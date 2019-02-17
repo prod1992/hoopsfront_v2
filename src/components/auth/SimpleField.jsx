@@ -16,7 +16,7 @@ const renderTextField = (
 
 class SimpleField extends Component {
   render() {
-    const { icon, name, placeholder, fieldType, id } = this.props.data;
+    const { icon, name, placeholder, fieldType } = this.props.data;
     return (
       <div className="input-field input-white untouched">
         <div className="icon-section">

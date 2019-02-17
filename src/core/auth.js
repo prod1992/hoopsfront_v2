@@ -1,6 +1,4 @@
-import React from "react";
 import getApiCredentials from "../constants/api";
-require("whatwg-fetch");
 
 const User = {};
 

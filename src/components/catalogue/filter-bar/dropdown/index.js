@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
+import React, {Component} from 'react'
+import {Checkbox, CheckboxGroup} from 'react-checkbox-group'
 
 class FilterDropdown extends Component {
     constructor(props) {

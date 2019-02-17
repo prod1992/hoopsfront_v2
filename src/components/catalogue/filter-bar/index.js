@@ -1,20 +1,21 @@
-import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
-import {filterShowHide} from '../../../actions/catalogue-actions';
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { filterShowHide } from '../../../actions/catalogue-actions';
 import FilterDropdown from './dropdown';
 import InputRange from 'react-input-range';
 import Autosuggestion from 'react-autosuggest';
-import {bindActionCreators} from "redux";
-import {sendSearchQuery} from "../../../actions/search";
-import {filterData} from "../../../actions/filterData";
+import { bindActionCreators } from "redux";
+import { sendSearchQuery } from "../../../actions/search";
+import { filterData } from "../../../actions/filterData";
 import getApiCredentials from "../../../constants/api";
 
 class FilterBar extends PureComponent {
+    
     constructor(props) {
         super(props);
         this.state = {
-            qty_range: {min: 0, max: 100},
-            price_range: {min: 0, max: 100},
+            qty_range: { min: 0, max: 100 },
+            price_range: { min: 0, max: 100 },
             tags: [],
             selectedTags: [],
             value: '',
@@ -40,26 +41,26 @@ class FilterBar extends PureComponent {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.searchVal !== prevState.searchVal) {
-            return {searchVal: nextProps.searchVal};
+            return { searchVal: nextProps.searchVal };
         } else return null;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const {products} = this.props.catalogueStates;
-        const {searchVal} = this.props;
+        const { products } = this.props.catalogueStates;
+        const { searchVal } = this.props;
 
         if (prevProps.searchVal !== searchVal) {
-            this.setState({searchVal});
+            this.setState({ searchVal });
         }
 
         if (prevProps.catalogueStates !== this.props.catalogueStates) {
             const tags = this.tagArrayHandler(products.data);
-            this.setState({tags});
+            this.setState({ tags });
         }
     }
 
     getSuggestionValue(suggestion) {
-        const {selectedTags} = this.state;
+        const { selectedTags } = this.state;
         this.setState({
             selectedTags: selectedTags.includes(suggestion) ?
                 selectedTags : [...selectedTags, suggestion],
@@ -88,8 +89,8 @@ class FilterBar extends PureComponent {
         const inputLength = inputValue.length;
 
         return inputLength === 0 ? [] : this.state.tags.filter(tag => {
-                return tag.toLowerCase().includes(inputValue);
-            }
+            return tag.toLowerCase().includes(inputValue);
+        }
         );
     };
 
@@ -105,7 +106,7 @@ class FilterBar extends PureComponent {
         return [...new Set(tags)];
     };
 
-    onChange(event, {newValue}) {
+    onChange(event, { newValue }) {
         this.setState({
             value: newValue
         });
@@ -122,8 +123,8 @@ class FilterBar extends PureComponent {
 
     clearFilters() {
         this.setState({
-            qty_range: {min: 0, max: 100},
-            price_range: {min: 0, max: 100},
+            qty_range: { min: 0, max: 100 },
+            price_range: { min: 0, max: 100 },
             tags: [],
             selectedTags: [],
             value: '',
@@ -136,7 +137,7 @@ class FilterBar extends PureComponent {
         })
     }
 
-    onSuggestionsFetchRequested({value}) {
+    onSuggestionsFetchRequested({ value }) {
         this.setState({
             suggestions: this.getSuggestions(value)
         });
@@ -159,8 +160,8 @@ class FilterBar extends PureComponent {
     }
 
     applyFilter() {
-        const {filterData, filterShowHide} = this.props;
-        const {vendors, brands, categories, subCategories, selectedTags, qty_range, price_range, searchVal} = this.state;
+        const { filterData, filterShowHide } = this.props;
+        const { vendors, brands, categories, subCategories, selectedTags, qty_range, price_range, searchVal } = this.state;
 
         let data = {
             qty_min: qty_range.min,
@@ -222,7 +223,7 @@ class FilterBar extends PureComponent {
 
     render() {
         const filterData = this.props.catalogueStates;
-        const {qty_range, price_range, value, suggestions, searchVal, selectedTags} = this.state;
+        const { qty_range, price_range, value, suggestions, searchVal, selectedTags } = this.state;
         const inputProps = {
             value,
             onChange: this.onChange
@@ -238,7 +239,7 @@ class FilterBar extends PureComponent {
                                     <h3>Filter</h3>
                                     <p>Select the following items to filter the Catalogues</p>
                                 </div>
-                                <span className="close_filther_block" onClick={() => this.closeFilter()}/>
+                                <span className="close_filther_block" onClick={() => this.closeFilter()} />
                             </div>
                             <div className="apply_btn">
                                 <button onClick={this.applyFilter}>Apply</button>
@@ -253,21 +254,21 @@ class FilterBar extends PureComponent {
                         </div>
                         <div className="filter_search_block">
                             <input type="text" value={searchVal} onChange={this.changeHandler}
-                                   placeholder="Enter your search here..."/>
+                                placeholder="Enter your search here..." />
                         </div>
                         <div className='dropdown-wrap'>
                             <FilterDropdown
                                 changeHandler={this.dataHandler}
-                                data={filterData.products.data} type="Vendor"/>
+                                data={filterData.products.data} type="Vendor" />
                             <FilterDropdown
                                 changeHandler={this.dataHandler}
-                                data={filterData.products.data} type="Brand"/>
+                                data={filterData.products.data} type="Brand" />
                             <FilterDropdown
                                 changeHandler={this.dataHandler}
-                                data={filterData.products.data} type="Category"/>
+                                data={filterData.products.data} type="Category" />
                             <FilterDropdown
                                 changeHandler={this.dataHandler}
-                                data={filterData.products.data} type="Sub Category"/>
+                                data={filterData.products.data} type="Sub Category" />
                         </div>
                         <div className='tags-sec'>
                             <span className='tag-head'>Tags</span>
@@ -280,20 +281,20 @@ class FilterBar extends PureComponent {
                                 inputProps={inputProps}
                             />
                             {!!selectedTags.length &&
-                            <div className="selected-tag-list">
-                                {selectedTags.map((tag, index) => {
-                                    return <div className="tag-item"
-                                                key={index}>
-                                        {tag}
-                                        <i className="material-icons remove-tag"
-                                           onClick={() =>
-                                               this.removeSelectedTag(index)
-                                           }>
-                                            close
+                                <div className="selected-tag-list">
+                                    {selectedTags.map((tag, index) => {
+                                        return <div className="tag-item"
+                                            key={index}>
+                                            {tag}
+                                            <i className="material-icons remove-tag"
+                                                onClick={() =>
+                                                    this.removeSelectedTag(index)
+                                                }>
+                                                close
                                         </i>
-                                    </div>
-                                })}
-                            </div>}
+                                        </div>
+                                    })}
+                                </div>}
                         </div>
                         <div className='range-wrapper'>
                             <div className='range-head'>Min Order QTY</div>
@@ -301,11 +302,11 @@ class FilterBar extends PureComponent {
                                 maxValue={100}
                                 minValue={0}
                                 value={qty_range}
-                                onChange={value => this.setState({qty_range: value})}/>
+                                onChange={value => this.setState({ qty_range: value })} />
                         </div>
                         <div className='order-values'>
                             <div className='value-square'>{qty_range.min}</div>
-                            <span className='line-value'/>
+                            <span className='line-value' />
                             <div className='value-square'>{qty_range.max}</div>
                         </div>
                         <div className='range-wrapper'>
@@ -314,7 +315,7 @@ class FilterBar extends PureComponent {
                                 maxValue={100}
                                 minValue={0}
                                 value={price_range}
-                                onChange={value => this.setState({price_range: value})}/>
+                                onChange={value => this.setState({ price_range: value })} />
                         </div>
                         <div className='order-values'>
                             <span>{`$${price_range.min}`}</span>

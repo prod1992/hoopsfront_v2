@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 
-class Loader extends Component{
-    render(){
-        return(
+class Loader extends Component {
+    render() {
+        return (
 
             <div className="loader-spinner positioning">
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
-                <div/>
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
             </div>
 
 
@@ -24,4 +24,4 @@ class Loader extends Component{
     }
 }
 
-export default Loader;
+export default Loader
