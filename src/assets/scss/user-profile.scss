@@ -1,0 +1,253 @@
+.user-profile {
+  padding-top: 30px;
+  .user-profile-header-block {
+    @include DisplayFlex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    margin-bottom: 15px;
+    .profile-header {
+      h3 {
+        color: #111;
+        font-size: 20px;
+        margin: 10px 0 8px;
+      }
+    }
+    .change-password {
+      background-color: #1db3e7;
+      padding: 0 20px;
+      height: 45px;
+      @include DisplayFlex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      i {
+        font-size: 20px;
+        margin-right: 8px;
+      }
+      span {
+        font-size: 15px;
+      }
+    }
+  }
+  .user-profile-details {
+    padding: 0 48px;
+    .inner-content {
+      background: white;
+      padding: 20px 0;
+      @include DisplayFlex;
+      align-items: center;
+      .img-wrapper {
+        padding: 0 15px;
+        width: 25%;
+        height: 305px;
+        @include DisplayFlex;
+        align-items: center;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .user-details {
+        width: 75%;
+        padding: 0 30px;
+        .details-header-block {
+          margin-bottom: 20px;
+          .username {
+            margin-bottom: 10px;
+            width: 100%;
+            @include TextOverflow;
+            span {
+              color: #111;
+              font-size: 28px;
+            }
+          }
+          .role {
+            width: 100%;
+            @include TextOverflow;
+            span {
+              color: #555;
+              font-size: 20px;
+              margin-bottom: 20px;
+            }
+          }
+        }
+        .info-rows {
+          width: 100%;
+          margin-bottom: 25px;
+          .row-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ebebeb;
+            @include DisplayFlex;
+            align-items: center;
+            .name {
+              width: 50%;
+              span {
+                color: rgba(0,0,0,.87);
+                font-size: 14px;
+                font-weight: 600;
+              }
+            }
+            .value {
+              width: 50%;
+              span {
+                font-weight: 400;
+                color: rgba(0,0,0,.87);
+                font-size: 14px;
+              }
+              &.badge {
+                span {
+                  background-color: #52ba57;
+                  font-size: 13px;
+                  font-weight: 400;
+                  color: white;
+                  display: inline-block;
+                  padding: 1px 8px;
+                  line-height: 20px;
+                  -webkit-border-radius: 2px;
+                  -moz-border-radius: 2px;
+                  border-radius: 2px;
+                }
+              }
+            }
+          }
+        }
+        .open-editing-modal {
+          display: flex;
+          justify-content: flex-end;
+          .edit-profile-button {
+            background-color: #555;
+            padding: 0 20px;
+            height: 45px;
+            @include DisplayFlex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            i {
+              font-size: 20px;
+              margin-right: 8px;
+            }
+            span {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.password-changing-modal,
+.profile-editing-modal {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 600px!important;
+  max-height: 90%!important;
+  border: 1px solid #dedede;
+  background: #fff;
+  padding: 24px;
+  .modal-header {
+    position: relative;
+    .close-modal {
+      position: absolute;
+      padding: 0;
+      top: 0;
+      right: 0;
+    }
+    .popup_header_block {
+      border-bottom: none;
+      h3 {
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 8px;
+        color: #111;
+      }
+      p {
+        font-size: 14px;
+        color: rgba(0,0,0,.87);
+        margin-bottom: 0;
+        line-height: 1.5;
+      }
+    }
+  }
+  .modal-content {
+    &.edit-profile {
+      border-top: 1px solid #ebebeb;
+      border-bottom: 1px solid #ebebeb;
+      padding-bottom: 40px;
+      margin-top: 30px;
+      .input-wrapper .pd-left {
+        padding-left: 35px;
+        height: 40px;
+      }
+    }
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      label {
+        color: #555;
+        font-size: 14px;
+        margin-top: 25px;
+      }
+      i {
+        position: absolute;
+        bottom: 6px;
+        left: 0;
+        color: #656e7e;
+      }
+      input {
+        height: 30px;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid rgb(204, 204, 204);
+        &:focus {
+          border-bottom: 1px solid #1f89bb;
+          box-shadow: 0 1px 0 0 #1f89bb;
+        }
+        &.invalid {
+          border-bottom: 1px solid #e3645b;
+          box-shadow: 0 1px 0 0 #e3645b;
+        }
+      }
+    }
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 0;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: unset;
+      width: unset;
+    }
+    .cancel {
+      font-size: 16px;
+      color: #888;
+      border: none;
+      background: none;
+      i {
+        margin-right: 10px;
+        color: #888;
+        font-size: 24px;
+      }
+    }
+    .update {
+      margin-left: 40px;
+      height: 43px;
+      padding: 0 20px;
+      line-height: 43px;
+      background-color: #1db3e7;
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.step-shared-wrapper{
+  width: 100%;
+  padding: 25px 15px;
+  @include DisplayFlex;
+  flex-direction: column;
+  .next-prev-control{
+    margin: 20px 0 40px 0;
+  }
+}
+
+.main-header-control-wrapper{
+  width: 100%;
+}
+
+.step-chart{
+  width: 100%;
+  padding: 0 200px 0 110px;
+  @include DisplayFlex;
+  align-items: center;
+}
+
+.step-1-crt{
+
+}
