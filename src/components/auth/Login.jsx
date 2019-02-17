@@ -17,14 +17,15 @@ import Grid from "@material-ui/core/Grid";
 const styles = theme => ({
   root: {
     backgroundColor: "#3fbeeb",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    borderBottomColor: "#FFFFFF"
   },
   whiteInput: {
     borderBottomColor: "#FFFFFF"
   }
 });
 
-class LogIn extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
@@ -86,5 +87,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(LogIn)
+  withStyles(styles, { withTheme: true })(Login)
 );

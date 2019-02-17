@@ -16,7 +16,7 @@ const renderTextField = (
 
 class SimpleField extends Component {
   render() {
-    const { icon, name, placeholder, fieldType, label, id } = this.props.data;
+    const { icon, name, placeholder, fieldType, id } = this.props.data;
     return (
       <div className="input-field input-white untouched">
         <div className="icon-section">
@@ -30,9 +30,6 @@ class SimpleField extends Component {
           label={placeholder}
 
         />
-        {/*<div className='field-animation-wrapper'>*/}
-        {/*<label className='input-label' htmlFor={name}>{label}</label>*/}
-        {/*</div>*/}
       </div>
     );
   }
