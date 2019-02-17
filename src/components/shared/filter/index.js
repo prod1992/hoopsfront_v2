@@ -1,19 +1,19 @@
-import {filterShowHide} from '../../../actions/catalogue-actions';
-import React, {Component} from 'react';
+import { filterShowHide } from '../../../actions/catalogue-actions';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Filter extends Component{
-    constructor(props){
+class Filter extends Component {
+    constructor(props) {
         super(props);
     }
 
-    showFilterBar(){
+    showFilterBar() {
         this.props.dispatch(filterShowHide(true))
     }
 
-    render(){
-        const {catalogueStates} = this.props;
-        return(
+    render() {
+        const { catalogueStates } = this.props;
+        return (
             <div className='filter-section'>
                 <div className='input-filter'>
                     <input type='text' placeholder='Enter Your search here' />
@@ -30,7 +30,7 @@ class Filter extends Component{
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         catalogueStates: state.catalogueReducer,
     }

@@ -1,27 +1,31 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { withStyles } from "@material-ui/core/styles";
-import Catalogue from "../catalogue";
-import MainPage from "../MainPage";
 import PropTypes from "prop-types";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
+
+import Logo from "../../components/Logo";
+import { NAVIGATION_ITEMS } from "../../constants/navigation";
+
+import CssBaseline from "@material-ui/core/CssBaseline";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-// import InboxIcon from "@material-ui/icons/MoveToInbox";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-// import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
-import Logo from "../../components/Logo";
-import { NAVIGATION_ITEMS } from "../../constants/navigation";
-import { Link } from "react-router-dom";
+// import InboxIcon from "@material-ui/icons/MoveToInbox";
+// import MailIcon from "@material-ui/icons/Mail";
+import Catalogue from "../catalogue";
+import Customers from "../customers";
+import Main from "../main";
+
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -152,9 +156,10 @@ class Dashboard extends Component {
           <main className={classes.content}>
             <Switch className={classes.content}>
               <Redirect exact from="/" to="/catalogue" />
-              <Route exact path="/dashboard" component={MainPage} />
-              <Route exact path="/catalogue" component={Catalogue} />
-              <Route exact path="/profile" component={Catalogue} />
+              <Route path="/customers" component={Customers} />
+              <Route path="/dashboard" component={Main} />
+              <Route path="/catalogue" component={Catalogue} />
+              <Route path="/profile" component={Catalogue} />
               <Route path="/import" component={Catalogue} />
               <Route exact path="/catalogue/:id" component={Catalogue} />
               <Route render={() => <Redirect to="/catalogue" />} />
