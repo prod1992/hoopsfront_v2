@@ -44,7 +44,7 @@ class App extends Component {
     return (
       !!this.props.appReady && (
         <Router>
-          <div className="application">
+          <div className="app">
             {!auth.isLoggedIn && <AuthRouteWrapper />}
             {auth.isLoggedIn && <Dashboard theme={theme} />}
           </div>

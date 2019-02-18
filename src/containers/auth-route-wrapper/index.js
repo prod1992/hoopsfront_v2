@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import Login from "../../components/auth/Login";
-import ForgetPassword from "../../components/auth/ForgotPassword";
+import ForgotPassword from "../../components/auth/ForgotPassword";
 import Register from "../../components/auth/Register";
 
 class AuthRouteWrapper extends Component {
@@ -13,7 +13,7 @@ class AuthRouteWrapper extends Component {
           <Redirect exact from="/" to="/login" />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/forget-password" component={ForgetPassword} />
+          <Route path="/forget-password" component={ForgotPassword} />
           <Route render={() => <Redirect to="/login" />} />
         </Switch>
       </React.Fragment>

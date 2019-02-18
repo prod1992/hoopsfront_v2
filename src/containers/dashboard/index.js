@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
 
-import Logo from "../../components/Logo";
-import { NAVIGATION_ITEMS } from "../../constants/navigation";
-
-import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -22,10 +18,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 // import InboxIcon from "@material-ui/icons/MoveToInbox";
 // import MailIcon from "@material-ui/icons/Mail";
+import { NAVIGATION_ITEMS } from "../../constants/navigation";
+import Logo from "../../components/Logo";
 import Catalogue from "../catalogue";
 import Customers from "../customers";
 import Main from "../main";
-
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -81,7 +78,9 @@ class Dashboard extends Component {
     const drawer = (
       <div>
         <a className="hoops-logo">
-          <Logo />
+          <Logo
+            fill={["#1fb3e6", "#1fb3e6", "#939598", "#939598", "#939598"]}
+          />
         </a>
 
         <List>
@@ -110,49 +109,49 @@ class Dashboard extends Component {
 
     return (
       <MuiThemeProvider theme={this.props.theme}>
-        <CssBaseline />
         <div className={classes.root}>
-          <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={this.handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <nav className={classes.drawer}>
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-            <Hidden smUp implementation="css">
-              <Drawer
-                container={this.props.container}
-                variant="temporary"
-                anchor={theme.direction === "rtl" ? "right" : "left"}
-                open={this.state.mobileOpen}
-                onClose={this.handleDrawerToggle}
-                classes={{
-                  paper: classes.drawerPaper
-                }}
-              >
-                {drawer}
-              </Drawer>
-            </Hidden>
-            <Hidden xsDown implementation="css">
-              <Drawer
-                classes={{
-                  paper: classes.drawerPaper
-                }}
-                variant="permanent"
-                open
-              >
-                {drawer}
-              </Drawer>
-            </Hidden>
-          </nav>
-
+          <header>
+            <AppBar position="fixed" className={classes.appBar}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={this.handleDrawerToggle}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+            <nav className={classes.drawer}>
+              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+              <Hidden smUp implementation="css">
+                <Drawer
+                  container={this.props.container}
+                  variant="temporary"
+                  anchor={theme.direction === "rtl" ? "right" : "left"}
+                  open={this.state.mobileOpen}
+                  onClose={this.handleDrawerToggle}
+                  classes={{
+                    paper: classes.drawerPaper
+                  }}
+                >
+                  {drawer}
+                </Drawer>
+              </Hidden>
+              <Hidden xsDown implementation="css">
+                <Drawer
+                  classes={{
+                    paper: classes.drawerPaper
+                  }}
+                  variant="permanent"
+                  open
+                >
+                  {drawer}
+                </Drawer>
+              </Hidden>
+            </nav>
+          </header>
           <main className={classes.content}>
             <Switch className={classes.content}>
               <Redirect exact from="/" to="/catalogue" />

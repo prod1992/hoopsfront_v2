@@ -1,13 +1,17 @@
 import React, { Component } from "react";
+// import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
-import { RememberPasswordRow } from "./RememberPassword";
+import RememberMe from "./RememberMe";
 import SimpleField from "./SimpleField";
-
+// import HttpsIcon from "@material-ui/icons/Https";
+import PersonIcon from "@material-ui/icons/Person";
 
 const styles = theme => ({
   cssLabel: {
@@ -15,6 +19,9 @@ const styles = theme => ({
     "&$cssFocused": {
       color: "#FFFFFF"
     }
+  },
+  input: {
+    color: "white"
   },
   cssOutlinedInput: {
     borderColor: "#FFFFFF",
@@ -26,18 +33,31 @@ const styles = theme => ({
   cssFocused: {}
 });
 
-const renderTextField = (
-  { input, label, meta: { touched, error }, ...custom },
-) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
-);
-
+const renderTextField = ({
+  input,
+  label,
+  meta: { touched, error },
+  ...custom
+}) => {
+  const { classes } = this.props;
+  return (
+    <TextField
+      label={label}
+      floatingLabelText={label}
+      errorText={touched && error}
+      InputProps={{
+        className: classes.input,
+        startAdornment: (
+          <InputAdornment position="start">
+            <PersonIcon />
+          </InputAdornment>
+        )
+      }}
+      {...input}
+      {...custom}
+    />
+  );
+};
 
 class ContactForm extends Component {
   render() {
@@ -47,24 +67,19 @@ class ContactForm extends Component {
         <div className="fields-heading">{formGroup.headingLabel}</div>
         {formGroup["group"].map((item, index) => (
           <div key={index}>
-            <SimpleField key={index} data={item} component={renderTextField}/>
+            <SimpleField key={index} data={item} component={renderTextField} />
           </div>
         ))}
-        {formGroup.name === "login" ? <RememberPasswordRow /> : null}
+        {formGroup.name === "login" ? <RememberMe /> : null}
         <Button type={formGroup["name"]}>{formGroup["headingLabel"]}</Button>
       </form>
     );
   }
 }
 
-// ContactForm = reduxForm({
-//     // a unique name for the form
-//     form: 'contact'
-// })(ContactForm);
-
 function mapStateToProps(state) {
   return {
-    user: state
+    user: state.user
   };
 }
 

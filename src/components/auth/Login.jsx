@@ -1,9 +1,8 @@
-
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-
-//import LoginRegisterLogo from "../logo/index";
+import Logo from "../../components/Logo";
 import { LOGIN_FIELD_GROUP } from "../../constants";
 
 import User from "../../core/auth";
@@ -15,10 +14,19 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
+  wrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    minHeight: "100vh"
+  },
   root: {
     backgroundColor: "#3fbeeb",
     color: "#FFFFFF",
-    borderBottomColor: "#FFFFFF"
+    borderBottomColor: "#FFFFFF",
+    maxWidth: 1170,
+    width: "100%"
   },
   whiteInput: {
     borderBottomColor: "#FFFFFF"
@@ -57,17 +65,38 @@ class Login extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="main-wrapper-layout light-blue">
+      <div className={classes.wrapper + " login-layout"}>
         <Paper className={classes.root}>
           <Grid
             container
-            spacing={32}
             style={{ maxWidth: 960, margin: "auto", padding: 50 }}
           >
-            <Grid item md={6}>
-              <a />
+            <Grid item xs={12} md={6}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  height: "100%"
+                }}
+              >
+                <Link to={"/"}>
+                  <Logo
+                    fill={[
+                      "#FFFFFF",
+                      "#FFFFFF",
+                      "#FFFFFF",
+                      "#FFFFFF",
+                      "#FFFFFF"
+                    ]}
+                  />
+                </Link>
+                <div>
+                  <p>We believe business can be easy</p>
+                </div>
+              </div>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={12} md={6}>
               <ContactForm
                 onSubmit={this.submit}
                 formGroup={LOGIN_FIELD_GROUP}
