@@ -14,20 +14,26 @@ const styles = {
       color: "#1db3e7"
     }
   },
+  myclass: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%"
+  },
   checked: {}
 };
 
 class RememberMe extends Component {
   state = {
-    isChecked: true
+    isChecked: false
   };
 
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.myclass}>
         <FormGroup row>
           <FormControlLabel
+            style={{ marginLeft: "0px" }}
             control={
               <Checkbox
                 checked={this.state.isChecked}
@@ -35,9 +41,10 @@ class RememberMe extends Component {
                   root: classes.root,
                   checked: classes.checked
                 }}
+                value="isChecked"
               />
             }
-            label="Remember Me"
+            label={"Remember Me"}
           />
         </FormGroup>
         <div className="rem-col">
@@ -48,8 +55,8 @@ class RememberMe extends Component {
   }
 }
 
-Checkbox.propTypes = {
+RememberMe.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Checkbox);
+export default withStyles(styles)(RememberMe);

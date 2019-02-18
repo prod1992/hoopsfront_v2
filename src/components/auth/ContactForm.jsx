@@ -9,11 +9,10 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormGroup from "@material-ui/core/FormGroup";
 
-import RememberMe from "./RememberMe";
 import SimpleField from "./SimpleField";
 // import HttpsIcon from "@material-ui/icons/Https";
 import PersonIcon from "@material-ui/icons/Person";
-
+import RememberMe from "./RememberMe";
 const styles = theme => ({
   cssLabel: {
     color: "#FFFFFF",
@@ -30,8 +29,13 @@ const styles = theme => ({
       borderColor: "#FFFFFF"
     }
   },
-  notchedOutline: {},
-  cssFocused: {}
+  button: {
+    backgroundColor: "#FFFFFF",
+    color: "#1db3e7",
+    borderRadius: "2px",
+    fontSize: "1.125rem",
+    padding: "12px"
+  }
 });
 
 const renderTextField = ({
@@ -68,16 +72,27 @@ class ContactForm extends Component {
         <h3>{formGroup.headingLabel}</h3>
         <form onSubmit={handleSubmit} autoComplete="off">
           {formGroup["group"].map((item, index) => (
-            <div key={index}>
+            <FormGroup key={index}>
               <SimpleField
                 key={index}
                 data={item}
                 component={renderTextField}
               />
-            </div>
+            </FormGroup>
           ))}
-          {formGroup.name === "login" ? <RememberMe /> : null}
-          <Button type={formGroup["name"]}>{formGroup["headingLabel"]}</Button>
+          {formGroup.name === "login" ? (
+            <FormGroup row>
+              <RememberMe />
+            </FormGroup>
+          ) : null}
+          <Button
+            fullWidth
+            className={classes.button}
+            type={formGroup["name"]}
+            variant="contained"
+          >
+            {formGroup["headingLabel"]}
+          </Button>
         </form>
       </div>
     );
