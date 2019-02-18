@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 // import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -13,6 +13,7 @@ import SimpleField from "./SimpleField";
 // import HttpsIcon from "@material-ui/icons/Https";
 import PersonIcon from "@material-ui/icons/Person";
 import RememberMe from "./RememberMe";
+import { inherits } from "util";
 const styles = theme => ({
   cssLabel: {
     color: "#FFFFFF",
@@ -31,10 +32,12 @@ const styles = theme => ({
   },
   button: {
     backgroundColor: "#FFFFFF",
+    fontFamily: "inherit",
     color: "#1db3e7",
     borderRadius: "2px",
     fontSize: "1.125rem",
-    padding: "12px"
+    padding: "12px",
+    textTransform: "none"
   }
 });
 
@@ -72,27 +75,28 @@ class ContactForm extends Component {
         <h3>{formGroup.headingLabel}</h3>
         <form onSubmit={handleSubmit} autoComplete="off">
           {formGroup["group"].map((item, index) => (
-            <FormGroup key={index}>
-              <SimpleField
-                key={index}
-                data={item}
-                component={renderTextField}
-              />
+            <FormGroup row key={index}>
+              <SimpleField data={item} component={renderTextField} />
             </FormGroup>
           ))}
           {formGroup.name === "login" ? (
             <FormGroup row>
               <RememberMe />
+              <Link style={{ color: "#FFFFFF" }} to="/forget-password">
+                Forgot password ?
+              </Link>
             </FormGroup>
           ) : null}
-          <Button
-            fullWidth
-            className={classes.button}
-            type={formGroup["name"]}
-            variant="contained"
-          >
-            {formGroup["headingLabel"]}
-          </Button>
+          <FormGroup row>
+            <Button
+              fullWidth
+              className={classes.button}
+              type={formGroup["name"]}
+              variant="contained"
+            >
+              {formGroup["headingLabel"]}
+            </Button>
+          </FormGroup>
         </form>
       </div>
     );
@@ -106,5 +110,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(
-  reduxForm({ form: "login" })(withStyles(styles)(ContactForm))
+  withStyles(styles)(reduxForm({ form: "login" })(ContactForm))
 );

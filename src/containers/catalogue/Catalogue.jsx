@@ -3,6 +3,7 @@ import {
   CATALOGUE_CONTROL_BTN_TYPES
 } from "../../constants/catalogue";
 import { PRODUCT_VIEW_TYPE } from "../../constants/catalogue";
+<<<<<<< HEAD
 import {
   setProducts,
   setVendors,
@@ -14,6 +15,12 @@ import {
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
 //import BulkEdit from "../../components/catalogue/bulk-edit";
+=======
+import { setProducts } from "../../actions/catalogue-actions";
+import FilterBar from "../../components/catalogue/filter-bar";
+import DropDown from "../../components/shared/dropdown-menu";
+import BulkEdit from "../../components/catalogue/bulk-edit";
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
 import { SIMPLE_PRODUCTS } from "../../constants/fake.data";
 import SimpleProduct from "../../components/catalogue";
 import getApiCredentials from "../../constants/api";
@@ -38,6 +45,7 @@ class Catalogue extends Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.getProductList = this.getProductList.bind(this);
+<<<<<<< HEAD
 
     //TODO check in this file
     this.getVendorsList = this.getVendorsList.bind(this);
@@ -45,12 +53,15 @@ class Catalogue extends Component {
     this.getCategorysList = this.getCategorysList.bind(this);
     this.getSubCategorysList = this.getSubCategorysList.bind(this);
 
+=======
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
     this.openProductAddingModal = this.openProductAddingModal.bind(this);
     this.closeProductAddingModal = this.closeProductAddingModal.bind(this);
   }
 
   componentDidMount() {
     this.getProductList();
+<<<<<<< HEAD
 
     //TODO check in this file
     this.getVendorsList();
@@ -58,6 +69,8 @@ class Catalogue extends Component {
     this.getCategorysList();
     this.getSubCategorysList();
 
+=======
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
     document.addEventListener("mousedown", this.handleClickOutside);
   }
 
@@ -127,6 +140,7 @@ class Catalogue extends Component {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: "Bearer " + token
+<<<<<<< HEAD
       }
     };
     const reqInstance = new Request(uri, requestOptions);
@@ -176,6 +190,8 @@ class Catalogue extends Component {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: "Bearer " + token
+=======
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
       }
     };
     const reqInstance = new Request(uri, requestOptions);
@@ -187,6 +203,7 @@ class Catalogue extends Component {
       })
       .then(data => {
         this.setState({ data });
+<<<<<<< HEAD
         this.props.dispatch(setBrands(data));
       })
       .catch(err => console.log(err, "error111"));
@@ -238,6 +255,9 @@ class Catalogue extends Component {
       .then(data => {
         this.setState({ data });
         this.props.dispatch(setSubCategorys(data));
+=======
+        this.props.dispatch(setProducts(data));
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
       })
       .catch(err => console.log(err, "error111"));
   }
@@ -280,6 +300,7 @@ class Catalogue extends Component {
                   ? "active"
                   : ""
               }
+<<<<<<< HEAD
             >
               <i className="material-icons">view_list</i>
             </button>
@@ -308,6 +329,36 @@ class Catalogue extends Component {
                 this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["import"])
               }
             >
+=======
+            >
+              <i className="material-icons">view_list</i>
+            </button>
+            <button
+              className={
+                this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
+              }
+            >
+              <i className="material-icons">file_download</i>
+              {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
+                <DropDown group={"DOWNLOAD_CSV"} />
+              )}
+            </button>
+            <button
+              className={
+                this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"]
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["import"])
+              }
+            >
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
               <i className="material-icons">more_horiz</i>
               {this.state.activeBtn ===
                 CATALOGUE_CONTROL_BTN_TYPES["import"] && (
@@ -317,7 +368,10 @@ class Catalogue extends Component {
                 />
               )}
             </button>
+<<<<<<< HEAD
             <Filter />
+=======
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
           </div>
           <Modal
             isOpen={this.state.productAddingModal}
@@ -327,11 +381,19 @@ class Catalogue extends Component {
           >
             <AddProduct closeModal={this.closeProductAddingModal} />
           </Modal>
+<<<<<<< HEAD
+=======
+          {!catalogueStates.bulkEdit ? <Filter /> : null}
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
         </div>
         <FilterBar />
         <div className="catalogue-body">
           <div className="shared-scroll-view">
             <div className="catalogue-grid">
+<<<<<<< HEAD
+=======
+              {catalogueStates["bulkEdit"] && <BulkEdit />}
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
               <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
                 <div className="row">
                   {!products["data"] && <Loader />}
@@ -341,6 +403,10 @@ class Catalogue extends Component {
                         simpleProduct={item}
                         key={index}
                         viewType={this.state.viewType}
+<<<<<<< HEAD
+=======
+                        bulkEdit={catalogueStates["bulkEdit"]}
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
                       />
                     ))}
                 </div>
@@ -357,8 +423,12 @@ function mapStateToProps(state) {
   return {
     catalogueStates: state.catalogueReducer,
     products: state.catalogueReducer.products,
+<<<<<<< HEAD
     filterData: state.filterData,
     categorys: state.catalogueReducer.categorys
+=======
+    filterData: state.filterData
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
   };
 }
 

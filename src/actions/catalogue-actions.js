@@ -8,11 +8,15 @@ import {
   SET_FILTERED_ARRAY,
   FILTER_SHOW,
   VIDEO_POPUP_STATE,
+<<<<<<< HEAD
   RESET_SELECTED_IDS,
   SET_VENDOR_LIST,
   SET_BRAND_LIST,
   SET_CATEGORY_LIST,
   SET_SUB_CATEGORY_LIST
+=======
+  RESET_SELECTED_IDS
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
 } from "./action-types";
 
 export const BulkEditProduct = payload => {
@@ -35,6 +39,7 @@ export const changeVideoButton = payload => {
     type: VIDEO_POPUP_STATE,
     payload
   };
+<<<<<<< HEAD
 };
 
 export const collectSelectedIds = payload => {
@@ -68,20 +73,39 @@ export const setVendors = payload => {
 export const setBrands = payload => {
   return {
     type: SET_BRAND_LIST,
+=======
+};
+
+export const collectSelectedIds = payload => {
+  return {
+    type: COLLECT_SELECTED_IDS,
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
     payload
   };
 };
 
+<<<<<<< HEAD
 export const setCategorys = payload => {
   return {
     type: SET_CATEGORY_LIST,
+=======
+export const selectAllProducts = payload => {
+  return {
+    type: SELECT_ALL_PRODUCTS,
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
     payload
   };
 };
 
+<<<<<<< HEAD
 export const setSubCategorys = payload => {
   return {
     type: SET_SUB_CATEGORY_LIST,
+=======
+export const setProducts = payload => {
+  return {
+    type: SET_PRODUCTS,
+>>>>>>> 6afca966d49b915b425270e74b373e998b3c954f
     payload
   };
 };

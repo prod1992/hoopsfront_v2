@@ -30,27 +30,23 @@ class RememberMe extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.myclass}>
-        <FormGroup row>
-          <FormControlLabel
-            style={{ marginLeft: "0px" }}
-            control={
-              <Checkbox
-                checked={this.state.isChecked}
-                classes={{
-                  root: classes.root,
-                  checked: classes.checked
-                }}
-                value="isChecked"
-              />
-            }
-            label={"Remember Me"}
+      <FormControlLabel
+        style={{ marginLeft: "0px" }}
+        control={
+          <Checkbox
+            classes={{
+              root: classes.root,
+              checked: classes.checked
+            }}
+            value="isChecked"
           />
-        </FormGroup>
-        <div className="rem-col">
-          <Link to="/forget-password">Forgot password ?</Link>
-        </div>
-      </div>
+        }
+        label={
+          <span style={{ color: "#FFFFFF" }} className="white-text">
+            Remember Me
+          </span>
+        }
+      />
     );
   }
 }

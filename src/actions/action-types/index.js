@@ -1,15 +1,8 @@
 /*APP*/
 export const APP_READY = "APP_READY";
 
-/*user register login*/
-export const USER_LOGGED_IN = "USER_LOGGED_IN";
-export const SET_USER_DATA = "SET_USER_DATA";
-
-/*catalogue functional buttons*/
-
-export const BULK_EDIT = "BULK_EDIT";
-export const COLLECT_SELECTED_IDS = "COLLECT_SELECTED_IDS";
-export const SELECT_ALL_PRODUCTS = "SELECT_ALL_PRODUCTS";
+export * from "./auth";
+export * from "./catalogue";
 
 /*Product import*/
 
