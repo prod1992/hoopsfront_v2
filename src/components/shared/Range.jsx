@@ -5,11 +5,16 @@ import Slider, { Range } from "rc-slider";
 // import Range from 'rc-slider/lib/Range';
 import "rc-slider/assets/index.css";
 
-export default class MultipleSelect extends React.Component {
+export default class RangeComponent extends React.Component {
   render() {
     return (
       <div>
-        <Range />
+        <Range
+          onChange={this.props.onChange}
+          min={+this.props.min}
+          max={+this.props.max}
+          defaultValue={[+this.props.min, +this.props.max]}
+        />
       </div>
     );
   }

@@ -44,19 +44,6 @@ const MenuProps = {
   }
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder"
-];
-
 function getStyles(name, that) {
   return {
     fontWeight:
@@ -90,7 +77,7 @@ class MultipleSelect extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const names = this.props.names;
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
