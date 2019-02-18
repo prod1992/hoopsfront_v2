@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { Route, Switch, Redirect, Link, NavLink } from "react-router-dom";
 
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
@@ -85,7 +85,7 @@ class Dashboard extends Component {
 
         <List>
           {NAVIGATION_ITEMS.map((item, index) => (
-            <ListItem button key={index}>
+            <ListItem button key={index} style={{ padding: 0 }}>
               <Tooltip
                 title={item.title}
                 placement={"right"}
@@ -93,13 +93,22 @@ class Dashboard extends Component {
                   tooltip: classes.darkTooltip
                 }}
               >
-                <Link
-                  to={item.href}
-                  style={{ textDecoration: "none", display: "flex" }}
+                <NavLink
+                  to={"/#/" + item.href}
+                  style={{
+                    textDecoration: "none",
+                    display: "flex",
+                    width: "100%",
+                    padding: 18
+                  }}
+                  activeStyle={{
+                    fontWeight: "bold",
+                    color: "red"
+                  }}
                 >
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.title} />
-                </Link>
+                </NavLink>
               </Tooltip>
             </ListItem>
           ))}

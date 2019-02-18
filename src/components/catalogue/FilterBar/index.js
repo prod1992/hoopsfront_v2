@@ -110,7 +110,7 @@ class FilterBar extends React.Component {
             apply
           </Button>
         </div>
-        <div class={classes.block}>
+        <div className={classes.block}>
           <Divider />
           <MultipleSelect
             onChange={this.dataHandler}
