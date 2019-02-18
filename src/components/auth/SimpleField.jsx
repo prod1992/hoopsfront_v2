@@ -1,24 +1,75 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Field } from "redux-form";
 import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
 
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => <TextField fullWidth={true} label={label} {...input} {...custom} />;
+const styles = theme => ({
+  margin: {
+    margin: theme.spacing.unit
+  },
+  cssLabel: {
+    color: "#FFFFFF",
+    "&$cssFocused": {
+      color: "#FFFFFF"
+    }
+  },
+  cssFocused: {
+    borderColor: "#FFFFFF"
+  },
+  cssUnderline: {
+    borderBottomColor: "#FFFFFF",
+    "&$after, &$before": {
+      borderBottomColor: "#FFFFFF"
+    }
+  },
+  cssOutlinedInput: {
+    borderBottomColor: "#FFFFFF",
+    color: "#FFFFFF",
+    "&:after,&:before": {
+      borderBottomColor: "#FFFFFF"
+    }
+  }
+});
 
-class SimpleField extends Component {
+class SimpleField extends React.Component {
   render() {
-    const { icon, name, placeholder, fieldType } = this.props.data;
+    const { classes } = this.props;
+    const renderTextField = ({
+      input,
+      label,
+      meta: { touched, error },
+      ...custom
+    }) => {
+      return (
+        <TextField
+          fullWidth={true}
+          label={label}
+          {...input}
+          {...custom}
+          InputLabelProps={{
+            classes: {
+              root: classes.cssLabel,
+              focused: classes.cssFocused
+            }
+          }}
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused
+            }
+          }}
+        />
+      );
+    };
+
+    const { icon, name, fieldType, label, id } = this.props.data;
     return (
       <Field
         name={name}
         component={renderTextField}
         type={fieldType}
-        label={placeholder}
+        label={label}
       />
     );
   }
@@ -30,4 +81,4 @@ SimpleField.propTypes = {
   touchedId: PropTypes.array
 };
 
-export default SimpleField;
+export default withStyles(styles)(SimpleField);

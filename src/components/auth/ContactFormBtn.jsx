@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Field } from "redux-form";
 
-class FormBtn extends Component {
+class FormBtn extends React.Component {
   constructor(props) {
     super(props);
     this.currentButton = this.currentButton.bind(this);
