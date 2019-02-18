@@ -1,14 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { HashRouter as Router } from "react-router-dom";
+
 import theme from "../ui/theme";
+
 import AuthRouteWrapper from "./auth-route-wrapper";
 import Dashboard from "./dashboard";
-import User from "../core/auth";
+
 import { AppReady } from "../actions/app";
+
+import User from "../core/auth";
 import { SetUserData, UserLoggedIn } from "../actions/user";
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.init = this.init.bind(this);
