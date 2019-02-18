@@ -22,6 +22,9 @@ export const SKIP_STEP = "SKIP_STEP";
 export const SELECT_VENDOR = "SELECT_VENDOR";
 export const ADD_NEW_VENDOR = "ADD_NEW_VENDOR";
 export const SET_VENDOR_LIST = "SET_VENDOR_LIST";
+export const SET_BRAND_LIST = "SET_BRAND_LIST";
+export const SET_CATEGORY_LIST = "SET_CATEGORY_LIST";
+export const SET_SUB_CATEGORY_LIST = "SET_SUB_CATEGORY_LIST";
 export const ADD_NEW_CREATED_VENDOR = "ADD_NEW_CREATED_VENDOR";
 
 /*Get Products*/

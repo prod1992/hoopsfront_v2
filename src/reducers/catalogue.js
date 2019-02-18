@@ -5,11 +5,19 @@ import {
   SELECT_ALL_PRODUCTS,
   FILTER_SHOW,
   SET_FILTERED_ARRAY,
-  RESET_SELECTED_IDS
+  RESET_SELECTED_IDS,
+  SET_SUB_CATEGORY_LIST,
+  SET_CATEGORY_LIST,
+  SET_BRAND_LIST,
+  SET_VENDOR_LIST
 } from "../actions/action-types";
 
 const initialState = {
   products: {},
+  vendors: {},
+  categorys: {},
+  subcategorys: {},
+  brands: {},
   bulkEdit: false,
   selectedIds: [],
   filterIsOpened: false,
@@ -54,6 +62,26 @@ const catalogueReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload
+      };
+    case SET_VENDOR_LIST:
+      return {
+        ...state,
+        vendors: action.payload
+      };
+    case SET_BRAND_LIST:
+      return {
+        ...state,
+        brands: action.payload
+      };
+    case SET_CATEGORY_LIST:
+      return {
+        ...state,
+        categorys: action.payload
+      };
+    case SET_SUB_CATEGORY_LIST:
+      return {
+        ...state,
+        subcategorys: action.payload
       };
     case FILTER_SHOW:
       return {
