@@ -21,6 +21,14 @@ import Filter from "../../components/shared/filter";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddProduct from "../../components/catalogue/single-product/addingPopup";
+import Book from "@material-ui/icons/Book";
+import ViewModule from "@material-ui/icons/ViewModule";
+import ViewList from "@material-ui/icons/ViewList";
+//import FileDownload from "@material-ui/icons/FileDownload";
+import MoreHoriz from "@material-ui/icons/MoreHoriz";
+import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
+import FilterList from "@material-ui/icons/FilterList";
+
 import Modal from "react-modal";
 
 class Catalogue extends Component {
@@ -236,14 +244,14 @@ class Catalogue extends Component {
           Catalogue
           <a href="#" className="row-link">
             <div className="row-i-ic">
-              <i className="material-icons">book</i>
+              <Book />
             </div>
             Automate your processes by adding catalogues
           </a>
         </div>
         <div className="catalogue-functional-header">
           <div className="action-buttons" ref={this.setWrapperRef}>
-            <button
+            <ViewModule
               onClick={() =>
                 this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
               }
@@ -252,10 +260,9 @@ class Catalogue extends Component {
                   ? "active"
                   : ""
               }
-            >
-              <i className="material-icons">view_module</i>
-            </button>
-            <button
+            />
+
+            <ViewList
               onClick={() =>
                 this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
               }
@@ -264,10 +271,9 @@ class Catalogue extends Component {
                   ? "active"
                   : ""
               }
-            >
-              <i className="material-icons">view_list</i>
-            </button>
-            <button
+            />
+
+            <VerticalAlignBottom
               className={
                 this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
                   ? "active"
@@ -276,13 +282,12 @@ class Catalogue extends Component {
               onClick={() =>
                 this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
               }
-            >
-              <i className="material-icons">file_download</i>
-              {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
-                <DropDown group={"DOWNLOAD_CSV"} />
-              )}
-            </button>
-            <button
+            />
+            {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
+              <DropDown group={"DOWNLOAD_CSV"} />
+            )}
+
+            <MoreHoriz
               className={
                 this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"]
                   ? "active"
@@ -291,16 +296,13 @@ class Catalogue extends Component {
               onClick={() =>
                 this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["import"])
               }
-            >
-              <i className="material-icons">more_horiz</i>
-              {this.state.activeBtn ===
-                CATALOGUE_CONTROL_BTN_TYPES["import"] && (
-                <DropDown
-                  group={"CSV_IMPORT_ITEMS"}
-                  openProductAddingModal={this.openProductAddingModal}
-                />
-              )}
-            </button>
+            />
+            {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"] && (
+              <DropDown
+                group={"CSV_IMPORT_ITEMS"}
+                openProductAddingModal={this.openProductAddingModal}
+              />
+            )}
           </div>
           <Modal
             isOpen={this.state.productAddingModal}

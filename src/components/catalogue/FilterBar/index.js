@@ -7,7 +7,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import { bindActionCreators } from "redux";
 import RangeComponent from "../../shared/Range";
-
+import { setProducts } from "../../../actions/catalogue-actions";
 import Divider from "@material-ui/core/Divider";
 
 import { sendSearchQuery } from "../../../actions/search";
@@ -18,6 +18,7 @@ import {
 import { filterData } from "../../../actions/filterData";
 //import VendordSelector from "./dropdown/VendordSelector";
 import MultipleSelect from "../../shared/MultiSelect";
+import getApiCredentials from "../../../constants/api";
 
 const styles = theme => ({
   list: {
@@ -41,8 +42,8 @@ class FilterBar extends React.Component {
     brands: "",
     categorys: "",
     subcategorys: "",
-    qty: [0, 100],
-    price: [0, 100]
+    qty_range: [0, 100],
+    price_range: [0, 100]
   };
   constructor(props) {
     super(props);
@@ -50,7 +51,56 @@ class FilterBar extends React.Component {
     this.applyFilter = this.applyFilter.bind(this);
   }
 
-  applyFilter() {}
+  applyFilter() {
+    const {
+      brands,
+      vendors,
+      categorys,
+      subcategorys,
+      qty_range,
+      price_range
+    } = this.state;
+    let data = {
+      qty_min: qty_range.min,
+      qty_max: qty_range.max,
+      price_min: price_range.min,
+      price_min: price_range.min
+    };
+    if (!!vendors.length) {
+      data.vendors = vendors;
+    }
+    if (!!brands.length) {
+      data.brands = brands;
+    }
+    if (!!categorys.length) {
+      data.categorys = categorys;
+    }
+    if (!!subcategorys.length) {
+      data.subcategorys = subcategorys;
+    }
+    let token = localStorage["userToken"];
+    let uri =
+      getApiCredentials.host + `/api/products/?filter=${JSON.stringify(data)}`;
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      }
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(data => {
+        this.props.dispatch(setProducts(data));
+      })
+      .catch(err => console.log(err, "error111"));
+  }
   toggleDrawer = open => () => {
     this.props.dispatch(filterShowHide(open));
   };
@@ -59,12 +109,10 @@ class FilterBar extends React.Component {
     this.setState({
       [name]: arr
     });
-    console.log(this.state);
   }
   RangeComponentChanged() {}
 
   render() {
-    console.log(this.state);
     const { classes, catalogueStates } = this.props;
 
     var vendorsNames = [];
@@ -104,6 +152,7 @@ class FilterBar extends React.Component {
       categorys,
       subcategorys
     } = this.state;
+    console.log(price_range);
     const sideList = (
       <div className={classes.list}>
         <div className="filter_title">
@@ -152,24 +201,28 @@ class FilterBar extends React.Component {
             changeHandler={this.dataHandler}
             names={sub_categoryNames}
           />
-          <RangeComponent
-            for="qty"
-            value={qty_range}
-            onChange={(min, max) => {
-              this.dataHandler([min, max], "qty_range");
-            }}
-            min="0"
-            max="100"
-          />
-          <RangeComponent
-            for="price"
-            value={price_range}
-            onChange={(min, max) => {
-              this.dataHandler([min, max], "price_range");
-            }}
-            min="0"
-            max="100"
-          />
+          <div>
+            <RangeComponent
+              for="qty"
+              value={qty_range}
+              onChange={value => {
+                this.setState({ qty_range: value });
+              }}
+              min="0"
+              max="100"
+            />
+          </div>
+          <div>
+            <RangeComponent
+              for="price"
+              value={price_range}
+              onChange={value => {
+                this.setState({ price_range: value });
+              }}
+              min="0"
+              max="100"
+            />
+          </div>
         </div>
       </div>
     );

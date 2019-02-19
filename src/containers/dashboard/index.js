@@ -21,7 +21,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { NAVIGATION_ITEMS } from "../../constants/navigation";
 import Logo from "../../components/Logo";
 import Catalogue from "../catalogue";
+import SingleProduct from "../catalogue/SingleProduct";
 import Customers from "../customers";
+
 import Main from "../main";
 
 const drawerWidth = 240;
@@ -169,7 +171,7 @@ class Dashboard extends Component {
               <Route path="/catalogue" component={Catalogue} />
               <Route path="/profile" component={Catalogue} />
               <Route path="/import" component={Catalogue} />
-              <Route exact path="/catalogue/:id" component={Catalogue} />
+              <Route exact path="/product/:id" component={SingleProduct} />
               <Route render={() => <Redirect to="/catalogue" />} />
             </Switch>
           </main>
