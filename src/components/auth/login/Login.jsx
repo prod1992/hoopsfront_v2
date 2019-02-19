@@ -25,9 +25,12 @@ const styles = theme => ({
     backgroundColor: "#3fbeeb",
     color: "#FFFFFF",
     borderBottomColor: "#FFFFFF",
-    maxWidth: 1170,
+    maxWidth: 576,
     width: "100%",
-    boxShadow: "none"
+    boxShadow: "none",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: 768
+    }
   }
 });
 

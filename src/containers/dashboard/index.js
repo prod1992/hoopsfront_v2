@@ -94,7 +94,7 @@ class Dashboard extends Component {
                 }}
               >
                 <NavLink
-                  to={"/#/" + item.href}
+                  to={"/" + item.href}
                   style={{
                     textDecoration: "none",
                     display: "flex",

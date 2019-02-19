@@ -55,24 +55,16 @@ function getStyles(name, that) {
 
 class MultipleSelect extends React.Component {
   state = {
+    //name: this.props.values
     name: []
   };
 
   handleChange = event => {
-    this.setState({ name: event.target.value });
-  };
+    const { changeHandler } = this.props;
 
-  handleChangeMultiple = event => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    this.setState({
-      name: value
-    });
+    this.setState({ name: event.target.value });
+
+    changeHandler(event.target.value, this.props.for);
   };
 
   render() {
@@ -93,7 +85,7 @@ class MultipleSelect extends React.Component {
             MenuProps={MenuProps}
           >
             {names.map(name => (
-              <MenuItem key={name} value={name}>
+              <MenuItem key={Math.random() + name} value={name}>
                 <Checkbox checked={this.state.name.indexOf(name) > -1} />
                 <ListItemText primary={name} />
               </MenuItem>

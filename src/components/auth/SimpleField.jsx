@@ -17,15 +17,21 @@ const styles = theme => ({
   cssFocused: {
     borderColor: "#FFFFFF"
   },
+  cssHovered: {
+    color: "#FFFFFFF"
+  },
   cssUnderline: {
     borderBottomColor: "#FFFFFF",
-    "&$after, &$before": {
+    "&:after, &:before": {
       borderBottomColor: "#FFFFFF"
     }
   },
   cssOutlinedInput: {
     borderBottomColor: "#FFFFFF",
     color: "#FFFFFF",
+    input: {
+      height: 48
+    },
     "&:after,&:before": {
       borderBottomColor: "#FFFFFF"
     }
@@ -56,7 +62,8 @@ class SimpleField extends React.Component {
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
-              focused: classes.cssFocused
+              focused: classes.cssFocused,
+              hovered: classes.cssHovered
             }
           }}
         />

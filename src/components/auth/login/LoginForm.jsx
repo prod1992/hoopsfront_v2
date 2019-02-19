@@ -9,11 +9,12 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormGroup from "@material-ui/core/FormGroup";
 
-import SimpleField from "../SimpleField";
-// import HttpsIcon from "@material-ui/icons/Https";
 import PersonIcon from "@material-ui/icons/Person";
+import HttpsIcon from "@material-ui/icons/Https";
+
+import SimpleField from "../SimpleField";
 import RememberMe from "../RememberMe";
-import { inherits } from "util";
+
 const styles = theme => ({
   cssLabel: {
     color: "#FFFFFF",
@@ -24,11 +25,9 @@ const styles = theme => ({
   input: {
     color: "white"
   },
-  cssOutlinedInput: {
-    borderColor: "#FFFFFF",
-    "&$cssFocused $notchedOutline": {
-      borderColor: "#FFFFFF"
-    }
+ 
+  notchedOutline: {
+    borderColor: "#FFFFFF"
   },
   button: {
     backgroundColor: "#FFFFFF",
@@ -80,7 +79,14 @@ class LoginForm extends Component {
             </FormGroup>
           ))}
           {formGroup.name === "login" ? (
-            <FormGroup row>
+            <FormGroup
+              row
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "30px 0"
+              }}
+            >
               <RememberMe />
               <Link style={{ color: "#FFFFFF" }} to="/forget-password">
                 Forgot password ?

@@ -36,58 +36,74 @@ const styles = theme => ({
 });
 
 class FilterBar extends React.Component {
+  state = {
+    vendors: "",
+    brands: "",
+    categorys: "",
+    subcategorys: "",
+    qty: [0, 100],
+    price: [0, 100]
+  };
   constructor(props) {
     super(props);
     this.dataHandler = this.dataHandler.bind(this);
+    this.applyFilter = this.applyFilter.bind(this);
   }
-  state = {
-    top: false,
-    left: false,
-    bottom: false,
-    right: false
-  };
 
+  applyFilter() {}
   toggleDrawer = open => () => {
     this.props.dispatch(filterShowHide(open));
   };
 
-  dataHandler(...args) {
-    console.log(...args);
-    /*this.setState({
+  dataHandler(arr, name) {
+    this.setState({
       [name]: arr
-    });*/
+    });
+    console.log(this.state);
   }
+  RangeComponentChanged() {}
 
   render() {
+    console.log(this.state);
     const { classes, catalogueStates } = this.props;
 
-    var vendors = [];
+    var vendorsNames = [];
     if (typeof catalogueStates.vendors.data != "undefined") {
-      for (var data in catalogueStates.vendors.data) {
-        vendors.push(catalogueStates.vendors.data[data].vendor);
+      for (let key in catalogueStates.vendors.data) {
+        vendorsNames.push(catalogueStates.vendors.data[key].vendor);
       }
     }
 
-    var brands = [];
+    var brandsNames = [];
     if (typeof catalogueStates.brands.data != "undefined") {
-      for (var data in catalogueStates.brands.data) {
-        brands.push(catalogueStates.brands.data[data].brand);
+      for (let key in catalogueStates.brands.data) {
+        brandsNames.push(catalogueStates.brands.data[key].brand);
       }
     }
 
-    var categorys = [];
+    var categorysNames = [];
     if (typeof catalogueStates.categorys.data != "undefined") {
-      for (var data in catalogueStates.categorys.data) {
-        categorys.push(catalogueStates.categorys.data[data].category);
+      for (let key in catalogueStates.categorys.data) {
+        categorysNames.push(catalogueStates.categorys.data[key].category);
       }
     }
 
-    var sub_category = [];
+    var sub_categoryNames = [];
     if (typeof catalogueStates.subcategorys.data != "undefined") {
-      for (var data in catalogueStates.subcategorys.data) {
-        sub_category.push(catalogueStates.subcategorys.data[data].sub_category);
+      for (let key in catalogueStates.subcategorys.data) {
+        sub_categoryNames.push(
+          catalogueStates.subcategorys.data[key].sub_category
+        );
       }
     }
+    const {
+      qty_range,
+      price_range,
+      vendors,
+      brands,
+      categorys,
+      subcategorys
+    } = this.state;
     const sideList = (
       <div className={classes.list}>
         <div className="filter_title">
@@ -113,27 +129,47 @@ class FilterBar extends React.Component {
         <div className={classes.block}>
           <Divider />
           <MultipleSelect
-            onChange={this.dataHandler}
-            label="asdf"
-            names={vendors}
+            for="vendors"
+            value={vendors}
+            changeHandler={this.dataHandler}
+            names={vendorsNames}
           />
           <MultipleSelect
-            onChange={this.dataHandler}
-            label="asdf"
-            names={brands}
+            for="brands"
+            value={brands}
+            changeHandler={this.dataHandler}
+            names={brandsNames}
           />
           <MultipleSelect
-            onChange={this.dataHandler}
-            label="asdf"
-            names={categorys}
+            for="categorys"
+            value={categorys}
+            changeHandler={this.dataHandler}
+            names={categorysNames}
           />
           <MultipleSelect
-            onChange={this.dataHandler}
-            label="asdf"
-            names={sub_category}
+            for="subcategorys"
+            value={subcategorys}
+            changeHandler={this.dataHandler}
+            names={sub_categoryNames}
           />
-          <RangeComponent onchange={this.dataHandler} min="0" max="100" />
-          <RangeComponent onchange={this.dataHandler} min="0" max="100" />
+          <RangeComponent
+            for="qty"
+            value={qty_range}
+            onChange={(min, max) => {
+              this.dataHandler([min, max], "qty_range");
+            }}
+            min="0"
+            max="100"
+          />
+          <RangeComponent
+            for="price"
+            value={price_range}
+            onChange={(min, max) => {
+              this.dataHandler([min, max], "price_range");
+            }}
+            min="0"
+            max="100"
+          />
         </div>
       </div>
     );
