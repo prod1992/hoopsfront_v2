@@ -68,6 +68,8 @@ class MultipleSelect extends React.Component {
   };
 
   render() {
+    console.log(this.props);
+
     const { classes } = this.props;
     const names = this.props.names;
     return (

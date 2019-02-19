@@ -61,8 +61,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit * 8,
-    paddingLeft: 25
+    padding: "80px 15px 0 15px"
   }
 });
 

@@ -1,7 +1,39 @@
-import { filterShowHide } from "../../../actions/catalogue-actions";
 import React, { Component } from "react";
+import { filterShowHide } from "../../../actions/catalogue-actions";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import FilterList from "@material-ui/icons/FilterList";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import Grid from "@material-ui/core/Grid";
+
+import Button from "@material-ui/core/Button";
+
+import InputBase from "@material-ui/core/InputBase";
+
+const styles = {
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1,
+    border: "1px solid #cccccc",
+    padding: ".35rem 1rem"
+  },
+  iconButton: {
+    padding: 10
+  },
+  divider: {
+    width: 1,
+    height: 28,
+    margin: 4
+  }
+};
+
 class Filter extends Component {
   constructor(props) {
     super(props);
@@ -12,20 +44,23 @@ class Filter extends Component {
   }
 
   render() {
-    const { catalogueStates } = this.props;
+    const { catalogueStates, classes } = this.props;
     return (
-      <div className="filter-section">
-        <div className="input-filter">
-          <input type="text" placeholder="Enter Your search here" />
-          <button className="search-chick-handler">
-            <i className="material-icons">search</i>
-          </button>
-        </div>
-        <button className="filter-btn" onClick={() => this.showFilterBar()}>
+      <Grid item container className="filter-section">
+        <Button className="filter-btn" onClick={() => this.showFilterBar()}>
           <FilterList />
           <span>Filter</span>
-        </button>
-      </div>
+        </Button>
+        <div className="input-filter">
+          <InputBase
+            className={classes.input}
+            placeholder="Enter Your search here"
+          />
+          <IconButton className={classes.iconButton} aria-label="Search">
+            <SearchIcon />
+          </IconButton>
+        </div>
+      </Grid>
     );
   }
 }
@@ -36,4 +71,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Filter);
+export default connect(mapStateToProps)(withStyles(styles)(Filter));

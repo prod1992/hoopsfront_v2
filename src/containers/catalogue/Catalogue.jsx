@@ -1,5 +1,5 @@
 import {
-  // CSV_DROP_ITEMS,
+  CSV_DROP_ITEMS,
   CATALOGUE_CONTROL_BTN_TYPES
 } from "../../constants/catalogue";
 import { PRODUCT_VIEW_TYPE } from "../../constants/catalogue";
@@ -10,6 +10,8 @@ import {
   setCategorys,
   setSubCategorys
 } from "../../actions/catalogue-actions";
+import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
 import BulkEdit from "../../components/catalogue/bulk-edit";
@@ -26,6 +28,7 @@ import Book from "@material-ui/icons/Book";
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
 import Grid from "@material-ui/core/Grid";
+import Fab from "@material-ui/core/Fab";
 //import FileDownload from "@material-ui/icons/FileDownload";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
@@ -33,6 +36,26 @@ import FilterList from "@material-ui/icons/FilterList";
 
 import Modal from "react-modal";
 
+const styles = theme => ({
+  catalogueHeader: {
+    fontSize: "1.5rem",
+    display: "flex",
+    fontWeight: "400",
+    alignItems: "center",
+    marginTop: "5px"
+  },
+  bookButton: {
+    backgroundColor: "#1DB3E7",
+    marginRight: 6,
+    minWidth: "40px",
+    cursor: "pointer"
+  },
+  CatalogueProcessHref: {
+    textDecoration: "none",
+    fontSize: "16px",
+    color: "#1DB3E7"
+  }
+});
 class Catalogue extends Component {
   constructor(props) {
     super(props);
@@ -239,105 +262,123 @@ class Catalogue extends Component {
   render() {
     const productsList = SIMPLE_PRODUCTS["group"];
 
-    const { catalogueStates, products } = this.props;
+    const { classes, catalogueStates, products } = this.props;
     return (
-      <div className="catalogue-wrapper">
-        <div className="catalogue-header-roww">
-          Catalogue
-          <a href="#" className="row-link">
-            <div className="row-i-ic">
-              <Book />
-            </div>
+      <Grid container className="catalogue-wrapper">
+        <Grid item>
+          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>Catalogues</h2>
+        </Grid>
+        <Grid item>
+          <a
+            href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
+            className={classes.CatalogueProcessHref}
+          >
+            <Fab size="small" color="primary" className={classes.bookButton}>
+              <Book color="white" />
+            </Fab>
             Automate your processes by adding catalogues
           </a>
-        </div>
-        <div className="catalogue-functional-header">
-          <div className="action-buttons" ref={this.setWrapperRef}>
-            <IconButton
-              onClick={() =>
-                this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
-              }
-              size="small"
-            >
-              <ViewModule
-                className={
-                  this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
-                    ? "active"
-                    : ""
-                }
-              />
-            </IconButton>
+        </Grid>
 
-            <IconButton size="small">
-              <ViewList
-                onClick={() =>
-                  this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
-                }
-                className={
-                  this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
-                    ? "active"
-                    : ""
-                }
-              />
-            </IconButton>
+        <Grid item xs={12}>
+          <Grid container justify={"space-between"}>
+            <Grid item>
+              <div className="action-buttons" ref={this.setWrapperRef}>
+                <IconButton
+                  onClick={() =>
+                    this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
+                  }
+                  size="small"
+                >
+                  <ViewModule
+                    className={
+                      this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
+                        ? "active"
+                        : ""
+                    }
+                  />
+                </IconButton>
 
-            <IconButton
-              size="small"
-              onClick={() =>
-                this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
-              }
-            >
-              <VerticalAlignBottom
-                className={
-                  this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
-                    ? "active"
-                    : ""
-                }
-              />
-              {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
-                <DropDown group={"DOWNLOAD_CSV"} />
-              )}
-            </IconButton>
+                <IconButton
+                  onClick={() =>
+                    this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
+                  }
+                  size="small"
+                >
+                  <ViewList
+                    className={
+                      this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
+                        ? "active"
+                        : ""
+                    }
+                  />
+                </IconButton>
 
-            <IconButton
-              onClick={() =>
-                this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["import"])
-              }
-              size="small"
-            >
-              <MoreHoriz
-                className={
-                  this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"]
-                    ? "active"
-                    : ""
-                }
-              />
-              {this.state.activeBtn ===
-                CATALOGUE_CONTROL_BTN_TYPES["import"] && (
-                <DropDown
-                  group={"CSV_IMPORT_ITEMS"}
-                  openProductAddingModal={this.openProductAddingModal}
-                />
-              )}
-            </IconButton>
-          </div>
-          <Modal
-            isOpen={this.state.productAddingModal}
-            onRequestClose={this.closeProductAddingModal}
-            overlayClassName="product-adding-modal-overlay"
-            className="product-adding-modal"
-          >
-            <AddProduct closeModal={this.closeProductAddingModal} />
-          </Modal>
-          {!catalogueStates.bulkEdit ? <Filter /> : null}
-        </div>
-        <FilterBar />
+                <IconButton
+                  size="small"
+                  onClick={() =>
+                    this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
+                  }
+                >
+                  <VerticalAlignBottom
+                    className={
+                      this.state.activeBtn ===
+                      CATALOGUE_CONTROL_BTN_TYPES["csv"]
+                        ? "active"
+                        : ""
+                    }
+                  />
+                  {this.state.activeBtn ===
+                    CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
+                    <DropDown group={"DOWNLOAD_CSV"} />
+                  )}
+                </IconButton>
+
+                <IconButton
+                  onClick={() =>
+                    this.showControlDropDown(
+                      CATALOGUE_CONTROL_BTN_TYPES["import"]
+                    )
+                  }
+                  size="small"
+                >
+                  <MoreHoriz
+                    className={
+                      this.state.activeBtn ===
+                      CATALOGUE_CONTROL_BTN_TYPES["import"]
+                        ? "active"
+                        : ""
+                    }
+                  />
+                  {this.state.activeBtn ===
+                    CATALOGUE_CONTROL_BTN_TYPES["import"] && (
+                    <DropDown
+                      group={"CSV_IMPORT_ITEMS"}
+                      openProductAddingModal={this.openProductAddingModal}
+                    />
+                  )}
+                </IconButton>
+              </div>
+            </Grid>
+            <Grid item>{!catalogueStates.bulkEdit ? <Filter /> : null}</Grid>
+          </Grid>
+          <FilterBar />
+        </Grid>
+        <Modal
+          isOpen={this.state.productAddingModal}
+          onRequestClose={this.closeProductAddingModal}
+          overlayClassName="product-adding-modal-overlay"
+          className="product-adding-modal"
+        >
+          <AddProduct closeModal={this.closeProductAddingModal} />
+        </Modal>
+
         <div className="catalogue-body">
           <div className="shared-scroll-view">
             <div className="catalogue-grid">
               {catalogueStates["bulkEdit"] && <BulkEdit />}
               <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
-                <Grid container spacing={24}>
+                <Grid container>
                   {!products["data"] && <Loader />}
                   {products["data"] &&
                     products["data"].map((item, index) => (
@@ -353,7 +394,7 @@ class Catalogue extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Grid>
     );
   }
 }
@@ -366,4 +407,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Catalogue);
+export default connect(mapStateToProps)(withStyles(styles)(Catalogue));

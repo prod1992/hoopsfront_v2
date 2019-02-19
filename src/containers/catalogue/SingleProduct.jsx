@@ -5,11 +5,48 @@ import getApiCredentials from "../../constants/api";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
+import Edit from "@material-ui/icons/Edit";
+import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import CardMedia from "@material-ui/core/CardMedia";
+import LocalMall from "@material-ui/icons/LocalMall";
 
 Modal.setAppElement("#root");
 const styles = {
   tag: {
     background: "red"
+  },
+  Heading: {
+    color: "#555"
+  },
+  optionsOwner: {
+    fontSize: ".875rem"
+  },
+  price: {
+    color: "#1DB3E7",
+    fontWeight: "600",
+    fontSize: "1.875rem"
+  },
+  BuyPrice: {
+    fontSize: ".815rem"
+  },
+  productLinkTo: {
+    color: "#111",
+    fontSize: "1.5em",
+    textDecoration: "none",
+    fontWeight: 600
+  },
+  Proportys: {
+    color: "#555",
+    fontSize: "16px",
+    lineHeight: "1.5",
+    fontWeight: "600"
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%" // 16:9
   }
 };
 class SingleProduct extends Component {
@@ -85,176 +122,127 @@ class SingleProduct extends Component {
     console.log(product);
     return (
       product && (
-        <div className="single-product-wrapper">
-          <div className="single-product-data">
-            <div className="product-img-wrap">
-              <div className="image-wrapper-inner">
-                <img src="../../../../assets/resources/images/24365700.jpg" />
-                <button
-                  className="image-selector"
-                  onClick={() => this.imageSelector.current.click()}
-                >
-                  <i className="material-icons">edit</i>
-                </button>
-                <input
-                  type="file"
-                  ref={this.imageSelector}
-                  className="d-none"
-                  onChange={e => this.handleImageChange(e)}
-                />
-              </div>
-            </div>
-            <div className="product-info">
-              <div className="product-head-info">
-                <div className="product-heading-column">
-                  <a href="" className="product-link-to">
-                    {product.name}
-                  </a>
-                  <div className="brand-row">
-                    <span>Brand: </span>
-                    <span>{product.brand}</span>
-                  </div>
+        <Paper className="single-product-wrapper">
+          <Grid container className="single-product-data">
+            <Grid item style={{ padding: 15 }} sm={4}>
+              <div className="product-img-wrap">
+                <div className="image-wrapper-inner">
+                  <CardMedia
+                    className={classes.media}
+                    image={product.image_name}
+                    title={product.title}
+                  />
+                  <Fab
+                    onClick={() => this.imageSelector.current.click()}
+                    color="secondary"
+                    aria-label="Edit"
+                    className={classes.fab}
+                  >
+                    <Edit />
+                  </Fab>
+                  <input
+                    type="file"
+                    ref={this.imageSelector}
+                    className="d-none"
+                    onChange={e => this.handleImageChange(e)}
+                  />
                 </div>
-                <div className="product-head-item">
-                  <span className="min-order">Min order Qty: N/A</span>
-                  <button className="edit-product" onClick={this.openModal}>
-                    <i className="material-icons">edit</i>
-                    Edit
-                  </button>
-                  {/*{isOpen &&
-                                <div className="popup_main_block">
-                                    <div className="popup">
-                                        <div className="popup_content">
-                                            <span className="close_popup" onClick={this.closeModal}/>
-                                            <div className="popup_iframe">
-                                                <h3>Edit product detail</h3>
-                                                <p className="edit-paragraph">Provide the following information to edit
-                                                    product detail</p>
-                                                <div className='filter-dropdown'>
-                                                    <span className='head'>Vendor</span>
-                                                    <div className='select' onClick={() => this.toggle()}>
-                                                        Select
-                                                        <i className="material-icons dop-icon">keyboard_arrow_down</i>
-                                                    </div>
-                                                    <div className={this.state.isToggled ? 'toggle open' : 'toggle'}>
-                                                        <div className='row-toggle-wrap'>
-                                                            <div className='shared-scroll-view'>
-                                                                <div className='toggle-row'>
-                                                                    <input type='checkbox' id='_1'/>
-                                                                    <label htmlFor='_1'>Select</label>
-                                                                </div>
-                                                                <div className='toggle-row'>
-                                                                    <input type='checkbox' id='_2'/>
-                                                                    <label htmlFor='_2'>Select</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="filter_search_block">
-                                                    <label>Product name</label>
-                                                    <input type="text" name="productName" value={productName}
-                                                           onChange={(e) => this.changeHandler(e)}/>
-                                                </div>
-                                                <div className="filter_search_block">
-                                                    <label>Brand</label>
-                                                    <input type="text" name="brand" value={brand}
-                                                           onChange={(e) => this.changeHandler(e)}/>
-                                                </div>
-                                                <div className="filter_search_block">
-                                                    <label>Min order Qty</label>
-                                                    <input type="text" name="minOrder" value={minOrder}
-                                                           onChange={(e) => this.changeHandler(e)}/>
-                                                </div>
-                                                <div className="filter_search_block">
-                                                    <label>Tags</label>
-                                                    <input type="text" name="tags" value={tags}
-                                                           onChange={(e) => this.changeHandler(e)}/>
-                                                </div>
-                                                <div className="filter_search_block">
-                                                    <label>Link Url</label>
-                                                    <input type="text" name="link" value={link}
-                                                           onChange={(e) => this.changeHandler(e)}/>
-                                                </div>
-                                                <div>
-                                                    <button onClick={this.closeModal}>
-                                                        <i className="material-icons">
-                                                            close
-                                                        </i>
-                                                        <span>Cancel</span>
+              </div>
+            </Grid>
+            <Grid item style={{ padding: 15 }} sm={8}>
+              <div className="product-info">
+                <div className="product-head-info">
+                  <div className="product-heading-column">
+                    <a href="" className={classes.productLinkTo}>
+                      {product.name}
+                    </a>
+                    <div className={classes.optionsOwner}>
+                      <span className={classes.Heading}>Brand: </span>
+                      <span className={classes.options}>{product.brand}</span>
+                    </div>
+                  </div>
+                  <div className="product-head-item">
+                    <Chip label="Min order Qty: N/A" />
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      <Edit />
+                      edit
+                    </Button>
+                  </div>
 
-                                                    </button>
-                                                    <button>Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>}*/}
+                  <Chip
+                    color="primary"
+                    variant="outlined"
+                    label={"Id: " + product.code}
+                  />
                 </div>
-                <div className="product-head-item">
-                  <span className="id-text">Id: {product.code}</span>
-                </div>
-              </div>
-              <div className="options-owner">
-                <div className="item">
-                  <span>Vendor:</span>
-                  Example
-                </div>
-                <span className="line-b" />
-                <div className="item">
-                  <span>Category:</span>
-                  {product.category}
-                </div>
-                <span className="line-b" />
-                <div className="item">
-                  <span> Sub Category:</span>
-                  {product.sub_category}
-                </div>
-              </div>
-              <div className="price-options">
-                <span className="price-p">${price}</span>
-                <span className="buy-b">
-                  <i className="material-icons">local_mall</i>
-                  Buy Price
-                </span>
-              </div>
-              <div className="tag-section-wrapper">
-                <div className="tag-section">
-                  <div className="item">
-                    <span className="properties">Colors:</span>
-                    <div className="tags-wrapper">
-                      {product.colour &&
-                        product.colour.map((colour, i) => (
-                          <Chip label={colour} />
-                        ))}
-                    </div>
+                <div className={classes.optionsOwner}>
+                  <div>
+                    <span className={classes.Heading}>Vendor:</span>
+                    <span classname={classes.options}>Example</span>
                   </div>
-                  <div className="item">
-                    <span className="properties">Sizes:</span>
-                    <div className="tags-wrapper">
-                      {product.size &&
-                        product.size.map((size, i) => <Chip label={size} />)}
-                    </div>
+                  <div>
+                    <span className={classes.Heading}>Category:</span>
+                    <span classname={classes.options}>{product.category}</span>
+                  </div>
+                  <div>
+                    <span className={classes.Heading}> Sub Category:</span>
+                    <span classname={classes.options}>
+                      {product.sub_category}
+                    </span>
                   </div>
                 </div>
-                <div className="tag-section">
-                  <div className="item">
-                    <span className="properties">Tags:</span>
-                    <div className="tags-wrapper">
-                      {product.tags &&
-                        product.tags.map((tag, i) => <Chip label={tag} />)}
+                <div className="price-options">
+                  <span className={classes.price}>${price}</span>
+                  <span className="buy-b">
+                    <LocalMall className={classes.BuyPrice} />
+                    <span className={classes.BuyPrice}>Buy Price</span>
+                  </span>
+                </div>
+                <div className="tag-section-wrapper">
+                  <div className="tag-section">
+                    <div className="item">
+                      <span className={classes.Proportys}>Colors:</span>
+                      <div className="tags-wrapper">
+                        {product.colour &&
+                          product.colour.map((colour, i) => (
+                            <Chip label={colour} />
+                          ))}
+                      </div>
+                    </div>
+                    <div className="item">
+                      <span className={classes.Proportys}>Sizes:</span>
+                      <div className="tags-wrapper">
+                        {product.size &&
+                          product.size.map((size, i) => (
+                            <Chip variant="outlined" label={size} />
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="tag-section">
+                    <div className="item">
+                      <span className={classes.Proportys}>Tags:</span>
+                      <div className="tags-wrapper">
+                        {product.tags &&
+                          product.tags.map((tag, i) => <Chip label={tag} />)}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
             className="product-editing-modal"
           />
-        </div>
+        </Paper>
       )
     );
   }
