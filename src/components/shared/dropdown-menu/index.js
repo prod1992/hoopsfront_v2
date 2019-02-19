@@ -33,7 +33,6 @@ class DropDown extends Component {
     localStorage.clear();
     this.props.history.push("/");
   }
-
   exportCatalogue() {
     let token = localStorage.getItem("userToken");
     let products = {
@@ -44,6 +43,8 @@ class DropDown extends Component {
     const requestOptions = {
       method: "POST",
       headers: {
+        "Content-Type": "application/csv",
+
         Authorization: "Bearer " + token
       },
       body: JSON.stringify(products)
@@ -52,24 +53,22 @@ class DropDown extends Component {
     return fetch(reqInstance)
       .then(response => {
         if (response.ok) {
-          return response.text();
+          return response.blob();
         }
       })
       .then(data => {
-        var href = "data:attachment/csv," + data;
+        console.log(data);
+        const href = window.URL.createObjectURL(data);
         console.log(href);
-        var a = document.createElement("a");
-        a.href = "data:attachment/csv," + data;
-        a.target = "_Blank";
-        a.download = "Export.csv";
-        document.body.appendChild(a);
+        const a = document.createElement("a");
+        a.download = "export.csv";
+        a.href = href;
         a.click();
-
+        a.href = "";
         return data;
       })
       .catch(err => console.log(err, "error111"));
   }
-
   renderImportEditBtns(param) {
     if (param === "CSV_IMPORT_ITEMS") {
       return (

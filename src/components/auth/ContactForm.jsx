@@ -15,12 +15,12 @@ import PersonIcon from "@material-ui/icons/Person";
 import RememberMe from "./RememberMe";
 import { inherits } from "util";
 const styles = theme => ({
-  cssLabel: {
-    color: "#FFFFFF",
-    "&$cssFocused": {
-      color: "#FFFFFF"
-    }
-  },
+  // cssLabel: {
+  //   color: "#FFFFFF",
+  //   "&$cssFocused": {
+  //     color: "#FFFFFF"
+  //   }
+  // },
   input: {
     color: "white"
   },

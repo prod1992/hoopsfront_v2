@@ -21,9 +21,11 @@ import Filter from "../../components/shared/filter";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddProduct from "../../components/catalogue/single-product/addingPopup";
+import IconButton from "@material-ui/core/IconButton";
 import Book from "@material-ui/icons/Book";
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
+import Grid from "@material-ui/core/Grid";
 //import FileDownload from "@material-ui/icons/FileDownload";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
@@ -251,58 +253,73 @@ class Catalogue extends Component {
         </div>
         <div className="catalogue-functional-header">
           <div className="action-buttons" ref={this.setWrapperRef}>
-            <ViewModule
+            <IconButton
               onClick={() =>
                 this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
               }
-              className={
-                this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
-                  ? "active"
-                  : ""
-              }
-            />
+              size="small"
+            >
+              <ViewModule
+                className={
+                  this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
+                    ? "active"
+                    : ""
+                }
+              />
+            </IconButton>
 
-            <ViewList
-              onClick={() =>
-                this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
-              }
-              className={
-                this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
-                  ? "active"
-                  : ""
-              }
-            />
+            <IconButton size="small">
+              <ViewList
+                onClick={() =>
+                  this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
+                }
+                className={
+                  this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
+                    ? "active"
+                    : ""
+                }
+              />
+            </IconButton>
 
-            <VerticalAlignBottom
-              className={
-                this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
-                  ? "active"
-                  : ""
-              }
+            <IconButton
+              size="small"
               onClick={() =>
                 this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
               }
-            />
-            {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
-              <DropDown group={"DOWNLOAD_CSV"} />
-            )}
+            >
+              <VerticalAlignBottom
+                className={
+                  this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
+                    ? "active"
+                    : ""
+                }
+              />
+              {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
+                <DropDown group={"DOWNLOAD_CSV"} />
+              )}
+            </IconButton>
 
-            <MoreHoriz
-              className={
-                this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"]
-                  ? "active"
-                  : ""
-              }
+            <IconButton
               onClick={() =>
                 this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["import"])
               }
-            />
-            {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"] && (
-              <DropDown
-                group={"CSV_IMPORT_ITEMS"}
-                openProductAddingModal={this.openProductAddingModal}
+              size="small"
+            >
+              <MoreHoriz
+                className={
+                  this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["import"]
+                    ? "active"
+                    : ""
+                }
               />
-            )}
+              {this.state.activeBtn ===
+                CATALOGUE_CONTROL_BTN_TYPES["import"] && (
+                <DropDown
+                  group={"CSV_IMPORT_ITEMS"}
+                  openProductAddingModal={this.openProductAddingModal}
+                />
+              )}
+            </IconButton>
           </div>
           <Modal
             isOpen={this.state.productAddingModal}
@@ -320,7 +337,7 @@ class Catalogue extends Component {
             <div className="catalogue-grid">
               {catalogueStates["bulkEdit"] && <BulkEdit />}
               <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
-                <div className="row">
+                <Grid container spacing={24}>
                   {!products["data"] && <Loader />}
                   {products["data"] &&
                     products["data"].map((item, index) => (
@@ -331,7 +348,7 @@ class Catalogue extends Component {
                         bulkEdit={catalogueStates["bulkEdit"]}
                       />
                     ))}
-                </div>
+                </Grid>
               </div>
             </div>
           </div>

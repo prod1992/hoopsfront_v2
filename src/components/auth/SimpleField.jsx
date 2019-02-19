@@ -62,8 +62,7 @@ class SimpleField extends React.Component {
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              hovered: classes.cssHovered
+              focused: classes.cssFocused
             }
           }}
         />
