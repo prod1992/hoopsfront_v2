@@ -62,7 +62,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: "80px 15px 0 15px"
+    padding: "100px 3rem 0 3rem"
   }
 });
 
@@ -163,8 +163,8 @@ class Dashboard extends Component {
               </Hidden>
             </nav>
           </header>
-          <main className={classes.content}>
-            <Switch className={classes.content}>
+          <main role="main" className={classes.content}>
+            <Switch>
               <Redirect exact from="/" to="/catalogue" />
               <Route path="/customers" component={Customers} />
               <Route path="/dashboard" component={Main} />

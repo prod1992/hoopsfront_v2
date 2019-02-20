@@ -1,5 +1,5 @@
 import { BulkEditProduct } from "../../../actions/catalogue-actions";
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import Modal from "react-modal";
 import AddProduct from "../../catalogue/single-product/addingPopup";
 import getApiCredentials from "../../../constants/api";
 
-class DropDown extends Component {
+class DropDown extends React.Component {
   constructor(props) {
     super(props);
 
