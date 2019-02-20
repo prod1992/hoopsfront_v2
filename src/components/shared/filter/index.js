@@ -8,7 +8,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 
 import Button from "@material-ui/core/Button";
-
 import InputBase from "@material-ui/core/InputBase";
 
 const styles = {
@@ -31,6 +30,17 @@ const styles = {
     width: 1,
     height: 28,
     margin: 4
+  },
+  filterButton: {
+    display: "flex",
+    alignItems: "center",
+    textTransform: "none",
+    color: "#405373",
+    fontWeight: 500,
+    fontSize: 16,
+    "& svg": {
+      marginRight: 10
+    }
   }
 };
 
@@ -46,8 +56,12 @@ class Filter extends Component {
   render() {
     const { catalogueStates, classes } = this.props;
     return (
-      <Grid item container className="filter-section">
-        <Button className="filter-btn" onClick={() => this.showFilterBar()}>
+      <Grid item container>
+        <Button
+          size="small"
+          className={classes.filterButton}
+          onClick={() => this.showFilterBar()}
+        >
           <FilterList />
           <span>Filter</span>
         </Button>

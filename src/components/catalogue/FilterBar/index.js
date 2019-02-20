@@ -75,35 +75,52 @@ class FilterBar extends React.Component {
   }
 
   applyFilter() {
+    const { filterData, filterShowHide } = this.props;
     const {
-      brands,
       vendors,
+      brands,
       categories,
-      subcategories,
+      subCategories,
+      selectedTags,
       qty_range,
-      price_range
+      price_range,
+      searchVal
     } = this.state;
+
     let data = {
       qty_min: qty_range.min,
       qty_max: qty_range.max,
-      price_min: price_range.min,
-      price_min: price_range.min
+      price_range_min: price_range.min,
+      price_range_max: price_range.max
     };
+
+    if (searchVal !== "") {
+      data.search_value = searchVal;
+    }
+
     if (!!vendors.length) {
       data.vendors = vendors;
     }
+
     if (!!brands.length) {
       data.brands = brands;
     }
+
     if (!!categories.length) {
       data.categories = categories;
     }
-    if (!!subcategories.length) {
-      data.subcategories = subcategories;
+
+    if (!!subCategories.length) {
+      data.sub_categories = subCategories;
     }
+
+    if (!!selectedTags.length) {
+      data.selected_tags = selectedTags;
+    }
+
     let token = localStorage["userToken"];
     let uri =
-      getApiCredentials.host + `/api/products/?filter=${JSON.stringify(data)}`;
+      getApiCredentials.host + `/api/products/filter?s=${JSON.stringify(data)}`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -113,16 +130,21 @@ class FilterBar extends React.Component {
       }
     };
     const reqInstance = new Request(uri, requestOptions);
+
     fetch(reqInstance)
       .then(response => {
         if (response.ok) {
           return response.json();
+        } else {
+          throw response.json();
         }
       })
       .then(data => {
-        this.props.dispatch(setProducts(data));
+        filterData(data);
       })
-      .catch(err => console.log(err, "error111"));
+      .catch(err => console.log(err, "error"));
+
+    filterShowHide(false);
   }
   toggleDrawer = open => () => {
     this.props.dispatch(filterShowHide(open));
@@ -319,7 +341,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(FilterBar));
+export default connect(mapStateToProps)(withStyles(styles)(FilterBar));

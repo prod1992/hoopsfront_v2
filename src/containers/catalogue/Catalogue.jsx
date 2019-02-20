@@ -10,7 +10,6 @@ import {
   setCategories,
   setSubCategories
 } from "../../actions/catalogue-actions";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
@@ -281,7 +280,7 @@ class Catalogue extends Component {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container justify={"space-between"}>
+          <Grid container justify="space-between">
             <Grid item>
               <div className="action-buttons" ref={this.setWrapperRef}>
                 <IconButton
@@ -383,8 +382,8 @@ class Catalogue extends Component {
                   {products["data"] &&
                     products["data"].map((item, index) => (
                       <SimpleProduct
-                        simpleProduct={item}
                         key={index}
+                        simpleProduct={item}
                         viewType={this.state.viewType}
                         bulkEdit={catalogueStates["bulkEdit"]}
                       />

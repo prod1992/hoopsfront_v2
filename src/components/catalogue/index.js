@@ -69,7 +69,7 @@ class SimpleProduct extends Component {
           <Grid container className={classes.productHeader}>
             <Grid item>{simpleProduct.name}</Grid>
           </Grid>
-          <Grid container justify={"space-between"}>
+          <Grid container justify="space-between">
             <Grid item>
               <Chip label={simpleProduct.id} />
               <div className="brand">
@@ -144,7 +144,7 @@ class SimpleProduct extends Component {
         lg={item_view_class_name.lg}
         xl={item_view_class_name.xl}
         className={
-          viewType !== PRODUCT_VIEW_TYPE["col_view"] && grid_view_class_name
+          viewType !== PRODUCT_VIEW_TYPE["col_view"] ? grid_view_class_name : ""
         }
       >
         <Card className={classes.card}>

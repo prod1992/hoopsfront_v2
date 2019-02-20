@@ -195,7 +195,7 @@ class SingleProduct extends Component {
                     <ul className={classes.productOptions}>
                       <li>
                         <span className={classes.optionLabel}>Vendor: </span>
-                        <span classname={classes.optionValue}>Example</span>
+                        <span className={classes.optionValue}>Example</span>
                       </li>
                       <li>
                         <span className={classes.optionLabel}>Category:</span>
@@ -208,7 +208,7 @@ class SingleProduct extends Component {
                           {" "}
                           Sub Category:
                         </span>
-                        <span classname={classes.optionValue}>
+                        <span className={classes.optionValue}>
                           {product.sub_category}
                         </span>
                       </li>
@@ -264,7 +264,7 @@ class SingleProduct extends Component {
                       <ul className={classes.tagsList}>
                         {product.colour &&
                           product.colour.map((colour, i) => (
-                            <li>
+                            <li key={i}>
                               <Chip
                                 className={classes.tagStyles}
                                 label={colour}
@@ -281,7 +281,7 @@ class SingleProduct extends Component {
                       <ul className={classes.tagsList}>
                         {product.size &&
                           product.size.map((size, i) => (
-                            <li>
+                            <li key={i}>
                               <Chip
                                 className={classes.tagStyles}
                                 variant="outlined"
@@ -298,7 +298,7 @@ class SingleProduct extends Component {
                       <ul className={classes.tagsList}>
                         {product.tags &&
                           product.tags.map((tag, i) => (
-                            <li>
+                            <li key={i}>
                               <Chip className={classes.tagStyles} label={tag} />
                             </li>
                           ))}
