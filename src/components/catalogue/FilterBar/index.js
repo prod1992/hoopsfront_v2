@@ -61,10 +61,10 @@ const styles = theme => ({
 
 class FilterBar extends React.Component {
   state = {
-    vendors: "",
-    brands: "",
-    categories: "",
-    subcategories: "",
+    vendors: [],
+    brands: [],
+    categories: [],
+    subcategories: [],
     qty_range: [0, 500],
     price_range: [0, 100]
   };
