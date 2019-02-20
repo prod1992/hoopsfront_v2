@@ -6,6 +6,8 @@ import FilterList from "@material-ui/icons/FilterList";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
+import { setProducts } from "../../../actions/catalogue-actions";
+import getApiCredentials from "../../../constants/api";
 
 import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
@@ -47,12 +49,66 @@ const styles = {
 class Filter extends Component {
   constructor(props) {
     super(props);
+    this.Search = this.Search.bind(this);
   }
 
   showFilterBar() {
     this.props.dispatch(filterShowHide(true));
   }
+  Search(event) {
+    var SreachQuery = event.target.value;
+    if (SreachQuery != "") {
+      let token = localStorage["userToken"];
+      let uri = getApiCredentials.host + `/api/products?query=${SreachQuery}`;
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token
+        }
+      };
+      const reqInstance = new Request(uri, requestOptions);
 
+      fetch(reqInstance)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw response.json();
+          }
+        })
+        .then(data => {
+          this.props.dispatch(setProducts(data));
+        })
+        .catch(err => console.log(err, "error"));
+    } else {
+      let token = localStorage["userToken"];
+      let uri = getApiCredentials.host + `/api/products`;
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token
+        }
+      };
+      const reqInstance = new Request(uri, requestOptions);
+
+      fetch(reqInstance)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw response.json();
+          }
+        })
+        .then(data => {
+          this.props.dispatch(setProducts(data));
+        })
+        .catch(err => console.log(err, "error"));
+    }
+  }
   render() {
     const { catalogueStates, classes } = this.props;
     return (
@@ -69,6 +125,7 @@ class Filter extends Component {
           <InputBase
             className={classes.input}
             placeholder="Enter Your search here"
+            onChange={event => this.Search(event)}
           />
           <IconButton className={classes.iconButton} aria-label="Search">
             <SearchIcon />
