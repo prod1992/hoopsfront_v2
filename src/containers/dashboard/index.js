@@ -23,6 +23,7 @@ import Logo from "../../components/Logo";
 import Catalogue from "../catalogue";
 import SingleProduct from "../catalogue/SingleProduct";
 import Customers from "../customers";
+import ImportPage from "../import";
 
 import Main from "../main";
 
@@ -169,7 +170,8 @@ class Dashboard extends Component {
               <Route path="/dashboard" component={Main} />
               <Route path="/catalogue" component={Catalogue} />
               <Route path="/profile" component={Catalogue} />
-              <Route path="/import" component={Catalogue} />
+              <Route path="/import" component={ImportPage} />
+
               <Route exact path="/product/:id" component={SingleProduct} />
               <Route render={() => <Redirect to="/catalogue" />} />
             </Switch>

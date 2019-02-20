@@ -1,31 +1,30 @@
-import {changeVideoButton} from '../../../store/actions/catalogue-actions';
-import playVideo from "../../../store/reducers/video.play";
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
-
+import { changeVideoButton } from "../../../actions/catalogue-actions";
+import playVideo from "../../../reducers/video.play";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PlayArrow from "@material-ui/icons/PlayArrow";
 class VideoBtn extends Component {
+  openCloseVideoPopUp() {
+    console.log("open video");
+    this.props.dispatch(changeVideoButton(true));
+  }
 
-    openCloseVideoPopUp(){
-        console.log('open video')
-        this.props.dispatch(changeVideoButton(true))
-    }
-
-    render() {
-        return (
-            <button className='video-btn' onClick={() => this.openCloseVideoPopUp()}>
-                <i className='video-icon'>
-                    <i className='material-icons'>play_arrow</i>
-                </i>
-                <span>Watch the video</span>
-            </button>
-        )
-    }
+  render() {
+    return (
+      <button className="video-btn" onClick={() => this.openCloseVideoPopUp()}>
+        <i className="video-icon">
+          <PlayArrow />
+        </i>
+        <span>Watch the video</span>
+      </button>
+    );
+  }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        videoData: state.playVideo
-    };
+const mapStateToProps = state => {
+  return {
+    videoData: state.playVideo
+  };
 };
 
 export default connect(mapStateToProps)(VideoBtn);
