@@ -14,12 +14,12 @@ import { withStyles } from "@material-ui/core/styles";
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
 import BulkEdit from "../../components/catalogue/bulk-edit";
-import { SIMPLE_PRODUCTS } from "../../constants/fake.data";
+
 import SimpleProduct from "../../components/catalogue";
 import getApiCredentials from "../../constants/api";
 import Loader from "../../components/shared/loader";
 import Filter from "../../components/shared/filter";
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import AddProduct from "../../components/catalogue/single-product/addingPopup";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,7 +27,16 @@ import Book from "@material-ui/icons/Book";
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContentText from "@material-ui/core/DialogContentText";
+
 import Fab from "@material-ui/core/Fab";
+import Popper from "@material-ui/core/Popper";
+import Button from "@material-ui/core/Button";
+
 //import FileDownload from "@material-ui/icons/FileDownload";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
@@ -43,19 +52,39 @@ const styles = theme => ({
     alignItems: "center",
     marginTop: "5px"
   },
-  bookButton: {
+  automateButton: {
     backgroundColor: "#1DB3E7",
     marginRight: 6,
     minWidth: "40px",
     cursor: "pointer"
   },
-  CatalogueProcessHref: {
+  catalogueProcessHref: {
     textDecoration: "none",
     fontSize: "16px",
     color: "#1DB3E7"
+  },
+  catalogActionButton: {
+    width: 28,
+    height: 28,
+    padding: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#405373",
+    fontSize: "1.3rem",
+    backgroundColor: "#e9e9e9",
+    "& svg": {
+      maxWidth: 20
+    },
+    "& + &": {
+      marginLeft: 20
+    },
+    "&:hover, &.active": {
+      color: "#b4b4b4"
+    }
   }
 });
-class Catalogue extends Component {
+class Catalogue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,8 +92,14 @@ class Catalogue extends Component {
       activeBtn: false,
       bulkEdit: false,
       data: [],
-
-      productAddingModal: false
+      productAddingModal: false,
+      arrow: false,
+      arrowRef: null,
+      disablePortal: false,
+      flip: true,
+      open: false,
+      placement: "bottom",
+      preventOverflow: "scrollParent"
     };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -75,10 +110,10 @@ class Catalogue extends Component {
 
   componentDidMount() {
     this.getProductList();
-    this.getVendorsList();
-    this.getBrandsList();
-    this.getCategoriesList();
-    this.getSubCategoriesList();
+    // this.getVendorsList();
+    // this.getBrandsList();
+    // this.getCategoriesList();
+    // this.getSubCategoriesList();
   }
 
   openProductAddingModal() {
@@ -258,21 +293,93 @@ class Catalogue extends Component {
       .catch(err => console.log(err, "error111"));
   }
 
-  render() {
-    const productsList = SIMPLE_PRODUCTS["group"];
+  handleChange = key => (event, value) => {
+    this.setState({
+      [key]: value
+    });
+  };
 
-    const { classes, catalogueStates, products } = this.props;
+  handleChangeTarget = key => event => {
+    this.setState({
+      [key]: event.target.value
+    });
+  };
+
+  handleClickButton = () => {
+    this.setState(state => ({
+      open: !state.open
+    }));
+  };
+
+  handleArrowRef = node => {
+    this.setState({
+      arrowRef: node
+    });
+  };
+
+  centerScroll = ref => {
+    if (!ref) {
+      return;
+    }
+
+    const container = ref.parentElement;
+    container.scrollTop = ref.clientHeight / 4;
+    container.scrollLeft = ref.clientWidth / 4;
+  };
+
+  render() {
+    const {
+      classes,
+      catalogueStates,
+      products,
+      open,
+      placement,
+      disablePortal,
+      flip,
+      preventOverflow,
+      arrow,
+      arrowRef
+    } = this.props;
+
+    const code = `
+\`\`\`jsx
+<Popper
+  placement="${placement}"
+  disablePortal={${disablePortal}}
+  modifiers={{
+    flip: {
+      enabled: ${flip},
+    },
+    preventOverflow: {
+      enabled: ${preventOverflow !== "disabled"},
+      boundariesElement: '${
+        preventOverflow === "disabled" ? "scrollParent" : preventOverflow
+      }',
+    },
+    arrow: {
+      enabled: ${arrow},
+      element: arrowRef,
+    },
+  }}
+>
+\`\`\`
+`;
+    const id = open ? "scroll-playground" : null;
     return (
-      <Grid container className="catalogue-wrapper">
+      <Grid container>
         <Grid item>
           <h2 style={{ margin: 0, fontSize: "1.5rem" }}>Catalogues</h2>
         </Grid>
         <Grid item>
           <a
             href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
-            className={classes.CatalogueProcessHref}
+            className={classes.catalogueProcessHref}
           >
-            <Fab size="small" color="primary" className={classes.bookButton}>
+            <Fab
+              size="small"
+              color="primary"
+              className={classes.automateButton}
+            >
               <Book />
             </Fab>
             Automate your processes by adding catalogues
@@ -282,73 +389,78 @@ class Catalogue extends Component {
         <Grid item xs={12}>
           <Grid container justify="space-between">
             <Grid item>
-              <div className="action-buttons" ref={this.setWrapperRef}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: 15,
+                  marginBottom: 20
+                }}
+                ref={this.setWrapperRef}
+              >
                 <IconButton
+                  className={
+                    classes.catalogActionButton +
+                    (this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
+                      ? " active"
+                      : "")
+                  }
                   onClick={() =>
                     this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
                   }
                   size="small"
                 >
-                  <ViewModule
-                    className={
-                      this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
-                        ? "active"
-                        : ""
-                    }
-                  />
+                  <ViewModule />
                 </IconButton>
-
                 <IconButton
+                  className={
+                    classes.catalogActionButton +
+                    (this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
+                      ? " active"
+                      : "")
+                  }
                   onClick={() =>
                     this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
                   }
                   size="small"
                 >
-                  <ViewList
-                    className={
-                      this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
-                        ? "active"
-                        : ""
-                    }
-                  />
+                  <ViewList />
                 </IconButton>
-
                 <IconButton
+                  className={
+                    classes.catalogActionButton +
+                    (this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
+                      ? " active"
+                      : "")
+                  }
                   size="small"
                   onClick={() =>
                     this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
                   }
                 >
-                  <VerticalAlignBottom
-                    className={
-                      this.state.activeBtn ===
-                      CATALOGUE_CONTROL_BTN_TYPES["csv"]
-                        ? "active"
-                        : ""
-                    }
-                  />
+                  <VerticalAlignBottom />
                   {this.state.activeBtn ===
                     CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
                     <DropDown group={"DOWNLOAD_CSV"} />
                   )}
                 </IconButton>
-
                 <IconButton
-                  onClick={() =>
-                    this.showControlDropDown(
-                      CATALOGUE_CONTROL_BTN_TYPES["import"]
-                    )
+                  className={
+                    classes.catalogActionButton +
+                    (this.state.activeBtn ===
+                    CATALOGUE_CONTROL_BTN_TYPES["import"]
+                      ? " active"
+                      : "")
                   }
                   size="small"
+                  buttonRef={node => {
+                    this.anchorEl = node;
+                  }}
+                  variant="contained"
+                  onClick={this.handleClickButton}
+                  aria-describedby={id}
                 >
-                  <MoreHoriz
-                    className={
-                      this.state.activeBtn ===
-                      CATALOGUE_CONTROL_BTN_TYPES["import"]
-                        ? "active"
-                        : ""
-                    }
-                  />
+                  <MoreHoriz />
                   {this.state.activeBtn ===
                     CATALOGUE_CONTROL_BTN_TYPES["import"] && (
                     <DropDown
@@ -357,6 +469,52 @@ class Catalogue extends Component {
                     />
                   )}
                 </IconButton>
+                <Popper
+                  id={id}
+                  open={open}
+                  anchorEl={this.anchorEl}
+                  placement={placement}
+                  disablePortal={disablePortal}
+                  className={classes.popper}
+                  modifiers={{
+                    flip: {
+                      enabled: flip
+                    },
+                    arrow: {
+                      enabled: arrow,
+                      element: arrowRef
+                    },
+                    preventOverflow: {
+                      enabled: preventOverflow !== "disabled",
+                      boundariesElement:
+                        preventOverflow === "disabled"
+                          ? "scrollParent"
+                          : preventOverflow
+                    }
+                  }}
+                >
+                  {arrow ? (
+                    <span className={classes.arrow} ref={this.handleArrowRef} />
+                  ) : null}
+                  <Paper className={classes.paper}>
+                    <DialogTitle>
+                      {"Use Google's location service?"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Let Google help apps determine location.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleClickButton} color="primary">
+                        Disagree
+                      </Button>
+                      <Button onClick={this.handleClickButton} color="primary">
+                        Agree
+                      </Button>
+                    </DialogActions>
+                  </Paper>
+                </Popper>
               </div>
             </Grid>
             <Grid item>{!catalogueStates.bulkEdit ? <Filter /> : null}</Grid>
@@ -377,7 +535,7 @@ class Catalogue extends Component {
             <div className="catalogue-grid">
               {catalogueStates["bulkEdit"] && <BulkEdit />}
               <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
-                <Grid container>
+                <Grid container spacing={16}>
                   {!products["data"] && <Loader />}
                   {products["data"] &&
                     products["data"].map((item, index) => (

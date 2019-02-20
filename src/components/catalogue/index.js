@@ -138,7 +138,6 @@ class SimpleProduct extends Component {
     return (
       <Grid
         item
-        style={{ padding: 15 }}
         xs={item_view_class_name.xs}
         md={item_view_class_name.md}
         lg={item_view_class_name.lg}
