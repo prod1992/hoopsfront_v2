@@ -7,8 +7,8 @@ import {
   setProducts,
   setVendors,
   setBrands,
-  setCategorys,
-  setSubCategorys
+  setCategories,
+  setSubCategories
 } from "../../actions/catalogue-actions";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
@@ -78,8 +78,8 @@ class Catalogue extends Component {
     this.getProductList();
     this.getVendorsList();
     this.getBrandsList();
-    this.getCategorysList();
-    this.getSubCategorysList();
+    this.getCategoriesList();
+    this.getSubCategoriesList();
   }
 
   openProductAddingModal() {
@@ -209,7 +209,7 @@ class Catalogue extends Component {
       .catch(err => console.log(err, "error111"));
   }
 
-  getCategorysList() {
+  getCategoriesList() {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + "/api/category";
     const requestOptions = {
@@ -229,12 +229,12 @@ class Catalogue extends Component {
       })
       .then(data => {
         this.setState({ data });
-        this.props.dispatch(setCategorys(data));
+        this.props.dispatch(setCategories(data));
       })
       .catch(err => console.log(err, "error111"));
   }
 
-  getSubCategorysList() {
+  getSubCategoriesList() {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + "/api/subcategory";
     const requestOptions = {
@@ -254,7 +254,7 @@ class Catalogue extends Component {
       })
       .then(data => {
         this.setState({ data });
-        this.props.dispatch(setSubCategorys(data));
+        this.props.dispatch(setSubCategories(data));
       })
       .catch(err => console.log(err, "error111"));
   }
@@ -274,7 +274,7 @@ class Catalogue extends Component {
             className={classes.CatalogueProcessHref}
           >
             <Fab size="small" color="primary" className={classes.bookButton}>
-              <Book color="white" />
+              <Book />
             </Fab>
             Automate your processes by adding catalogues
           </a>

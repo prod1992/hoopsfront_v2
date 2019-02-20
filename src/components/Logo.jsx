@@ -8,7 +8,7 @@ class Logo extends Component {
   render() {
     const { fill } = this.props;
     return (
-      <div style={{ width: 135 }}>
+      <div style={{ width: 100 }}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 757 303">
           <title>logo</title>
           <g>

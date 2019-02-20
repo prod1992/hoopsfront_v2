@@ -1,9 +1,7 @@
 import React from "react";
-import Slider, { Range } from "rc-slider";
-// We can just import Slider or Range to reduce bundle size
-// import Slider from 'rc-slider/lib/Slider';
-// import Range from 'rc-slider/lib/Range';
+import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
+import TextField from "@material-ui/core/TextField";
 
 export default class RangeComponent extends React.Component {
   constructor(props) {
@@ -14,7 +12,7 @@ export default class RangeComponent extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{ margin: "20px 0 30px" }}>
         <Range
           value={this.state.value}
           onChange={e => {
@@ -26,23 +24,47 @@ export default class RangeComponent extends React.Component {
           min={+this.props.min}
           max={+this.props.max}
           defaultValue={[+this.props.min, +this.props.max]}
-        />
-        <input
-          onChange={e => {
-            var maxValue = parseInt(this.state.value[1]);
-            var NewValue = [e.target.value, maxValue];
-            this.setState({ value: NewValue });
+          trackStyle={[
+            {
+              backgroundColor: "#2399d1",
+              height: 8
+            },
+            {
+              backgroundColor: "#2399d1",
+              height: 8
+            }
+          ]}
+          railStyle={{
+            backgroundColor: "#FFFFFF",
+            height: 8,
+            border: "1px solid #2399d1"
           }}
-          value={this.state.value[0]}
+          handleStyle={[
+            { borderColor: "#2399d1", width: 25, height: 25, marginTop: -9 },
+            { borderColor: "#2399d1", width: 25, height: 25, marginTop: -9 }
+          ]}
         />
-        <input
-          onChange={e => {
-            var minValue = parseInt(this.state.value[0]);
-            var NewValue = [minValue, e.target.value];
-            this.setState({ value: NewValue });
-          }}
-          value={this.state.value[1]}
-        />
+        <div style={{ marginTop: 30, display: "flex", alignItems: "center" }}>
+          <TextField
+            onChange={e => {
+              var maxValue = parseInt(this.state.value[1]);
+              var NewValue = [e.target.value, maxValue];
+              this.setState({ value: NewValue });
+            }}
+            value={this.state.value[0]}
+            variant="outlined"
+          />
+          <span style={{ margin: "0 1rem" }}>-</span>
+          <TextField
+            onChange={e => {
+              var minValue = parseInt(this.state.value[0]);
+              var NewValue = [minValue, e.target.value];
+              this.setState({ value: NewValue });
+            }}
+            value={this.state.value[1]}
+            variant="outlined"
+          />
+        </div>
       </div>
     );
   }

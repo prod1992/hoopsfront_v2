@@ -173,7 +173,6 @@ class SimpleProduct extends Component {
             to={`/product/${simpleProduct.id}`}
             className="product-image-frame"
           >
-            {console.log(simpleProduct)}
             <CardMedia
               className={classes.media}
               image={simpleProduct.image_name}

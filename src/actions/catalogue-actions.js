@@ -72,14 +72,14 @@ export const setBrands = payload => {
   };
 };
 
-export const setCategorys = payload => {
+export const setCategories = payload => {
   return {
     type: SET_CATEGORY_LIST,
     payload
   };
 };
 
-export const setSubCategorys = payload => {
+export const setSubCategories = payload => {
   return {
     type: SET_SUB_CATEGORY_LIST,
     payload

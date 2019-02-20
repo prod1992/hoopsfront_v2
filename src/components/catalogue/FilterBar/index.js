@@ -1,14 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import PropTypes from "prop-types";
+import getApiCredentials from "../../../constants/api";
+
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import { bindActionCreators } from "redux";
-import RangeComponent from "../../shared/Range";
-import { setProducts } from "../../../actions/catalogue-actions";
+import InputLabel from "@material-ui/core/InputLabel";
 import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import FormGroup from "@material-ui/core/FormGroup";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { sendSearchQuery } from "../../../actions/search";
 import {
@@ -16,23 +20,42 @@ import {
   collectSelectedIds
 } from "../../../actions/catalogue-actions";
 import { filterData } from "../../../actions/filterData";
+import { setProducts } from "../../../actions/catalogue-actions";
+
 //import VendordSelector from "./dropdown/VendordSelector";
+import RangeComponent from "../../shared/Range";
 import MultipleSelect from "../../shared/MultiSelect";
-import getApiCredentials from "../../../constants/api";
 
 const styles = theme => ({
   list: {
-    width: 250
+    width: 390
+  },
+  formGroup: {
+    margin: "15px 0"
+  },
+  filterBlock: {
+    padding: 25
+  },
+  applyButton: {
+    margin: 0,
+    textTransform: "capitalize",
+    borderRadius: 2
+  },
+  multipleSelect: {
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 120,
+      width: "100%",
+      maxWidth: "100%"
+    }
   },
   fullList: {
     width: "auto"
   },
-  button: {
-    margin: theme.spacing.unit
-  },
-  block: {
-    width: "90%",
-    marginLeft: "5%"
+  btnCloseFilter: {
+    position: "absolute",
+    top: "8px",
+    right: "8px"
   }
 });
 
@@ -40,9 +63,9 @@ class FilterBar extends React.Component {
   state = {
     vendors: "",
     brands: "",
-    categorys: "",
-    subcategorys: "",
-    qty_range: [0, 100],
+    categories: "",
+    subcategories: "",
+    qty_range: [0, 500],
     price_range: [0, 100]
   };
   constructor(props) {
@@ -55,8 +78,8 @@ class FilterBar extends React.Component {
     const {
       brands,
       vendors,
-      categorys,
-      subcategorys,
+      categories,
+      subcategories,
       qty_range,
       price_range
     } = this.state;
@@ -72,11 +95,11 @@ class FilterBar extends React.Component {
     if (!!brands.length) {
       data.brands = brands;
     }
-    if (!!categorys.length) {
-      data.categorys = categorys;
+    if (!!categories.length) {
+      data.categories = categories;
     }
-    if (!!subcategorys.length) {
-      data.subcategorys = subcategorys;
+    if (!!subcategories.length) {
+      data.subcategories = subcategories;
     }
     let token = localStorage["userToken"];
     let uri =
@@ -129,18 +152,18 @@ class FilterBar extends React.Component {
       }
     }
 
-    var categorysNames = [];
-    if (typeof catalogueStates.categorys.data != "undefined") {
-      for (let key in catalogueStates.categorys.data) {
-        categorysNames.push(catalogueStates.categorys.data[key].category);
+    var categoriesNames = [];
+    if (typeof catalogueStates.categories.data != "undefined") {
+      for (let key in catalogueStates.categories.data) {
+        categoriesNames.push(catalogueStates.categories.data[key].categorie);
       }
     }
 
-    var sub_categoryNames = [];
-    if (typeof catalogueStates.subcategorys.data != "undefined") {
-      for (let key in catalogueStates.subcategorys.data) {
-        sub_categoryNames.push(
-          catalogueStates.subcategorys.data[key].sub_category
+    var sub_categorieNames = [];
+    if (typeof catalogueStates.subcategories.data != "undefined") {
+      for (let key in catalogueStates.subcategories.data) {
+        sub_categorieNames.push(
+          catalogueStates.subcategories.data[key].sub_categorie
         );
       }
     }
@@ -149,59 +172,90 @@ class FilterBar extends React.Component {
       price_range,
       vendors,
       brands,
-      categorys,
-      subcategorys
+      categories,
+      subcategories
     } = this.state;
-    console.log(price_range);
+
     const sideList = (
       <div className={classes.list}>
-        <div className="filter_title">
-          <div className="filter_title_text">
-            <h3>Filter</h3>
+        <div className={classes.filterBlock}>
+          <div>
+            <h3 style={{ margin: 0 }}>Filter</h3>
             <p>Select the following items to filter the Catalogues</p>
           </div>
-          <span
-            className="close_filther_block"
-            onClick={() => this.closeFilter()}
-          />
-        </div>
-        <div className="apply_btn">
-          <Button
-            onClick={this.applyFilter}
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            apply
-          </Button>
-        </div>
-        <div className={classes.block}>
-          <Divider />
-          <MultipleSelect
-            for="vendors"
-            value={vendors}
-            changeHandler={this.dataHandler}
-            names={vendorsNames}
-          />
-          <MultipleSelect
-            for="brands"
-            value={brands}
-            changeHandler={this.dataHandler}
-            names={brandsNames}
-          />
-          <MultipleSelect
-            for="categorys"
-            value={categorys}
-            changeHandler={this.dataHandler}
-            names={categorysNames}
-          />
-          <MultipleSelect
-            for="subcategorys"
-            value={subcategorys}
-            changeHandler={this.dataHandler}
-            names={sub_categoryNames}
-          />
           <div>
+            <Button
+              onClick={this.applyFilter}
+              variant="contained"
+              color="primary"
+              className={classes.applyButton}
+            >
+              Apply
+            </Button>
+          </div>
+
+          <IconButton
+            onClick={this.toggleDrawer(false)}
+            className={classes.btnCloseFilter}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <div className={classes.filterBlock}>
+          <FormGroup className={classes.formGroup}>
+            <InputLabel shrink htmlFor="select-multiple-vendor">
+              Vendor
+            </InputLabel>
+            <MultipleSelect
+              for="vendors"
+              value={vendors}
+              changeHandler={this.dataHandler}
+              names={vendorsNames}
+              InputProps={{
+                id: "select-multiple-vendor"
+              }}
+            />
+          </FormGroup>
+          <FormGroup className={classes.formGroup}>
+            <InputLabel shrink htmlFor="select-multiple-brand">
+              Brand
+            </InputLabel>
+            <MultipleSelect
+              for="brands"
+              value={brands}
+              changeHandler={this.dataHandler}
+              names={brandsNames}
+              InputProps={{ id: "select-multiple-brand" }}
+            />
+          </FormGroup>
+
+          <FormGroup className={classes.formGroup}>
+            <InputLabel shrink htmlFor="select-multiple-categories">
+              Category
+            </InputLabel>
+            <MultipleSelect
+              for="categories"
+              value={categories}
+              changeHandler={this.dataHandler}
+              names={categoriesNames}
+              InputProps={{ id: "select-multiple-categories" }}
+            />
+          </FormGroup>
+          <FormGroup className={classes.formGroup}>
+            <InputLabel shrink htmlFor="select-multiple-subcategories">
+              Sub Category
+            </InputLabel>
+            <MultipleSelect
+              for="subcategories"
+              value={subcategories}
+              changeHandler={this.dataHandler}
+              names={sub_categorieNames}
+              InputProps={{ id: "select-multiple-subcategories" }}
+            />
+          </FormGroup>
+          <FormGroup className={classes.formGroup}>
+            <InputLabel htmlFor="qty">Min Order Quantity</InputLabel>
             <RangeComponent
               for="qty"
               value={qty_range}
@@ -209,10 +263,11 @@ class FilterBar extends React.Component {
                 this.setState({ qty_range: value });
               }}
               min="0"
-              max="100"
+              max="500"
             />
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup className={classes.formGroup}>
+            <InputLabel htmlFor="price">Min Order Quantity</InputLabel>
             <RangeComponent
               for="price"
               value={price_range}
@@ -222,12 +277,11 @@ class FilterBar extends React.Component {
               min="0"
               max="100"
             />
-          </div>
+          </FormGroup>
         </div>
       </div>
     );
 
-    // <Button onClick={this.toggleDrawer('right', true)}>Open Right</Button>
     const filterData = this.props.catalogueStates;
     return (
       <div>
@@ -265,4 +319,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(FilterBar));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(FilterBar));

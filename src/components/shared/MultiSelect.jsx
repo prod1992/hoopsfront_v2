@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -9,7 +9,6 @@ import FormControl from "@material-ui/core/FormControl";
 import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
-import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
   root: {
@@ -17,9 +16,9 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   formControl: {
-    margin: theme.spacing.unit,
     minWidth: 120,
-    maxWidth: 300
+    maxWidth: "100%",
+    width: "100%"
   },
   chips: {
     display: "flex",
@@ -68,22 +67,28 @@ class MultipleSelect extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-
     const { classes } = this.props;
     const names = this.props.names;
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="select-multiple-checkbox">
+          <InputLabel htmlFor={"select-multiple-checkbox__" + this.props.name}>
             {this.props.name}
           </InputLabel>
           <Select
             multiple
             value={this.state.name}
             onChange={this.handleChange}
-            input={<Input id="select-multiple-checkbox" />}
-            renderValue={selected => selected.join(", ")}
+            input={
+              <Input id={"select-multiple-checkbox__" + this.props.name} />
+            }
+            renderValue={selected => {
+              if (selected.length === 0) {
+                return <em>Placeholder</em>;
+              }
+
+              return selected.join(", ");
+            }}
             MenuProps={MenuProps}
           >
             {names.map(name => (

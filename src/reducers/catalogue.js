@@ -15,8 +15,8 @@ import {
 const initialState = {
   products: {},
   vendors: {},
-  categorys: {},
-  subcategorys: {},
+  categories: {},
+  subcategories: {},
   brands: {},
   bulkEdit: false,
   selectedIds: [],
@@ -76,12 +76,12 @@ const catalogueReducer = (state = initialState, action) => {
     case SET_CATEGORY_LIST:
       return {
         ...state,
-        categorys: action.payload
+        categories: action.payload
       };
     case SET_SUB_CATEGORY_LIST:
       return {
         ...state,
-        subcategorys: action.payload
+        subcategories: action.payload
       };
     case FILTER_SHOW:
       return {
