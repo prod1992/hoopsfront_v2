@@ -1,6 +1,9 @@
+import React from "react";
+import { connect } from "react-redux";
 import SelectDropdown from "../../../components/shared/select-dropdown";
 import StepButtons from "../shared/step-buttons";
-import VideoBtn from "../../shared/video-btn";
+import { withStyles } from "@material-ui/core/styles";
+import VideoBtn from "../../shared/WatchVideoButton";
 import AddVendor from "../shared/add-vendor";
 import {
   setCsv,
@@ -11,16 +14,21 @@ import {
   removeZipFile,
   fetchProgressLoaded
 } from "../../../actions/import-actions";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+
 import { toast, ToastContainer } from "react-toastify";
 import Dropzone from "react-dropzone";
+import { Grid, Paper } from "@material-ui/core";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Close from "@material-ui/icons/Close";
 
-import { withStyles } from "@material-ui/core/styles";
-const styles = theme => ({});
-class UploadFiles extends Component {
+const styles = theme => ({
+  heading: {
+    fontWeight: 400,
+    fontSize: 16
+  },
+  uploadFileRoot: {}
+});
+class UploadFiles extends React.Component {
   constructor(props) {
     super(props);
     this.formData = new FormData();
@@ -93,7 +101,7 @@ class UploadFiles extends Component {
 
   render() {
     const { csvFileName, zipFileName } = this.state;
-    const { progress } = this.props;
+    const { progress, classes } = this.props;
 
     const overlayStyle = {
       position: "absolute",
@@ -108,13 +116,22 @@ class UploadFiles extends Component {
       color: "#fff"
     };
     return (
-      <div className="upload-file-step step-1">
+      <Paper div className={classes.uploadFileRoot}>
         <ToastContainer autoClose={2000} />
         <div className="custom-container">
-          <div className="heading-row">
-            <h5 className="heading-text">Upload file</h5>
-            <VideoBtn />
-          </div>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="center"
+            spacing={16}
+          >
+            <Grid item>
+              <h5 className={classes.heading}>Upload file</h5>
+            </Grid>
+            <Grid item>
+              <VideoBtn />
+            </Grid>
+          </Grid>
           <div className="upload-body">
             <div className="field-control">
               <div className="row">
@@ -325,7 +342,7 @@ class UploadFiles extends Component {
           </div>
         </div>
         {this.props.selectVendor.addNewVendor && <AddVendor />}
-      </div>
+      </Paper>
     );
   }
 }

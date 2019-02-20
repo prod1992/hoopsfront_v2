@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../shared/video-btn";
+import VideoBtn from "../../shared/WatchVideoButton";
 
 class ProductInfo extends Component {
   render() {

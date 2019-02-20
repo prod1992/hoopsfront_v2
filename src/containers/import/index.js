@@ -4,19 +4,18 @@ import AdditionalCoast from "../../components/import/additional-cost";
 import StepButtons from "../../components/import/shared/step-buttons";
 import PreviewImport from "../../components/import/preview-import";
 import ShippingInfo from "../../components/import/shipping-info";
-import UploadFiles from "../../components/import/data-mapping";
+import UploadFiles from "../../components/import/upload-step";
 import ProductInfo from "../../components/import/product-info";
 import Pricing from "../../components/import/pricing";
 import { moveNextStep, movePrevStep } from "../../actions/catalogue-actions";
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 
-//import {onFinish, onUpload} from "../../service/catalog/import";
 const styles = theme => ({});
-class ImportPage extends Component {
+class ImportPage extends React.Component {
   render() {
     const { importStep, importFileData, selectedVendor } = this.props;
     return (
