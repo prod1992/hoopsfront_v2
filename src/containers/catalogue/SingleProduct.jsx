@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Modal from "react-modal";
+
 import getApiCredentials from "../../constants/api";
-//import EditingPopup from "./editingPopup";
+import EditingPopup from "../../components/catalogue/single-product/editingPopup";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
@@ -12,9 +12,9 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import LocalMall from "@material-ui/icons/LocalMall";
+import Modal from "@material-ui/core/Modal";
 
-Modal.setAppElement("#root");
-const styles = {
+const styles = theme => ({
   optionLabel: {
     color: "#555",
     marginRight: 3
@@ -74,8 +74,19 @@ const styles = {
     "& li": {
       marginRight: 3
     }
+  },
+  ModalClass: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: "none"
   }
-};
+});
 class SingleProduct extends Component {
   constructor() {
     super();
@@ -143,185 +154,194 @@ class SingleProduct extends Component {
 
   render() {
     const { product } = this.state;
+    console.log(product);
     const { classes, theme } = this.props;
     // const price = product && JSON.parse(service[0])["29"];
     const price = (Math.random() * 3 + 0.1).toFixed(2);
+    console.log(product);
 
     return (
       product && (
-        <Paper
-          style={{ padding: theme.spacing.unit }}
-          className="single-product-wrapper"
-        >
-          <Grid container spacing={16} className="single-product-data">
-            <Grid item xs={12} sm={4}>
-              <div className="product-img-wrap">
-                <div className="image-wrapper-inner">
-                  <CardMedia
-                    className={classes.media}
-                    image={product.image_name}
-                    title={product.title}
-                  />
-                  <Fab
-                    onClick={() => this.imageSelector.current.click()}
-                    color="secondary"
-                    aria-label="Edit"
-                    className={classes.fab}
-                  >
-                    <Edit />
-                  </Fab>
-                  <input
-                    type="file"
-                    ref={this.imageSelector}
-                    className="d-none"
-                    onChange={e => this.handleImageChange(e)}
-                  />
-                </div>
-              </div>
-            </Grid>
-            <Grid item container xs={12} sm={8}>
-              <Grid item container sm spacing={16}>
-                <Grid item>
-                  <div className="product-heading-column">
-                    <h2 className={classes.productTitle}>{product.name}</h2>
-                    <div className={classes.productOptions}>
-                      <span className={classes.optionLabel}>Brand:</span>
-                      <span className={classes.optionValue}>
-                        {product.brand}
-                      </span>
-                    </div>
+        <div>
+          <Modal open={this.state.modalIsOpen} onClose={this.closeModal}>
+            <div className={classes.ModalClass}>
+              asdasdfadf
+              <EditingPopup productData={product} />
+            </div>
+          </Modal>
+          <Paper
+            style={{ padding: theme.spacing.unit }}
+            className="single-product-wrapper"
+          >
+            <Grid container spacing={16} className="single-product-data">
+              <Grid item xs={12} sm={4}>
+                <div className="product-img-wrap">
+                  <div className="image-wrapper-inner">
+                    <CardMedia
+                      className={classes.media}
+                      image={product.image_name}
+                      title={product.title}
+                    />
+                    <Fab
+                      onClick={() => this.imageSelector.current.click()}
+                      color="secondary"
+                      aria-label="Edit"
+                      className={classes.fab}
+                    >
+                      <Edit />
+                    </Fab>
+                    <input
+                      type="file"
+                      ref={this.imageSelector}
+                      className="d-none"
+                      onChange={e => this.handleImageChange(e)}
+                    />
                   </div>
-                  <div className="product-info">
-                    <ul className={classes.productOptions}>
-                      <li>
-                        <span className={classes.optionLabel}>Vendor: </span>
-                        <span className={classes.optionValue}>Example</span>
-                      </li>
-                      <li>
-                        <span className={classes.optionLabel}>Category:</span>
+                </div>
+              </Grid>
+              <Grid item container xs={12} sm={8}>
+                <Grid item container sm spacing={16}>
+                  <Grid item>
+                    <div className="product-heading-column">
+                      <h2 className={classes.productTitle}>{product.name}</h2>
+                      <div className={classes.productOptions}>
+                        <span className={classes.optionLabel}>Brand:</span>
                         <span className={classes.optionValue}>
-                          {product.category}
+                          {product.brand}
                         </span>
-                      </li>
-                      <li>
-                        <span className={classes.optionLabel}>
-                          {" "}
-                          Sub Category:
-                        </span>
-                        <span className={classes.optionValue}>
-                          {product.sub_category}
-                        </span>
-                      </li>
-                    </ul>
-                    <div className="price-options">
-                      <span className={classes.productPrice}>${price}</span>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          fontSize: ".8125rem"
-                        }}
-                      >
-                        <LocalMall
-                          style={{
-                            width: 12,
-                            height: 12,
-                            marginRight: 5,
-                            marginTop: -2,
-                            fill: "#666f7f"
-                          }}
-                        />
-                        Buy Price
                       </div>
                     </div>
-                  </div>
-                </Grid>
-                <Grid item>
-                  <div className="product-head-info">
-                    <div className="product-head-item">
-                      <Chip
-                        className={classes.tagStyles}
-                        label="Min order Qty: N/A"
-                      />
+                    <div className="product-info">
+                      <ul className={classes.productOptions}>
+                        <li>
+                          <span className={classes.optionLabel}>Vendor: </span>
+                          <span className={classes.optionValue}>Example</span>
+                        </li>
+                        <li>
+                          <span className={classes.optionLabel}>Category:</span>
+                          <span className={classes.optionValue}>
+                            {product.category}
+                          </span>
+                        </li>
+                        <li>
+                          <span className={classes.optionLabel}>
+                            {" "}
+                            Sub Category:
+                          </span>
+                          <span className={classes.optionValue}>
+                            {product.sub_category}
+                          </span>
+                        </li>
+                      </ul>
+                      <div className="price-options">
+                        <span className={classes.productPrice}>${price}</span>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: ".8125rem"
+                          }}
+                        >
+                          <LocalMall
+                            style={{
+                              width: 12,
+                              height: 12,
+                              marginRight: 5,
+                              marginTop: -2,
+                              fill: "#666f7f"
+                            }}
+                          />
+                          Buy Price
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </Grid>
+                  <Grid item>
+                    <div className="product-head-info">
+                      <div className="product-head-item">
+                        <Chip
+                          className={classes.tagStyles}
+                          label="Min order Qty: N/A"
+                        />
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={this.openModal}
+                    >
+                      <Edit />
+                      Edit
+                    </Button>
+                  </Grid>
+                  <Grid container spacing={16}>
+                    <Grid item xs sm={6}>
+                      <div className={classes.tagsSection}>
+                        <h4 className={classes.tagsSectionHeading}>Colors:</h4>
+                        <ul className={classes.tagsList}>
+                          {product.colour &&
+                            product.colour.map((colour, i) => (
+                              <li key={i}>
+                                <Chip
+                                  className={classes.tagStyles}
+                                  label={colour}
+                                />
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    </Grid>
+                    <Grid item xs sm={6}>
+                      {" "}
+                      <div className={classes.tagsSection}>
+                        <h4 className={classes.tagsSectionHeading}>Sizes:</h4>
+                        <ul className={classes.tagsList}>
+                          {product.size &&
+                            product.size.map((size, i) => (
+                              <li key={i}>
+                                <Chip
+                                  className={classes.tagStyles}
+                                  variant="outlined"
+                                  label={size}
+                                />
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    </Grid>
+                    <Grid item xs sm={6}>
+                      <div className={classes.tagsSection}>
+                        <h4 className={classes.tagsSectionHeading}>Tags:</h4>
+                        <ul className={classes.tagsList}>
+                          {product.tags &&
+                            product.tags.map((tag, i) => (
+                              <li key={i}>
+                                <Chip
+                                  className={classes.tagStyles}
+                                  label={tag}
+                                />
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button
-                    size="small"
-                    variant="contained"
+                <Grid style={{ marginLeft: "auto" }} item sm="auto">
+                  <Chip
                     color="primary"
-                    className={classes.button}
-                  >
-                    <Edit />
-                    edit
-                  </Button>
+                    variant="outlined"
+                    label={"Id: " + product.code}
+                  />
                 </Grid>
-                <Grid container spacing={16}>
-                  <Grid item xs sm={6}>
-                    <div className={classes.tagsSection}>
-                      <h4 className={classes.tagsSectionHeading}>Colors:</h4>
-                      <ul className={classes.tagsList}>
-                        {product.colour &&
-                          product.colour.map((colour, i) => (
-                            <li key={i}>
-                              <Chip
-                                className={classes.tagStyles}
-                                label={colour}
-                              />
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </Grid>
-                  <Grid item xs sm={6}>
-                    {" "}
-                    <div className={classes.tagsSection}>
-                      <h4 className={classes.tagsSectionHeading}>Sizes:</h4>
-                      <ul className={classes.tagsList}>
-                        {product.size &&
-                          product.size.map((size, i) => (
-                            <li key={i}>
-                              <Chip
-                                className={classes.tagStyles}
-                                variant="outlined"
-                                label={size}
-                              />
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </Grid>
-                  <Grid item xs sm={6}>
-                    <div className={classes.tagsSection}>
-                      <h4 className={classes.tagsSectionHeading}>Tags:</h4>
-                      <ul className={classes.tagsList}>
-                        {product.tags &&
-                          product.tags.map((tag, i) => (
-                            <li key={i}>
-                              <Chip className={classes.tagStyles} label={tag} />
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid style={{ marginLeft: "auto" }} item sm="auto">
-                <Chip
-                  color="primary"
-                  variant="outlined"
-                  label={"Id: " + product.code}
-                />
               </Grid>
             </Grid>
-          </Grid>
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onRequestClose={this.closeModal}
-            className="product-editing-modal"
-          />
-        </Paper>
+          </Paper>
+        </div>
       )
     );
   }

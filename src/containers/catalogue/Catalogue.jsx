@@ -10,6 +10,8 @@ import {
   setCategories,
   setSubCategories
 } from "../../actions/catalogue-actions";
+import { Link } from "react-router-dom";
+
 import { withStyles } from "@material-ui/core/styles";
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
@@ -23,22 +25,23 @@ import { connect } from "react-redux";
 import AddProduct from "../../components/catalogue/single-product/addingPopup";
 import IconButton from "@material-ui/core/IconButton";
 import Book from "@material-ui/icons/Book";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContentText from "@material-ui/core/DialogContentText";
+
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import Edit from "@material-ui/icons/Edit";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
+import Add from "@material-ui/icons/Add";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Popper from "@material-ui/core/Popper";
@@ -89,6 +92,10 @@ const styles = theme => ({
     "&:hover, &.active": {
       color: "#b4b4b4"
     }
+  },
+  importHref: {
+    display: "flex",
+    textDecoration: "none"
   }
 });
 class Catalogue extends React.Component {
@@ -105,14 +112,17 @@ class Catalogue extends React.Component {
       disablePortal: false,
       flip: true,
       open: false,
-      placement: "bottom",
       preventOverflow: "scrollParent"
     };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleMoreHorizClickButton = this.handleMoreHorizClickButton.bind(
+      this
+    );
     this.getProductList = this.getProductList.bind(this);
     this.openProductAddingModal = this.openProductAddingModal.bind(this);
     this.closeProductAddingModal = this.closeProductAddingModal.bind(this);
+    this.downluadCSV = this.downluadCSV.bind(this);
   }
 
   componentDidMount() {
@@ -313,18 +323,55 @@ class Catalogue extends React.Component {
     });
   };
 
-  handleClickButton = () => {
+  handleMoreHorizClickButton = () => {
     this.setState(state => ({
-      open: !state.open
+      MoreHorizOpen: !state.MoreHorizOpen
     }));
   };
-
+  handleDownloadCSVClickButton = () => {
+    this.setState(state => ({
+      DownluadCSVOpen: !state.DownluadCSVOpen
+    }));
+  };
   handleArrowRef = node => {
     this.setState({
       arrowRef: node
     });
   };
+  downluadCSV = () => {
+    let token = localStorage.getItem("userToken");
+    let products = {
+      products: this.props.catalogueStates.products.data
+    };
 
+    let uri = getApiCredentials.host + "/api/products/export";
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/csv",
+
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify(products)
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    return fetch(reqInstance)
+      .then(response => {
+        if (response.ok) {
+          return response.blob();
+        }
+      })
+      .then(data => {
+        const href = window.URL.createObjectURL(data);
+        const a = document.createElement("a");
+        a.download = "export.csv";
+        a.href = href;
+        a.click();
+        a.href = "";
+        return data;
+      })
+      .catch(err => console.log(err, "error111"));
+  };
   centerScroll = ref => {
     if (!ref) {
       return;
@@ -344,8 +391,7 @@ class Catalogue extends React.Component {
       flip,
       preventOverflow,
       disablePortal,
-      arrowRef,
-      placement
+      arrowRef
     } = this.state;
 
     const id = open ? "scroll-playground" : null;
@@ -418,76 +464,62 @@ class Catalogue extends React.Component {
                       : "")
                   }
                   size="small"
-                  onClick={() =>
-                    this.showControlDropDown(CATALOGUE_CONTROL_BTN_TYPES["csv"])
-                  }
-                >
-                  <VerticalAlignBottom />
-                  {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]}
-                </IconButton>
-                <Popper
-                  id={id}
-                  open={open}
-                  anchorEl={this.anchorEl}
-                  transition={true}
-                  placement={placement}
-                  disablePortal={disablePortal}
-                  className={classes.popper}
-                  modifiers={{
-                    flip: {
-                      enabled: flip
-                    },
-                    arrow: {
-                      enabled: arrow,
-                      element: arrowRef
-                    },
-                    preventOverflow: {
-                      enabled: preventOverflow !== "disabled",
-                      boundariesElement:
-                        preventOverflow === "disabled"
-                          ? "scrollParent"
-                          : preventOverflow
-                    }
+                  onClick={this.handleDownloadCSVClickButton}
+                  buttonRef={node => {
+                    this.ExportCSVButton = node;
                   }}
                 >
-                  {arrow ? (
-                    <span className={classes.arrow} ref={this.handleArrowRef} />
-                  ) : null}
-                  <Paper className={classes.paper}>
-                    <MenuList>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <AddIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="Add New"
-                        />
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <SendIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="Import"
-                        />
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="Bulk Edit"
-                        />
-                      </MenuItem>
-                    </MenuList>
-                  </Paper>
-                </Popper>
+                  <VerticalAlignBottom />
+                  <Popper
+                    open={this.state.DownluadCSVOpen}
+                    anchorEl={this.ExportCSVButton}
+                    transition={true}
+                    placement="bottom-start"
+                    disablePortal={disablePortal}
+                    className={classes.popper}
+                    modifiers={{
+                      flip: {
+                        enabled: flip
+                      },
+                      arrow: {
+                        enabled: arrow,
+                        element: this.ExportCSVButton
+                      },
+                      preventOverflow: {
+                        enabled: preventOverflow !== "disabled",
+                        boundariesElement:
+                          preventOverflow === "disabled"
+                            ? "scrollParent"
+                            : preventOverflow
+                      }
+                    }}
+                  >
+                    {arrow ? (
+                      <span
+                        className={classes.arrow}
+                        ref={this.handleArrowRef}
+                      />
+                    ) : null}
+                    <Paper className={classes.paper}>
+                      <MenuList>
+                        <MenuItem
+                          className={classes.menuItem}
+                          onClick={this.downluadCSV}
+                        >
+                          <ListItemIcon className={classes.icon}>
+                            <LibraryBooks />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={{ primary: classes.primary }}
+                            inset
+                            primary="CSV"
+                          />
+                        </MenuItem>
+                      </MenuList>
+                    </Paper>
+                  </Popper>
+                </IconButton>
+
                 <IconButton
                   className={
                     classes.catalogActionButton +
@@ -501,7 +533,7 @@ class Catalogue extends React.Component {
                     this.anchorEl = node;
                   }}
                   variant="contained"
-                  onClick={this.handleClickButton}
+                  onClick={this.handleMoreHorizClickButton}
                   aria-describedby={id}
                 >
                   <MoreHoriz />
@@ -510,9 +542,9 @@ class Catalogue extends React.Component {
                 </IconButton>
                 <Popper
                   id={id}
-                  open={open}
+                  open={this.state.MoreHorizOpen}
                   anchorEl={this.anchorEl}
-                  placement={placement}
+                  placement="bottom-start"
                   disablePortal={disablePortal}
                   className={classes.popper}
                   modifiers={{
@@ -539,32 +571,35 @@ class Catalogue extends React.Component {
                     <MenuList>
                       <MenuItem className={classes.menuItem}>
                         <ListItemIcon className={classes.icon}>
-                          <SendIcon />
+                          <Add />
                         </ListItemIcon>
                         <ListItemText
                           classes={{ primary: classes.primary }}
                           inset
-                          primary="Sent mail"
+                          primary="add product"
                         />
                       </MenuItem>
                       <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="Drafts"
-                        />
+                        <Link to="/import" className={classes.importHref}>
+                          <ListItemIcon className={classes.icon}>
+                            <OpenInBrowser />
+                          </ListItemIcon>
+
+                          <ListItemText
+                            classes={{ primary: classes.primary }}
+                            inset
+                            primary="import"
+                          />
+                        </Link>
                       </MenuItem>
                       <MenuItem className={classes.menuItem}>
                         <ListItemIcon className={classes.icon}>
-                          <InboxIcon />
+                          <Edit />
                         </ListItemIcon>
                         <ListItemText
                           classes={{ primary: classes.primary }}
                           inset
-                          primary="Inbox"
+                          primary="bulk edit"
                         />
                       </MenuItem>
                     </MenuList>
