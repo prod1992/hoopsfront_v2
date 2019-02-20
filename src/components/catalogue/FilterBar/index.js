@@ -75,18 +75,15 @@ class FilterBar extends React.Component {
   }
 
   applyFilter() {
-    const { filterData, filterShowHide } = this.props;
     const {
       vendors,
       brands,
       categories,
-      subCategories,
-      selectedTags,
+      subcategories,
       qty_range,
       price_range,
       searchVal
     } = this.state;
-
     let data = {
       qty_min: qty_range.min,
       qty_max: qty_range.max,
@@ -110,17 +107,17 @@ class FilterBar extends React.Component {
       data.categories = categories;
     }
 
-    if (!!subCategories.length) {
-      data.sub_categories = subCategories;
+    if (!!subcategories.length) {
+      data.sub_categories = subcategories;
     }
-
+    /*
     if (!!selectedTags.length) {
       data.selected_tags = selectedTags;
     }
-
+*/
     let token = localStorage["userToken"];
     let uri =
-      getApiCredentials.host + `/api/products/filter?s=${JSON.stringify(data)}`;
+      getApiCredentials.host + `/api/products?filter=${JSON.stringify(data)}`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -140,11 +137,11 @@ class FilterBar extends React.Component {
         }
       })
       .then(data => {
-        filterData(data);
+        this.props.dispatch(setProducts(data));
       })
       .catch(err => console.log(err, "error"));
 
-    filterShowHide(false);
+    this.props.dispatch(filterShowHide(false));
   }
   toggleDrawer = open => () => {
     this.props.dispatch(filterShowHide(open));
@@ -155,7 +152,6 @@ class FilterBar extends React.Component {
       [name]: arr
     });
   }
-  RangeComponentChanged() {}
 
   render() {
     const { classes, catalogueStates } = this.props;
@@ -177,7 +173,7 @@ class FilterBar extends React.Component {
     var categoriesNames = [];
     if (typeof catalogueStates.categories.data != "undefined") {
       for (let key in catalogueStates.categories.data) {
-        categoriesNames.push(catalogueStates.categories.data[key].categorie);
+        categoriesNames.push(catalogueStates.categories.data[key].category);
       }
     }
 
@@ -185,10 +181,11 @@ class FilterBar extends React.Component {
     if (typeof catalogueStates.subcategories.data != "undefined") {
       for (let key in catalogueStates.subcategories.data) {
         sub_categorieNames.push(
-          catalogueStates.subcategories.data[key].sub_categorie
+          catalogueStates.subcategories.data[key].sub_category
         );
       }
     }
+
     const {
       qty_range,
       price_range,
