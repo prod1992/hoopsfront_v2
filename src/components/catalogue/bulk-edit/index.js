@@ -1,12 +1,12 @@
-import { BulkEditProduct } from "../../../actions/catalogue-actions";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import getApiCredentials from "../../../constants/api";
-import { selectAllProducts } from "../../../actions/catalogue-actions";
 import {
+  BulkEditProduct,
+  selectAllProducts,
   setFilteredProductData,
   resetSelectedIds
 } from "../../../actions/catalogue-actions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import getApiCredentials from "../../../constants/api";
 
 class BulkEdit extends Component {
   constructor(props) {
