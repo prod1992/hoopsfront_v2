@@ -14,7 +14,6 @@ import { withStyles } from "@material-ui/core/styles";
 import FilterBar from "../../components/catalogue/FilterBar";
 import DropDown from "../../components/shared/dropdown-menu";
 import BulkEdit from "../../components/catalogue/bulk-edit";
-
 import SimpleProduct from "../../components/catalogue";
 import getApiCredentials from "../../constants/api";
 import Loader from "../../components/shared/loader";
@@ -32,7 +31,15 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
 
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import SendIcon from "@material-ui/icons/Send";
+import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Popper from "@material-ui/core/Popper";
 import Button from "@material-ui/core/Button";
@@ -93,7 +100,7 @@ class Catalogue extends React.Component {
       bulkEdit: false,
       data: [],
       productAddingModal: false,
-      arrow: false,
+      arrow: true,
       arrowRef: null,
       disablePortal: false,
       flip: true,
@@ -110,10 +117,10 @@ class Catalogue extends React.Component {
 
   componentDidMount() {
     this.getProductList();
-    // this.getVendorsList();
-    // this.getBrandsList();
-    // this.getCategoriesList();
-    // this.getSubCategoriesList();
+    this.getVendorsList();
+    this.getBrandsList();
+    this.getCategoriesList();
+    this.getSubCategoriesList();
   }
 
   openProductAddingModal() {
@@ -193,6 +200,7 @@ class Catalogue extends React.Component {
       })
       .catch(err => console.log(err, "error111"));
   }
+
   getVendorsList() {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + "/api/vendors";
@@ -328,42 +336,18 @@ class Catalogue extends React.Component {
   };
 
   render() {
+    const { classes, catalogueStates, products } = this.props;
+
     const {
-      classes,
-      catalogueStates,
-      products,
+      arrow,
       open,
-      placement,
-      disablePortal,
       flip,
       preventOverflow,
-      arrow,
-      arrowRef
-    } = this.props;
+      disablePortal,
+      arrowRef,
+      placement
+    } = this.state;
 
-    const code = `
-\`\`\`jsx
-<Popper
-  placement="${placement}"
-  disablePortal={${disablePortal}}
-  modifiers={{
-    flip: {
-      enabled: ${flip},
-    },
-    preventOverflow: {
-      enabled: ${preventOverflow !== "disabled"},
-      boundariesElement: '${
-        preventOverflow === "disabled" ? "scrollParent" : preventOverflow
-      }',
-    },
-    arrow: {
-      enabled: ${arrow},
-      element: arrowRef,
-    },
-  }}
->
-\`\`\`
-`;
     const id = open ? "scroll-playground" : null;
     return (
       <Grid container>
@@ -439,11 +423,71 @@ class Catalogue extends React.Component {
                   }
                 >
                   <VerticalAlignBottom />
-                  {this.state.activeBtn ===
-                    CATALOGUE_CONTROL_BTN_TYPES["csv"] && (
-                    <DropDown group={"DOWNLOAD_CSV"} />
-                  )}
+                  {this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]}
                 </IconButton>
+                <Popper
+                  id={id}
+                  open={open}
+                  anchorEl={this.anchorEl}
+                  transition={true}
+                  placement={placement}
+                  disablePortal={disablePortal}
+                  className={classes.popper}
+                  modifiers={{
+                    flip: {
+                      enabled: flip
+                    },
+                    arrow: {
+                      enabled: arrow,
+                      element: arrowRef
+                    },
+                    preventOverflow: {
+                      enabled: preventOverflow !== "disabled",
+                      boundariesElement:
+                        preventOverflow === "disabled"
+                          ? "scrollParent"
+                          : preventOverflow
+                    }
+                  }}
+                >
+                  {arrow ? (
+                    <span className={classes.arrow} ref={this.handleArrowRef} />
+                  ) : null}
+                  <Paper className={classes.paper}>
+                    <MenuList>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Add New"
+                        />
+                      </MenuItem>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <SendIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Import"
+                        />
+                      </MenuItem>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Bulk Edit"
+                        />
+                      </MenuItem>
+                    </MenuList>
+                  </Paper>
+                </Popper>
                 <IconButton
                   className={
                     classes.catalogActionButton +
@@ -462,12 +506,7 @@ class Catalogue extends React.Component {
                 >
                   <MoreHoriz />
                   {this.state.activeBtn ===
-                    CATALOGUE_CONTROL_BTN_TYPES["import"] && (
-                    <DropDown
-                      group={"CSV_IMPORT_ITEMS"}
-                      openProductAddingModal={this.openProductAddingModal}
-                    />
-                  )}
+                    CATALOGUE_CONTROL_BTN_TYPES["import"]}
                 </IconButton>
                 <Popper
                   id={id}
@@ -497,22 +536,38 @@ class Catalogue extends React.Component {
                     <span className={classes.arrow} ref={this.handleArrowRef} />
                   ) : null}
                   <Paper className={classes.paper}>
-                    <DialogTitle>
-                      {"Use Google's location service?"}
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        Let Google help apps determine location.
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={this.handleClickButton} color="primary">
-                        Disagree
-                      </Button>
-                      <Button onClick={this.handleClickButton} color="primary">
-                        Agree
-                      </Button>
-                    </DialogActions>
+                    <MenuList>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <SendIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Sent mail"
+                        />
+                      </MenuItem>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Drafts"
+                        />
+                      </MenuItem>
+                      <MenuItem className={classes.menuItem}>
+                        <ListItemIcon className={classes.icon}>
+                          <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={{ primary: classes.primary }}
+                          inset
+                          primary="Inbox"
+                        />
+                      </MenuItem>
+                    </MenuList>
                   </Paper>
                 </Popper>
               </div>
@@ -536,8 +591,9 @@ class Catalogue extends React.Component {
               {catalogueStates["bulkEdit"] && <BulkEdit />}
               <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
                 <Grid container spacing={16}>
-                  {!products["data"] && <Loader />}
-                  {products["data"] &&
+                  {!products["data"] ? (
+                    <Loader />
+                  ) : (
                     products["data"].map((item, index) => (
                       <SimpleProduct
                         key={index}
@@ -545,7 +601,8 @@ class Catalogue extends React.Component {
                         viewType={this.state.viewType}
                         bulkEdit={catalogueStates["bulkEdit"]}
                       />
-                    ))}
+                    ))
+                  )}
                 </Grid>
               </div>
             </div>

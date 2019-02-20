@@ -1,16 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { HashRouter as Router } from "react-router-dom";
-
-import theme from "../ui/theme";
-
 import AuthRouteWrapper from "./auth-route-wrapper";
 import Dashboard from "./dashboard";
+import User from "../core/auth";
+import { SetUserData, UserLoggedIn } from "../actions/user";
 
 import { AppReady } from "../actions/app";
 
-import User from "../core/auth";
-import { SetUserData, UserLoggedIn } from "../actions/user";
+import theme from "../ui/theme";
 
 class App extends React.Component {
   constructor(props) {
@@ -49,8 +47,11 @@ class App extends React.Component {
       !!this.props.appReady && (
         <Router>
           <div className="app">
-            {!auth.isLoggedIn && <AuthRouteWrapper />}
-            {auth.isLoggedIn && <Dashboard theme={theme} />}
+            {!auth.isLoggedIn ? (
+              <AuthRouteWrapper />
+            ) : (
+              <Dashboard theme={theme} />
+            )}
           </div>
         </Router>
       )

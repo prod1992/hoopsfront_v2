@@ -63,6 +63,27 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: "100px 3rem 0 3rem"
+  },
+  navLink: {
+    textDecoration: "none",
+    display: "flex",
+    width: "100%",
+    padding: 18,
+    position: "relative",
+    ":before": {
+      content: "",
+      position: "absolute",
+      height: "100%",
+      width: 3,
+      backgroundColor: "#1db3e7",
+      top: 0,
+      left: 0,
+      bottom: 0
+    },
+    "&.active": {
+      backgroundColor: "#f3f3f3",
+      fontWeight: 500
+    }
   }
 });
 
@@ -95,19 +116,7 @@ class Dashboard extends Component {
                   tooltip: classes.darkTooltip
                 }}
               >
-                <NavLink
-                  to={"/" + item.href}
-                  style={{
-                    textDecoration: "none",
-                    display: "flex",
-                    width: "100%",
-                    padding: 18
-                  }}
-                  activeStyle={{
-                    fontWeight: "bold",
-                    color: "red"
-                  }}
-                >
+                <NavLink to={"/" + item.href} className={classes.navLink}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.title} />
                 </NavLink>
