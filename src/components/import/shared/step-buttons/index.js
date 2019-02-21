@@ -7,6 +7,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 //import { Modal } from "../../../modal/modal";
 import { ToastContainer, toast } from "react-toastify";
+import TrendingFlat from "@material-ui/icons/TrendingFlat";
 
 class StepButtons extends Component {
   constructor(props) {
@@ -107,14 +108,14 @@ class StepButtons extends Component {
           disabled
         >
           <span>Next</span>
-          <i className="material-icons">trending_flat</i>
+          <TrendingFlat />
         </button>
       );
     } else {
       return (
         <button onClick={this.changeNextStep} className="next">
           <span>Next</span>
-          <i className="material-icons">trending_flat</i>
+          <TrendingFlat />
         </button>
       );
     }
@@ -135,7 +136,8 @@ class StepButtons extends Component {
               onClick={this.changePrevStep}
               className={stepData["stepState"] === 0 ? "disabled" : ""}
             >
-              <i className="material-icons">trending_flat</i>
+              <TrendingFlat />
+
               <span>Back</span>
             </button>
           </div>

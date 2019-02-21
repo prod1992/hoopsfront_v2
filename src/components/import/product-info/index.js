@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
-
+import TrendingFlat from "@material-ui/icons/TrendingFlat";
 class ProductInfo extends Component {
   render() {
     const { importFileData } = this.props;
@@ -59,9 +59,7 @@ class ProductInfo extends Component {
                           </a>
                         </td>
                         <td>
-                          <i className="material-icons table_right_arrow">
-                            trending_flat
-                          </i>
+                          <TrendingFlat />
                         </td>
                         <td>
                           <ImportedProperty

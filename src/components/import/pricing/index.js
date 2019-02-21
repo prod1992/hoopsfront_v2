@@ -3,7 +3,9 @@ import StepButtons from "../shared/step-buttons";
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
-
+import TrendingFlat from "@material-ui/icons/TrendingFlat";
+import RemoveCircle from "@material-ui/icons/RemoveCircle";
+import Beenhere from "@material-ui/icons/Beenhere";
 class Pricing extends Component {
   constructor(props) {
     super(props);
@@ -80,9 +82,7 @@ class Pricing extends Component {
                 </a>
               </td>
               <td>
-                <i className="material-icons table_right_arrow">
-                  trending_flat
-                </i>
+                <TrendingFlat />
               </td>
               <td>
                 <ImportedProperty
@@ -150,7 +150,7 @@ class Pricing extends Component {
           {i > 1 && (
             <div className="remove-price-break">
               <button onClick={() => this.removePriceBreaks(i)}>
-                <i className="material-icons">remove_circle</i>
+                <RemoveCircle />
               </button>
             </div>
           )}
@@ -182,9 +182,7 @@ class Pricing extends Component {
         <div className="product_mapping_block_title">
           <div className="product_info">
             <div className="product_info_icon_block">
-              <i className="material-icons white-text product_info_icon_block_icon">
-                beenhere
-              </i>
+              <Beenhere />
             </div>
             <span className="product_info_icon_block_text">
               Services price mapping

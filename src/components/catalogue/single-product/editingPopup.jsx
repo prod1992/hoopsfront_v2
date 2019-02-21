@@ -2,7 +2,23 @@ import React, { Component } from "react";
 
 import getApiCredentials from "./../../../constants/api";
 import { connect } from "react-redux";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
 
+import Chip from "@material-ui/core/Chip";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: "100%"
+  },
+  inputWrapper: {
+    width: "100vh"
+  }
+});
 class EditingPopup extends Component {
   constructor() {
     super();
@@ -75,7 +91,9 @@ class EditingPopup extends Component {
     fetch(reqInstance)
       .then(res => res.json())
       .then(data => {
-        console.log("data", data);
+        if (data.id) {
+          this.props.closeModal();
+        }
       })
       .catch(err => console.log("error ", err));
   }
@@ -109,76 +127,72 @@ class EditingPopup extends Component {
   render() {
     const { tagInputValue, productInfo } = this.state;
     // const { productData } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className="popup_main_block edit_popup">
         <div className="popup">
           <div className="popup_content">
-            <span
-              className="close_popup"
-              onClick={() => this.props.closeModal()}
-            />
-            <div className="popup_header_block">
-              <h3>Edit product detail</h3>
-              <p>Provide the following information to edit product detail</p>
-            </div>
             <div className="popup_vendor_block">
               <div className="popup_vendor_block">
                 <div className="popup_vendor_block_title">
                   <h3>Vendor</h3>
                 </div>
-                <select
-                  className="hoops_map_select"
+
+                <Select
+                  name="vendor"
                   value={productInfo.vendor_id}
-                  onChange={e =>
-                    this.getEditedInfo("vendor_id", e.target.value)
-                  }
+                  onChange={e => {
+                    this.getEditedInfo("vendor_id", e.target.value);
+                  }}
                 >
-                  <option value="select1">Example Vendor</option>
-                  <option value="select2">Select2</option>
-                  <option value="select3">Select3</option>
-                  <option value="select4">Select4</option>
-                </select>
+                  <MenuItem value="select1">Example Vendor</MenuItem>
+                  <MenuItem value="select2">Select2</MenuItem>
+                  <MenuItem value="select3">Select3</MenuItem>
+                  <MenuItem value="select4">Select4</MenuItem>
+                </Select>
               </div>
             </div>
             <div className="popup_product_name_block">
               <div className="popup_product_title">
                 <div className="popup_product_select_block">
-                  <span>Product name</span>
-                  <input
-                    type="text"
-                    placeholder="Example T-Shirt"
+                  <TextField
+                    label="Product name"
+                    name="name"
                     value={productInfo.name}
+                    className={classes.textField}
                     onChange={e => this.getEditedInfo("name", e.target.value)}
+                    margin="none"
                   />
                 </div>
               </div>
               <div className="brand_block">
                 <div className="brand_block_itemss">
                   <div className="popup_product_select_block">
-                    <span>Brand</span>
-                    <input
-                      type="text"
-                      placeholder="Example Brand"
+                    <TextField
+                      label="Brand"
                       value={productInfo.brand}
+                      className={classes.textField}
                       onChange={e =>
                         this.getEditedInfo("brand", e.target.value)
                       }
+                      margin="none"
                     />
                   </div>
                 </div>
                 <div className="brand_block_itemss">
                   <div className="popup_product_select_block">
-                    <span>Min order Qty</span>
-                    <input
-                      type="number"
+                    <TextField
+                      label="Min order Qty"
                       value={productInfo.minimum_order_quantity}
+                      className={classes.textField}
                       onChange={e =>
                         this.getEditedInfo(
                           "minimum_order_quantity",
                           e.target.value
                         )
                       }
+                      margin="none"
                     />
                   </div>
                 </div>
@@ -189,18 +203,18 @@ class EditingPopup extends Component {
                     <div className="popup_vendor_block_title">
                       <h3>Category</h3>
                     </div>
-                    <select
-                      className="hoops_map_select"
+
+                    <Select
                       value={productInfo.category}
-                      onChange={e =>
-                        this.getEditedInfo("category", e.target.value)
-                      }
+                      onChange={e => {
+                        this.getEditedInfo("category", e.target.value);
+                      }}
                     >
-                      <option value="select1">T-Shirts</option>
-                      <option value="select2">Select2</option>
-                      <option value="select3">Select3</option>
-                      <option value="select4">Select4</option>
-                    </select>
+                      <MenuItem value="select1">T-Shirts</MenuItem>
+                      <MenuItem value="select2">Select2</MenuItem>
+                      <MenuItem value="select3">Select3</MenuItem>
+                      <MenuItem value="select4">Select4</MenuItem>
+                    </Select>
                   </div>
                 </div>
                 <div className="brand_block_itemss">
@@ -208,28 +222,28 @@ class EditingPopup extends Component {
                     <div className="popup_vendor_block_title">
                       <h3>Sub category</h3>
                     </div>
-                    <select
-                      className="hoops_map_select"
+
+                    <Select
                       value={productInfo.sub_category}
-                      onChange={e =>
-                        this.getEditedInfo("sub_category", e.target.value)
-                      }
+                      onChange={e => {
+                        this.getEditedInfo("sub_category", e.target.value);
+                      }}
                     >
-                      <option value="select1">Short Sleeve</option>
-                      <option value="select2">Select2</option>
-                      <option value="select3">Select3</option>
-                      <option value="select4">Select4</option>
-                    </select>
+                      <MenuItem value="select1">Short Sleeve</MenuItem>
+                      <MenuItem value="select2">Select2</MenuItem>
+                      <MenuItem value="select3">Select3</MenuItem>
+                      <MenuItem value="select4">Select4</MenuItem>
+                    </Select>
                   </div>
                 </div>
               </div>
               <div className="tags_block">
                 <div className="brand_block_itemss">
                   <div className="popup_product_select_block">
-                    <span>Tags</span>
-                    <input
-                      type="text"
+                    <TextField
+                      label="Tags"
                       value={tagInputValue}
+                      className={classes.textField}
                       onKeyDown={e => {
                         if (e.keyCode === 13) {
                           this.getInsertedTags(e.target.value);
@@ -240,18 +254,20 @@ class EditingPopup extends Component {
                           tagInputValue: e.target.value
                         })
                       }
+                      margin="none"
                     />
                   </div>
                 </div>
                 <div className="brand_block_itemss">
                   <div className="popup_product_select_block">
-                    <span>Link Url</span>
-                    <input
-                      type="text"
+                    <TextField
+                      label="Link Url"
                       value={productInfo.link_url}
+                      className={classes.textField}
                       onChange={e =>
                         this.getEditedInfo("link_url", e.target.value)
                       }
+                      margin="none"
                     />
                   </div>
                 </div>
@@ -260,31 +276,22 @@ class EditingPopup extends Component {
                 {productInfo.tags &&
                   productInfo.tags.map((item, index) => {
                     return (
-                      <button key={index}>
-                        {item}
-                        <i
-                          className="material-icons"
-                          onClick={() => this.removeTag(index)}
-                        >
-                          close
-                        </i>
-                      </button>
+                      <Chip
+                        key={index}
+                        onDelete={() => this.removeTag(index)}
+                        label={item}
+                      />
                     );
                   })}
               </div>
             </div>
-            <div className="popup_sav_and_edit_block">
-              <div
-                className="popup_cancel"
-                onClick={() => this.props.closeModal()}
-              >
-                <span className="cancel_block" />
-                <span className="popup_cancel_text">Cancel</span>
-              </div>
-              <button className="popup_save" onClick={this.updateProduct}>
-                Save
-              </button>
-            </div>
+
+            <Button onClick={() => this.props.closeModal()} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.updateProduct} color="primary">
+              Save
+            </Button>
           </div>
         </div>
       </div>
@@ -298,4 +305,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(EditingPopup);
+export default connect(mapStateToProps)(withStyles(styles)(EditingPopup));
