@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { AddNewVendor } from "../../../../actions/select.vendor";
-
+import Clear from "@material-ui/icons/Clear";
 class AddVendorForm extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ class AddVendorForm extends Component {
           <div className="save-new-vendor">
             <span className="add-v-head">Add vendor</span>
             <button onClick={this.closeAddVendor}>
-              <i className="material-icons">clear</i>
+              <Clear />
               Cencel
             </button>
             <button type="submit" className="save">

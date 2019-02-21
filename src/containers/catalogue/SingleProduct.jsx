@@ -13,6 +13,12 @@ import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import LocalMall from "@material-ui/icons/LocalMall";
 import Modal from "@material-ui/core/Modal";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Close from "@material-ui/icons/Close";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const styles = theme => ({
   optionLabel: {
@@ -163,21 +169,42 @@ class SingleProduct extends Component {
 
   render() {
     const { product } = this.state;
-    console.log(product);
+
     const { classes, theme } = this.props;
     // const price = product && JSON.parse(service[0])["29"];
     const price = (Math.random() * 3 + 0.1).toFixed(2);
-    console.log(product);
 
     return (
       product && (
         <div>
-          <Modal open={this.state.modalIsOpen} onClose={this.closeModal}>
-            <div className={classes.ModalClass}>
-              asdasdfadf
-              <EditingPopup productData={product} />
-            </div>
-          </Modal>
+          <Dialog
+            open={this.state.modalIsOpen}
+            onClose={this.closeModal}
+            scroll="paper"
+            aria-labelledby="scroll-dialog-title"
+          >
+            <DialogTitle id="scroll-dialog-title">
+              <div>
+                <header className="popup_header_block">
+                  <h3>Edit product detail</h3>
+                  <p>
+                    Provide the following information to edit product detail
+                  </p>
+                </header>
+                <Close onClick={this.closeModal} />
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <EditingPopup
+                  productData={product}
+                  closeModal={this.closeModal}
+                />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions />
+          </Dialog>
+
           <Paper
             style={{ padding: theme.spacing.unit }}
             className="single-product-wrapper"
