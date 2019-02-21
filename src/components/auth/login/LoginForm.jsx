@@ -18,7 +18,7 @@ import RememberMe from "../RememberMe";
 const styles = theme => ({
   cssLabel: {
     color: "#FFFFFF",
-    "&$cssFocused": {
+    "& cssFocused": {
       color: "#FFFFFF"
     }
   },

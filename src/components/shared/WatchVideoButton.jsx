@@ -18,8 +18,12 @@ const styles = theme => ({
     textTransform: "capitalize",
     backgroundColor: "#ffffff",
     border: "1px solid rgba(0,0,0,.2)",
+    overflow: "hidden",
+    borderRadius: 2,
     "& svg": {
-      marginRight: 10
+      borderRadius: "50%",
+      marginRight: 10,
+      animation: "shadow-pulse 2s infinite"
     }
   }
 });
@@ -54,14 +58,16 @@ class VideoBtn extends React.Component {
           <span>Watch the video</span>
         </Button>
         <Modal open={this.state.open}>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/cWGE9Gi0bB0?controls=0"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
+          <div>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/cWGE9Gi0bB0?controls=0"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </div>
         </Modal>
       </div>
     );

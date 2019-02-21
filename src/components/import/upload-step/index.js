@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import SelectDropdown from "../../../components/shared/select-dropdown";
 import StepButtons from "../shared/step-buttons";
 import { withStyles } from "@material-ui/core/styles";
@@ -17,7 +18,7 @@ import {
 
 import { toast, ToastContainer } from "react-toastify";
 import Dropzone from "react-dropzone";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Chip } from "@material-ui/core";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Close from "@material-ui/icons/Close";
 
@@ -28,8 +29,46 @@ const styles = theme => ({
   },
   uploadFileRoot: {
     padding: 24
+  },
+  dropZone: {
+    minHeight: 220,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "1px dashed #93a6ab",
+    borderRadius: 3
+  },
+  dropZoneGroup: {
+    margin: "10px 0"
+  },
+  dropZoneTitle: {
+    fontWeight: 500,
+    margin: "6px 0 0",
+    fontSize: "1.125rem"
+  },
+  dropZoneInner: {
+    maxWidth: 300,
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "flex",
+    alignItems: "center"
+  },
+  dropZoneLabel: {
+    marginBottom: 5
+  },
+  dropZoneIcon: {
+    marginRight: 10,
+    width: 55,
+    height: 55,
+    borderRadius: "50%",
+    backgroundColor: "#f0f0f0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#93a6ab"
   }
 });
+
 class UploadFiles extends React.Component {
   constructor(props) {
     super(props);
@@ -117,6 +156,55 @@ class UploadFiles extends React.Component {
       textAlign: "center",
       color: "#fff"
     };
+
+    const RenderBlueUrl = props => {
+      return (
+        <div>
+          <Link
+            to={props.to}
+            style={{
+              textDecoration: "underline",
+              display: "flex",
+              alignItems: "center",
+              color: "#1db3e7",
+              fontSize: 14,
+              lineHeight: 1.5,
+              textUnderlinePosition: "below",
+              webkitTextUnderlinePosition: "under",
+              msTextUnderlinePosition: "below",
+              textUnderlinePosition: "under"
+            }}
+          >
+            {props.icon}
+            <span style={{ marginLeft: 5 }}>{props.anchorText}</span>
+          </Link>
+          {props.text && <p style={{ margin: 0 }}>{props.text}</p>}
+        </div>
+      );
+    };
+
+    const RenderLabelGroup = props => {
+      let chipStyles = {
+        borderRadius: 2,
+        padding: 0,
+        height: 20,
+        margin: "0 10px",
+        color: "#FFFFFF",
+        fontSize: ".8125rem",
+        textTransform: "capitalize",
+        fontFamily: "inherit"
+      };
+      chipStyles.backgroundColor =
+        props.priority === "required" ? "#e3645b" : "#f0ab5d";
+      return (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span>{props.text}</span>
+          <Chip style={chipStyles} label={props.priority} />
+          <RenderBlueUrl anchorText={"What's this?"} to={props.url} />
+        </div>
+      );
+    };
+
     return (
       <div>
         <Grid
@@ -134,90 +222,80 @@ class UploadFiles extends React.Component {
         </Grid>
         <Paper className={classes.uploadFileRoot}>
           <ToastContainer autoClose={2000} />
-          <div className="custom-container">
-            <div className="upload-body">
-              <div className="field-control">
-                <div className="row">
-                  <div className="col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                    <div className="field-col">
-                      <div className="action-info">
-                        <span className="action-heading">Select vendor</span>
-                        <span className="action-priority required">
-                          Required
-                        </span>
-                        <a
-                          href="http://help.hoopscrm.com/catalog/import-field-explanations/vendor"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className="action-hint"
-                        >
-                          What's This?
-                        </a>
-                      </div>
-                      <div className="custom-field-row">
-                        <SelectDropdown />
+          <Grid container>
+            <Grid item>
+              <div className="custom-container">
+                <div className="upload-body">
+                  {progress !== 0 && (
+                    <div className="progress-bar-wrapper">
+                      <div
+                        className="progress-bar"
+                        style={{
+                          background: "#52ba57",
+                          width: `${progress * 100}%`
+                        }}
+                      >
+                        {(progress * 100).toFixed(0)}% complete
                       </div>
                     </div>
+                  )}
+                  <div className="next-prev-control">
+                    {/*<div className="right-side">*/}
+                    {/*<button className="next">*/}
+                    {/*<span>Next</span>*/}
+                    {/*<i className="material-icons">trending_flat</i>*/}
+                    {/*</button>*/}
+                    {/*</div>*/}
                   </div>
-                  <div className="col-sm-12 col-md-5 col-lg-5 col-xl-5">
-                    <div className="cloud-down-col">
-                      <div className="download-row">
-                        <span className="down-link">
-                          <CloudDownload />
-                          <a
-                            href="../../../../assets/resources/CSV/Catalog-Import-Template-Complete.csv"
-                            download
-                          >
-                            Download the basic template
-                          </a>
-                        </span>
-                        <span className="description">
-                          Great for simple products like apparel.
-                        </span>
-                      </div>
-                      <div className="download-row">
-                        <span className="down-link">
-                          <CloudDownload />
-                          <a
-                            href="../../../../assets/resources/CSV/Catalog-Import-Template-Complete.csv"
-                            download
-                          >
-                            Download the complete template
-                          </a>
-                        </span>
-                        <span className="description">
-                          Great for complex products like promotional products.
-                        </span>
-                      </div>
-                      <div className="download-row">
-                        <span className="down-link">
-                          <CloudDownload />
-                          <a
-                            href="../../../../assets/resources/CSV/Catalog-Import%20Explanations-and%20-Examples.xlsx"
-                            download
-                          >
-                            Download field explanations & example products
-                          </a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  <StepButtons formData={this.formData} firstPage={true} />
                 </div>
               </div>
-              <div className="drag-section">
-                <div className="action-info">
-                  <span className="action-heading">Upload product csv</span>
-                  <span className="action-priority required">Required</span>
-                  <a
-                    href="http://help.hoopscrm.com/catalog/import-field-explanations/what-format-do-csv-files-need-to-be"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="action-hint"
-                  >
-                    What's This?
-                  </a>
+              <div className="field-col">
+                <RenderLabelGroup
+                  text={"Select vendor"}
+                  url={
+                    "http://help.hoopscrm.com/catalog/import-field-explanations/vendor"
+                  }
+                  priority={"required"}
+                />
+
+                <div className="custom-field-row">
+                  <SelectDropdown />
                 </div>
-                <div className="drag-arrow">
+              </div>
+            </Grid>
+            <Grid item style={{ marginLeft: "auto" }}>
+              <RenderBlueUrl
+                to="/"
+                anchorText={"Download the basic template"}
+                text={"Great for simple products like apparel."}
+                icon={<CloudDownload />}
+              />
+              <RenderBlueUrl
+                to="/"
+                anchorText={"Download the complete template"}
+                text={"Great for complex products like promotional products."}
+                icon={<CloudDownload />}
+              />
+              <RenderBlueUrl
+                to="/"
+                anchorText={"Download the basic template"}
+                icon={<CloudDownload />}
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <div className={classes.dropZoneGroup}>
+                <RenderLabelGroup
+                  text={"Upload product csv"}
+                  url={
+                    "http://help.hoopscrm.com/catalog/import-field-explanations/what-format-do-csv-files-need-to-be"
+                  }
+                  priority={"required"}
+                />
+
+                <div className={classes.dropZone}>
                   {csvFileName === "" ? (
                     <Dropzone
                       onDrop={acceptedFile =>
@@ -225,7 +303,7 @@ class UploadFiles extends React.Component {
                       }
                       multiple={false}
                       accept=".csv"
-                      className="file-upload-dropzone"
+                      className={classes.dropZone}
                     >
                       {({ getRootProps, getInputProps, isDragActive }) => (
                         <div
@@ -238,15 +316,17 @@ class UploadFiles extends React.Component {
                         >
                           <input {...getInputProps()} />
                           {isDragActive && <div style={overlayStyle} />}
-                          <div className="arrow-info-data">
-                            <div className="drag-icon-wrap">
+                          <div className={classes.dropZoneInner}>
+                            <div className={classes.dropZoneIcon}>
                               <CloudDownload />
                             </div>
                             <div className="drag-description">
-                              <p>Drag and drop</p>
-                              <p>
+                              <h4 className={classes.dropZoneTitle}>
+                                Drag and drop
+                              </h4>
+                              <div>
                                 Your file here, or <u>click to locate file</u>
-                              </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -262,24 +342,18 @@ class UploadFiles extends React.Component {
                   )}
                 </div>
               </div>
-              <div className="drag-section">
-                <div className="action-info">
-                  <span className="action-heading">
-                    Upload product images (.zip file){" "}
-                  </span>
-                  <span className="action-priority recommended">
-                    Recommended
-                  </span>
-                  <a
-                    href="http://help.hoopscrm.com/catalog/import-field-explanations/how-do-i-import-product-images"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="action-hint"
-                  >
-                    What's This?
-                  </a>
-                </div>
-                <div className="drag-arrow">
+            </Grid>
+            <Grid item xs={12}>
+              <div className={classes.dropZoneGroup}>
+                <RenderLabelGroup
+                  text={"Upload product images (.zip file)"}
+                  url={
+                    "http://help.hoopscrm.com/catalog/import-field-explanations/how-do-i-import-product-images"
+                  }
+                  priority={"recommended"}
+                />
+
+                <div className={classes.dropZone}>
                   {zipFileName === "" ? (
                     <Dropzone
                       onDrop={acceptedFile =>
@@ -300,15 +374,17 @@ class UploadFiles extends React.Component {
                         >
                           <input {...getInputProps()} />
                           {isDragActive && <div style={overlayStyle} />}
-                          <div className="arrow-info-data">
-                            <div className="drag-icon-wrap">
+                          <div className={classes.dropZoneInner}>
+                            <div className={classes.dropZoneIcon}>
                               <CloudDownload />
                             </div>
-                            <div className="drag-description">
-                              <p>Drag and drop</p>
-                              <p>
+                            <div className="drag-descriptioTitlen">
+                              <h4 className={classes.dropZoneTitle}>
+                                Drag and drop
+                              </h4>
+                              <div>
                                 Your file here, or <u>click to locate file</u>
-                              </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -324,30 +400,8 @@ class UploadFiles extends React.Component {
                   )}
                 </div>
               </div>
-              {progress !== 0 && (
-                <div className="progress-bar-wrapper">
-                  <div
-                    className="progress-bar"
-                    style={{
-                      background: "#52ba57",
-                      width: `${progress * 100}%`
-                    }}
-                  >
-                    {(progress * 100).toFixed(0)}% complete
-                  </div>
-                </div>
-              )}
-              <div className="next-prev-control">
-                {/*<div className="right-side">*/}
-                {/*<button className="next">*/}
-                {/*<span>Next</span>*/}
-                {/*<i className="material-icons">trending_flat</i>*/}
-                {/*</button>*/}
-                {/*</div>*/}
-              </div>
-              <StepButtons formData={this.formData} firstPage={true} />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
           {this.props.selectVendor.addNewVendor && <AddVendor />}
         </Paper>
       </div>
