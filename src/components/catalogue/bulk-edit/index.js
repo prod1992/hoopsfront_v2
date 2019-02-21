@@ -14,7 +14,9 @@ import Close from "@material-ui/icons/Close";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
-
+import { spawn } from "child_process";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 const styles = theme => ({
   catalogueProcessHref: {
     textDecoration: "none",
@@ -29,6 +31,35 @@ const styles = theme => ({
   },
   getInfo: {
     color: "#FF9800"
+  },
+  link: {
+    color: "#1DB3E7",
+    textDecoration: "none"
+  },
+  numberOfRecords: {
+    fontSize: "14px",
+    color: "#555555"
+  },
+  checkSection: {
+    display: "flex"
+  },
+  SelectAllLabel: {
+    marginLeft: "15px"
+  },
+  BulkFunctionRow: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  bulkEditWrapper: {
+    marginTop: "20px",
+    marginBottom: "20px"
+  },
+  deleteVendorRow: {
+    display: "flex",
+    alignItems: "center"
+  },
+  deleteVendorRowLink: {
+    marginLeft: "10px"
   }
 });
 class BulkEdit extends Component {
@@ -112,54 +143,33 @@ class BulkEdit extends Component {
     const { checkedItems, isChecked } = this.state;
     const { classes } = this.props;
     return (
-      <div className="bulk-edit-wrapper">
-        <div className="bulk-edit-head">
-          <a
-            href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
-            className={classes.catalogueProcessHref}
-          >
-            <Fab
-              size="small"
-              color="primary"
-              className={classes.automateButton}
-            >
-              <Book />
-            </Fab>
-            Automate your processes by adding catalogues
-          </a>
-        </div>
-        <div className="bulk-func-row">
+      <div className={classes.bulkEditWrapper}>
+        <div className={classes.BulkFunctionRow}>
           <div className="select-all-option">
-            <div className="check-section">
-              <div className="catalogue-product-check">
-                <div className="checkbox-ctrl">
-                  <div className="custom-checkbox-style">
-                    <input
-                      name="select_product"
-                      id="select_all"
-                      className="checkbox"
-                      type="checkbox"
-                      checked={isChecked && selectedAll}
-                      onChange={this.selectAllProducts}
-                    />
-                    <b className="icon-mark icon-check-mark-sign" />
-                  </div>
-                </div>
-              </div>
-              <label htmlFor="select_all" className="">
-                Select All
-              </label>
+            <div className={classes.checkSection}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="select_all"
+                    className="checkbox"
+                    checked={isChecked && selectedAll}
+                    onChange={this.selectAllProducts}
+                    color="primary"
+                  />
+                }
+                label="Select All"
+              />
             </div>
-            <p className="selected-count">
+            <span className={classes.numberOfRecords}>
               Number of records <span>{selectedIds.length}</span> selected
               records <span>{products["data"] && products["data"].length}</span>
-            </p>
+            </span>
           </div>
-          <div className="delete-vendor-row">
+          <div className={classes.deleteVendorRow}>
             <Info className={classes.getInfo} />
-            <strong className="">
+            <strong className={classes.deleteVendorRowLink}>
               Tip Deleting a{" "}
-              <a href="#" className="link">
+              <a href="#" className={classes.link}>
                 vendor
               </a>{" "}
               will delete all associated products
@@ -168,16 +178,14 @@ class BulkEdit extends Component {
           <div className="bulk-row-btns">
             <IconButton
               size="small"
-              color="primary"
-              className={classes.automateButton}
+              className={classes.catalogActionButton}
               onClick={() => this.handleDeleteItems()}
             >
               <Delete />
             </IconButton>
             <IconButton
               size="small"
-              color="primary"
-              className={classes.automateButton}
+              className={classes.catalogActionButton}
               onClick={() => this.closeEdit()}
             >
               <Close />

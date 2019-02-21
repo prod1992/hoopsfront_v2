@@ -11,14 +11,14 @@ import { connect } from "react-redux";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-
+import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
   card: {
     maxWidth: "100%",
-
+    position: "relative",
     borderRadius: 3,
     boxShadow: "rgba(0, 0, 0, 0) 0px 0px 8px 0px",
     transition: "0.2s ease box-shadow",
@@ -60,6 +60,12 @@ const styles = theme => ({
   endder: {
     marginLeft: "5px",
     marginRight: "5px"
+  },
+  BulkEditCheckbox: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    background: "#fff"
   }
 });
 
@@ -202,24 +208,18 @@ class SimpleProduct extends Component {
           }
         >
           {bulkEdit && (
-            <div className="catalogue-product-check">
-              <div className="checkbox-ctrl">
-                <div className="custom-checkbox-style">
-                  <input
-                    name="select_product"
-                    className="checkbox"
-                    type="checkbox"
-                    checked={
-                      catalogueStates.selectedAll ||
-                      catalogueStates.selectedIds.includes(simpleProduct.id)
-                    }
-                    onChange={event =>
-                      this.handleCheckProductId(event, simpleProduct["id"])
-                    }
-                  />
-                  <b className="icon-mark icon-check-mark-sign" />
-                </div>
-              </div>
+            <div className={classes.BulkEditCheckbox}>
+              <Checkbox
+                name="select_product"
+                checked={
+                  catalogueStates.selectedAll ||
+                  catalogueStates.selectedIds.includes(simpleProduct.id)
+                }
+                onChange={event =>
+                  this.handleCheckProductId(event, simpleProduct["id"])
+                }
+                color="primary"
+              />
             </div>
           )}
           <Link
