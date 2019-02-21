@@ -43,6 +43,23 @@ const styles = theme => ({
   gridView: {
     display: "flex",
     flexDirection: "row"
+  },
+  price: {
+    color: "#1db3e7"
+  },
+  tagStyles: {
+    padding: "0 3px",
+    fontSize: "0.75rem",
+    borderRadius: 100,
+    height: 22,
+    fontFamily: "inherit",
+    "&:not([variant='outlined'])": {
+      backgroundColor: "#e9e9e9"
+    }
+  },
+  endder: {
+    marginLeft: "5px",
+    marginRight: "5px"
   }
 });
 
@@ -80,13 +97,13 @@ class SimpleProduct extends Component {
           </Grid>
           <Grid container justify="space-between">
             <Grid item>
-              <Chip label={simpleProduct.id} />
+              <Chip label={simpleProduct.id} className={classes.tagStyles} />
               <div className="brand">
                 <span>Brand</span>:<span>{simpleProduct.brand}</span>
               </div>
             </Grid>
             <Grid item style={{ textAlign: "right" }}>
-              <div className="price">
+              <div className={classes.price}>
                 $<span>{simpleProduct.product_price || "0.00"}</span>
               </div>
               <div className="price-text">BUY PRICE</div>
@@ -97,6 +114,8 @@ class SimpleProduct extends Component {
             <Grid item>
               Category: <strong>{simpleProduct.category}</strong>
             </Grid>
+            <span className={classes.endder}>|</span>
+
             <Grid item>
               <span>
                 Vendor: <strong>Example</strong>
@@ -113,31 +132,33 @@ class SimpleProduct extends Component {
           <Grid item container xs={12}>
             <Grid item xs>
               <Grid item>
-                <span className="product-name">{simpleProduct.name}</span>
-                <Chip label={simpleProduct.id} />
+                <strong className="product-name">{simpleProduct.name}</strong>
+                <Chip label={simpleProduct.id} className={classes.tagStyles} />
               </Grid>
               <Grid item container>
                 <Grid item className="brand">
                   <span>
-                    Brand: <strong>{simpleProduct.brand}</strong>
+                    Brand: <span>{simpleProduct.brand}</span>
                   </span>
                 </Grid>
                 <Grid item className="category">
-                  <span className="grey-text">|</span>
+                  <span className={classes.endder}>|</span>
                   <span>
-                    Category: <strong>{simpleProduct.category}</strong>
+                    Category: <span>{simpleProduct.category}</span>
                   </span>
                 </Grid>
                 <Grid item className="vendor">
+                  <span className={classes.endder}>|</span>
+
                   <span>
-                    Vendor: <strong>Example</strong>
+                    Vendor: <span>Example</span>
                   </span>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={2}>
-              <div className="price">
-                <div>
+              <div>
+                <div className={classes.price}>
                   $<span>{simpleProduct.product_price || "0.00"}</span>
                 </div>
                 <div>
