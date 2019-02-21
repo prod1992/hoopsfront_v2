@@ -7,7 +7,7 @@ import {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import getApiCredentials from "../../../constants/api";
-import { setProducts } from "../../../actions/catalogue-actions";
+// import { setProducts } from "../../../actions/catalogue-actions";
 
 class SelectDropdown extends Component {
   constructor(props) {

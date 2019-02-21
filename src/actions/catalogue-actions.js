@@ -7,7 +7,7 @@ import {
   SELECT_ALL_PRODUCTS,
   SET_FILTERED_ARRAY,
   FILTER_SHOW,
-  VIDEO_POPUP_STATE,
+  VIDEO_MODAL_STATE,
   RESET_SELECTED_IDS,
   SET_VENDOR_LIST,
   SET_BRAND_LIST,
@@ -30,9 +30,9 @@ export const movePrevStep = {
   type: PREV_STEP
 };
 
-export const changeVideoButton = payload => {
+export const toggleVideoModal = payload => {
   return {
-    type: VIDEO_POPUP_STATE,
+    type: VIDEO_MODAL_STATE,
     payload
   };
 };

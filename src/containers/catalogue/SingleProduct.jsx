@@ -103,7 +103,6 @@ class SingleProduct extends Component {
   }
 
   componentDidMount() {
-    const api = getApiCredentials.host;
     const { id } = this.props.match.params;
     this.getProduct(id);
   }
@@ -285,7 +284,7 @@ class SingleProduct extends Component {
                         <ul className={classes.tagsList}>
                           {product.colour &&
                             product.colour.map((colour, i) => (
-                              <li key={i}>
+                              <li key={product.id}>
                                 <Chip
                                   className={classes.tagStyles}
                                   label={colour}
@@ -302,7 +301,7 @@ class SingleProduct extends Component {
                         <ul className={classes.tagsList}>
                           {product.size &&
                             product.size.map((size, i) => (
-                              <li key={i}>
+                              <li key={product.id}>
                                 <Chip
                                   className={classes.tagStyles}
                                   variant="outlined"
@@ -319,7 +318,7 @@ class SingleProduct extends Component {
                         <ul className={classes.tagsList}>
                           {product.tags &&
                             product.tags.map((tag, i) => (
-                              <li key={i}>
+                              <li key={product.id}>
                                 <Chip
                                   className={classes.tagStyles}
                                   label={tag}

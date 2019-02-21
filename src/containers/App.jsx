@@ -37,7 +37,7 @@ class App extends React.Component {
       .then(() => this.props.dispatch(AppReady))
       .catch(() => this.props.dispatch(AppReady));
   }
-  componentWillMount() {
+  componentDidMount() {
     this.init();
   }
   render() {

@@ -112,7 +112,9 @@ class Catalogue extends React.Component {
       disablePortal: false,
       flip: true,
       open: false,
-      preventOverflow: "scrollParent"
+      preventOverflow: "scrollParent",
+      DownloadPopper: false,
+      MoreHorizOpen: false
     };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -122,7 +124,7 @@ class Catalogue extends React.Component {
     this.getProductList = this.getProductList.bind(this);
     this.openProductAddingModal = this.openProductAddingModal.bind(this);
     this.closeProductAddingModal = this.closeProductAddingModal.bind(this);
-    this.downluadCSV = this.downluadCSV.bind(this);
+    this.downloadCSV = this.downloadCSV.bind(this);
   }
 
   componentDidMount() {
@@ -338,7 +340,7 @@ class Catalogue extends React.Component {
       arrowRef: node
     });
   };
-  downluadCSV = () => {
+  downloadCSV = () => {
     let token = localStorage.getItem("userToken");
     let products = {
       products: this.props.catalogueStates.products.data
@@ -471,7 +473,7 @@ class Catalogue extends React.Component {
                 >
                   <VerticalAlignBottom />
                   <Popper
-                    open={this.state.DownluadCSVOpen}
+                    open={this.state.DownloadPopper}
                     anchorEl={this.ExportCSVButton}
                     transition={true}
                     placement="bottom-start"
@@ -504,7 +506,7 @@ class Catalogue extends React.Component {
                       <MenuList>
                         <MenuItem
                           className={classes.menuItem}
-                          onClick={this.downluadCSV}
+                          onClick={this.downloadCSV}
                         >
                           <ListItemIcon className={classes.icon}>
                             <LibraryBooks />

@@ -30,7 +30,7 @@ export const FILTER_SHOW = "FILTER_SHOW";
 
 /*Video play states*/
 
-export const VIDEO_POPUP_STATE = "VIDEO_POPUP_STATE";
+export const VIDEO_MODAL_STATE = "VIDEO_MODAL_STATE";
 
 export const SET_FILTERED_ARRAY = "SET_FILTERED_ARRAY";
 

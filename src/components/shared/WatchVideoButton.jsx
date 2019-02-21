@@ -1,37 +1,69 @@
-import { changeVideoButton } from "../../actions/catalogue-actions";
-import playVideo from "../../reducers/video.play";
 import React from "react";
 import { connect } from "react-redux";
-import Modal from "@material-ui/core/Modal";
-import PlayArrow from "@material-ui/icons/PlayArrow";
 import { withStyles } from "@material-ui/core/styles";
+
+import { toggleVideoModal } from "../../actions/catalogue-actions";
+import playVideo from "../../reducers/video.play";
+
+import Modal from "@material-ui/core/Modal";
+import PlayCircleFilled from "@material-ui/icons/PlayCircleFilled";
+
+import { Button } from "@material-ui/core";
 
 const styles = theme => ({
   button: {
     display: "flex",
     alignItems: "center",
-    padding: 0
+    justifyContent: "space-between",
+    textTransform: "capitalize",
+    backgroundColor: "#ffffff",
+    border: "1px solid rgba(0,0,0,.2)",
+    "& svg": {
+      marginRight: 10
+    }
   }
 });
 
 class VideoBtn extends React.Component {
+  state = {
+    open: false
+  };
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   openCloseVideoPopUp() {
-    console.log("open video");
-    this.props.dispatch(changeVideoButton(true));
+    this.props.dispatch(toggleVideoModal(true));
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <button
-        className={classes.button}
-        onClick={() => this.openCloseVideoPopUp()}
-        variant="outlined"
-        color="primary"
-      >
-        <PlayArrow />
-        <span>Watch the video</span>
-      </button>
+      <div>
+        <Button
+          className={classes.button}
+          onClick={() => this.openCloseVideoPopUp()}
+          variant="outlined"
+          color="primary"
+        >
+          <PlayCircleFilled />
+          <span>Watch the video</span>
+        </Button>
+        <Modal open={this.state.open}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/cWGE9Gi0bB0?controls=0"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          />
+        </Modal>
+      </div>
     );
   }
 }

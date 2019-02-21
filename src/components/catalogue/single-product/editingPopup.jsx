@@ -108,7 +108,7 @@ class EditingPopup extends Component {
 
   render() {
     const { tagInputValue, productInfo } = this.state;
-    const { productData } = this.props;
+    // const { productData } = this.props;
 
     return (
       <div className="popup_main_block edit_popup">

@@ -30,7 +30,9 @@ import Main from "../main";
 const drawerWidth = 240;
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    backgroundColor: "#f4f6f9",
+    minHeight: "100vh"
   },
   darkTooltip: {
     backgroundColor: "#222222",

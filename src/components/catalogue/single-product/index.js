@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Modal from "react-modal";
-import getApiCredentials from "./../../../core/constants/index";
-import EditingPopup from "./editingPopup";
 import { connect } from "react-redux";
+
+import getApiCredentials from "./../../../core/constants/index";
+
+import EditingPopup from "./editingPopup";
 
 Modal.setAppElement("#root");
 
-class SingleProduct extends Component {
+class SingleProduct extends React.Component {
   constructor() {
     super();
 
@@ -22,7 +24,6 @@ class SingleProduct extends Component {
   }
 
   componentDidMount() {
-    const api = getApiCredentials.host;
     const { id } = this.props.match.params;
     this.getProduct(id);
   }
