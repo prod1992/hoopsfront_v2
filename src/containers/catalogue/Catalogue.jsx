@@ -8,7 +8,8 @@ import {
   setVendors,
   setBrands,
   setCategories,
-  setSubCategories
+  setSubCategories,
+  BulkEditProduct
 } from "../../actions/catalogue-actions";
 import { Link } from "react-router-dom";
 
@@ -143,6 +144,7 @@ class Catalogue extends React.Component {
     this.openProductAddingModal = this.openProductAddingModal.bind(this);
     this.closeProductAddingModal = this.closeProductAddingModal.bind(this);
     this.downloadCSV = this.downloadCSV.bind(this);
+    this.StartBulkEdit = this.StartBulkEdit.bind(this);
   }
 
   componentDidMount() {
@@ -168,7 +170,10 @@ class Catalogue extends React.Component {
   setWrapperRef(node) {
     this.wrapperRef = node;
   }
-
+  StartBulkEdit = () => {
+    this.handleMoreHorizClickButton();
+    this.props.dispatch(BulkEditProduct(true));
+  };
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state.data;
     const { filterData } = this.props;
@@ -610,7 +615,10 @@ class Catalogue extends React.Component {
                             />
                           </Link>
                         </MenuItem>
-                        <MenuItem className={classes.menuItem}>
+                        <MenuItem
+                          className={classes.menuItem}
+                          onClick={this.StartBulkEdit}
+                        >
                           <ListItemIcon className={classes.icon}>
                             <Edit />
                           </ListItemIcon>

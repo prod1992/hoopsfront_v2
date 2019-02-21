@@ -7,7 +7,30 @@ import {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import getApiCredentials from "../../../constants/api";
+import Book from "@material-ui/icons/Book";
+import Info from "@material-ui/icons/Info";
+import Delete from "@material-ui/icons/Delete";
+import Close from "@material-ui/icons/Close";
+import Fab from "@material-ui/core/Fab";
+import IconButton from "@material-ui/core/IconButton";
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = theme => ({
+  catalogueProcessHref: {
+    textDecoration: "none",
+    fontSize: "16px",
+    color: "#1DB3E7"
+  },
+  automateButton: {
+    backgroundColor: "#1DB3E7",
+    marginRight: 6,
+    minWidth: "40px",
+    cursor: "pointer"
+  },
+  getInfo: {
+    color: "#FF9800"
+  }
+});
 class BulkEdit extends Component {
   constructor(props) {
     super(props);
@@ -87,11 +110,23 @@ class BulkEdit extends Component {
   render() {
     const { selectedIds, products, selectedAll } = this.props.catalogueReducer;
     const { checkedItems, isChecked } = this.state;
+    const { classes } = this.props;
     return (
       <div className="bulk-edit-wrapper">
         <div className="bulk-edit-head">
-          <i className="material-icons book">book</i>
-          <a href="#">Automate your processes by adding catalogues</a>
+          <a
+            href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
+            className={classes.catalogueProcessHref}
+          >
+            <Fab
+              size="small"
+              color="primary"
+              className={classes.automateButton}
+            >
+              <Book />
+            </Fab>
+            Automate your processes by adding catalogues
+          </a>
         </div>
         <div className="bulk-func-row">
           <div className="select-all-option">
@@ -121,22 +156,32 @@ class BulkEdit extends Component {
             </p>
           </div>
           <div className="delete-vendor-row">
-            <i className="material-icons">info</i>
-            <span className="">
+            <Info className={classes.getInfo} />
+            <strong className="">
               Tip Deleting a{" "}
               <a href="#" className="link">
                 vendor
               </a>{" "}
               will delete all associated products
-            </span>
+            </strong>
           </div>
           <div className="bulk-row-btns">
-            <button onClick={() => this.handleDeleteItems()}>
-              <i className="material-icons">delete</i>
-            </button>
-            <button onClick={() => this.closeEdit()}>
-              <i className="material-icons">close</i>
-            </button>
+            <IconButton
+              size="small"
+              color="primary"
+              className={classes.automateButton}
+              onClick={() => this.handleDeleteItems()}
+            >
+              <Delete />
+            </IconButton>
+            <IconButton
+              size="small"
+              color="primary"
+              className={classes.automateButton}
+              onClick={() => this.closeEdit()}
+            >
+              <Close />
+            </IconButton>
           </div>
         </div>
       </div>
@@ -150,5 +195,4 @@ function mapStateToProps(state) {
     products: state.catalogueReducer.products
   };
 }
-
-export default connect(mapStateToProps)(BulkEdit);
+export default connect(mapStateToProps)(withStyles(styles)(BulkEdit));
