@@ -16,11 +16,45 @@ import ProductInfo from "../../components/import/product-info";
 import Pricing from "../../components/import/pricing";
 import { moveNextStep, movePrevStep } from "../../actions/catalogue-actions";
 
-const styles = theme => ({});
+import {
+  Restore as RestoreIcon,
+  Favorite as FavoriteIcon,
+  RemoveRedEye as RemoveRedEyeIcon
+} from "@material-ui/icons";
+
+import { Icon } from "@material-ui/core";
+
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+
+const styles = theme => ({
+  root: {
+    position: "fixed",
+    bottom: 0,
+    left: 240,
+    right: 0,
+    backgroundColor: "#172027"
+  },
+  wrapper: {
+    color: "#94aec7",
+    flexDirection: "row",
+    selected: {
+      color: "#FFFFFF"
+    }
+  }
+});
 
 class ImportPage extends React.Component {
+  state = {
+    value: "recents"
+  };
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
   render() {
-    const { importStep, importFileData, selectedVendor } = this.props;
+    const { value } = this.state;
+    const { classes, importStep, importFileData, selectedVendor } = this.props;
+
     return (
       <div className="import-page-wrapper">
         <div className="shared-scroll-view">
@@ -108,6 +142,31 @@ class ImportPage extends React.Component {
           ) : null}
         </div>
         <GlobalStep />
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={this.handleChange}
+          className={classes.root}
+        >
+          <BottomNavigationAction
+            className={classes.wrapper}
+            label="Recents"
+            value="recents"
+            icon={<RestoreIcon />}
+          />
+          <BottomNavigationAction
+            className={classes.wrapper}
+            label="Favorites"
+            value="favorites"
+            icon={<RemoveRedEyeIcon />}
+          />
+          <BottomNavigationAction
+            className={classes.wrapper}
+            label="Nearby"
+            value="nearby"
+            icon={<RemoveRedEyeIcon />}
+          />
+        </BottomNavigation>
       </div>
     );
   }
