@@ -1,488 +1,652 @@
 import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import getApiCredentials from "./../../../constants/api";
+import Chip from "@material-ui/core/Chip";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: "100%"
+  },
+  inputWrapper: {
+    width: "100vh"
+  }
+});
 class AddProduct extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            productDetails: {
-                productCode: "",
-                vendor: "",
-                productName: "",
-                serviceName: "",
-                colours: ["Red", "Green", "Yellow"],
-                tags: ["example", "example", "example"],
-                linkUrl: "",
-                stock: "",
-                brand: "",
-                printArea: "",
-                freightDescription: "",
-                individualProductPackaging: "",
-                stdProductionTime: "",
-                size: [],
-                category: "",
-                subCategory: "",
-                description: "",
-                primaryPriceDescription: "",
-                cartonHeight: "",
-                cartonWidth: "",
-                cartonDepth: "",
-                cartonWeight: "",
-                qtyPerCarton: "",
-                cartonCubic: "",
-                cartonNotes: [],
-                qtyBreakPoint1: "",
-                qtyBreakPoint1Price: "",
-                qtyBreakPoint2: "",
-                qtyBreakPoint2Price: "",
-                qtyBreakPoint3: "",
-                qtyBreakPoint3Price: "",
-                qtyBreakPoint4: "",
-                qtyBreakPoint4Price: "",
-                parentProductCode: "",
-                decorationName: "",
-                decorationAreas: [],
-                decorationAdditional_0_qty_0: "",
-                decorationAdditional_0_price_0: "",
-                decorationAdditional_0_qty_1: "",
-                decorationAdditional_0_price_1: "",
-                decoration_0_setupNotes: "",
-                decoration_0_setupCost_0: ""
-            },
-            tagInputValue: "",
-            colourInputValue: "",
-            sizeInputValue: ""
+    this.state = {
+      productDetails: {
+        code: "",
+        vendor: "",
+        name: "",
+        serviceName: "",
+        colour: ["Red", "Green", "Yellow"],
+        tags: ["example", "example", "example"],
+        linkUrl: "",
+        stock: "",
+        brand: "",
+        printArea: "",
+        freightDescription: "",
+        individualProductPackaging: "",
+        stdProductionTime: "",
+        size: [],
+        category: "",
+        subCategory: "",
+        description: "",
+        primaryPriceDescription: "",
+        cartonHeight: "",
+        cartonWidth: "",
+        cartonDepth: "",
+        cartonWeight: "",
+        qtyPerCarton: "",
+        cartonCubic: "",
+        cartonNotes: [],
+        qtyBreakPoint1: "",
+        qtyBreakPoint1Price: "",
+        qtyBreakPoint2: "",
+        qtyBreakPoint2Price: "",
+        qtyBreakPoint3: "",
+        qtyBreakPoint3Price: "",
+        qtyBreakPoint4: "",
+        qtyBreakPoint4Price: "",
+        parentProductCode: "",
+        decorationName: "",
+        decorationAreas: [],
+        decorationAdditional_0_qty_0: "",
+        decorationAdditional_0_price_0: "",
+        decorationAdditional_0_qty_1: "",
+        decorationAdditional_0_price_1: "",
+        decoration_0_setupNotes: "",
+        decoration_0_setupCost_0: ""
+      },
+      tagInputValue: "",
+      colourInputValue: "",
+      sizeInputValue: ""
+    };
+    this.addthisProduct = this.addthisProduct.bind(this);
+  }
+  addthisProduct() {
+    let token = localStorage["userToken"];
+    let uri = getApiCredentials.host + `/api/products/`;
+    var { productDetails } = this.state;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify(productDetails)
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(res => res.json())
+      .then(data => {
+        console.log("data", data);
+        if (data.id) {
+          this.props.closeModal();
         }
-    }
+        this.setState({ product: data });
+      })
+      .catch(err => console.log("error ", err));
+  }
+  getProductDetails(name, value) {
+    this.setState({
+      productDetails: {
+        ...this.state.productDetails,
+        [name]: value
+      }
+    });
+  }
 
-    getProductDetails(name, value) {
-        this.setState({
-            productDetails: {
-                ...this.state.productDetails,
-                [name]: value
-            }
-        })
-    }
+  getInputedTag(tagGroup, tag) {
+    let updatedTags = [...this.state.productDetails[tagGroup], tag];
+    this.setState({
+      productDetails: {
+        ...this.state.productDetails,
+        [tagGroup]: updatedTags
+      },
+      tagInputValue: "",
+      colourInputValue: "",
+      sizeInputValue: ""
+    });
+  }
 
-    getInputedTag(tagGroup, tag) {
-        let updatedTags = [...this.state.productDetails[tagGroup], tag];
-        this.setState({
-            productDetails: {
-                ...this.state.productDetails,
-                [tagGroup]: updatedTags
-            },
-            tagInputValue: "",
-            colourInputValue: "",
-            sizeInputValue: ""
-        })
-    }
+  removeTag(tagGroup, index) {
+    let updatedTags = [...this.state.productDetails[tagGroup]];
+    updatedTags.splice(index, 1);
+    this.getProductDetails(tagGroup, updatedTags);
+  }
 
-    removeTag(tagGroup, index) {
-        let updatedTags = [...this.state.productDetails[tagGroup]];
-        updatedTags.splice(index, 1);
-        this.getProductDetails(tagGroup, updatedTags);
-    }
+  render() {
+    const {
+      productDetails,
+      tagInputValue,
+      colourInputValue,
+      sizeInputValue
+    } = this.state;
+    const { closeModal } = this.props;
+    const { classes } = this.props;
 
-    render() {
-        const {productDetails, tagInputValue, colourInputValue, sizeInputValue} = this.state;
-        const {closeModal} = this.props;
-
-        return <div className="product-adding-popup">
-            <button className="closing-button" onClick={closeModal}>
-                <i className="material-icons">close</i>
-            </button>
-            <header className="popup_header_block">
-                <h3>Add product information</h3>
-                <p>Provide the following information to
-                    add a product</p>
-            </header>
-            <section className="main-content">
-                <div className="input-wrapper">
-                    <label>Product name</label>
-                    <input type="text"
-                           name="productName"
-                           value={productDetails.productName}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-                <div className="input-wrapper">
-                    <label>Vendor</label>
-                    <select name="vendor"
-                            value={productDetails.vendor}
-                            onChange={(e) => {
-                                this.getProductDetails(e.target.name, e.target.value)
-                            }}>
-                        <option value="opt1">Option 1</option>
-                        <option value="opt2">Option 2</option>
-                        <option value="opt3">Option 3</option>
-                        <option value="opt4">Option 4</option>
-                    </select>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>Product code</label>
-                        <input type="text"
-                               name="productCode"
-                               value={productDetails.productCode}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>Service name</label>
-                        <input type="text"
-                               name="serviceName"
-                               value={productDetails.serviceName}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>Stock</label>
-                        <input type="text"
-                               name="stock"
-                               value={productDetails.stock}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>Brand</label>
-                        <input type="text"
-                               name="brand"
-                               value={productDetails.brand}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper tag-adder">
-                    <label>Product colours</label>
-                    <input type="text"
-                           name="colourInputValue"
-                           value={colourInputValue}
-                           onKeyDown={(e) => {
-                               if (e.keyCode === 13) {
-                                   this.getInputedTag("colours", e.target.value)
-                               }
-                           }}
-                           onChange={(e) => this.setState({
-                               colourInputValue: e.target.value
-                           })}/>
-                </div>
-                <div className="tags_button_block">
-                    {productDetails.colours && productDetails.colours.map((item, index) => {
-                        return <button key={index}>
-                            {item}
-                            <i className="material-icons"
-                               onClick={() => this.removeTag("colours", index)}>close</i>
-                        </button>
-                    })}
-                </div>
-                <div className="input-wrapper tag-adder">
-                    <label>Size</label>
-                    <input type="text"
-                           name="sizeInputValue"
-                           value={sizeInputValue}
-                           onKeyDown={(e) => {
-                               if (e.keyCode === 13) {
-                                   this.getInputedTag("size", e.target.value)
-                               }
-                           }}
-                           onChange={(e) => this.setState({
-                               sizeInputValue: e.target.value
-                           })}/>
-                </div>
-                <div className="tags_button_block">
-                    {productDetails.size && productDetails.size.map((item, index) => {
-                        return <button key={index}>
-                            {item}
-                            <i className="material-icons"
-                               onClick={() => this.removeTag("size", index)}>close</i>
-                        </button>
-                    })}
-                </div>
-                <div className="input-wrapper tag-adder">
-                    <label>Tags</label>
-                    <input type="text"
-                           name="tagInputValue"
-                           value={tagInputValue}
-                           onKeyDown={(e) => {
-                               if (e.keyCode === 13) {
-                                   this.getInputedTag("tags", e.target.value)
-                               }
-                           }}
-                           onChange={(e) => this.setState({
-                               tagInputValue: e.target.value
-                           })}/>
-                </div>
-                <div className="tags_button_block">
-                    {productDetails.tags && productDetails.tags.map((item, index) => {
-                        return <button key={index}>
-                            {item}
-                            <i className="material-icons"
-                               onClick={() => this.removeTag("tags", index)}>close</i>
-                        </button>
-                    })}
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>Link Url</label>
-                        <input type="text"
-                               name="linkUrl"
-                               value={productDetails.linkUrl}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>Print Area</label>
-                        <input type="text"
-                               name="printArea"
-                               value={productDetails.printArea}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper">
-                    <label>Freight Description</label>
-                    <input type="text"
-                           name="freightDescription"
-                           value={productDetails.freightDescription}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-                <div className="input-wrapper">
-                    <label>Description</label>
-                    <input type="text"
-                           name="description"
-                           value={productDetails.description}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-                <div className="input-wrapper">
-                    <label>Primary Price Description</label>
-                    <input type="text"
-                           name="primaryPriceDescription"
-                           value={productDetails.primaryPriceDescription}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>Individual Product Packaging</label>
-                        <input type="text"
-                               name="individualProductPackaging"
-                               value={productDetails.individualProductPackaging}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>Standard Production Time</label>
-                        <input type="text"
-                               name="stdProductionTime"
-                               value={productDetails.stdProductionTime}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>Category</label>
-                        <select name="category"
-                                value={productDetails.category}
-                                onChange={(e) => {
-                                    this.getProductDetails(e.target.name, e.target.value)
-                                }}>
-                            <option value="opt1">Option 1</option>
-                            <option value="opt2">Option 2</option>
-                            <option value="opt3">Option 3</option>
-                            <option value="opt4">Option 4</option>
-                        </select>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>Subcategory</label>
-                        <select name="subCategory"
-                                value={productDetails.subCategory}
-                                onChange={(e) => {
-                                    this.getProductDetails(e.target.name, e.target.value)
-                                }}>
-                            <option value="opt1">Option 1</option>
-                            <option value="opt2">Option 2</option>
-                            <option value="opt3">Option 3</option>
-                            <option value="opt4">Option 4</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm carton-details">
-                    <header>Carton Details</header>
-                    <div className="wrapper-row">
-                        <div className="input-wrapper">
-                            <label>Height</label>
-                            <input type="text"
-                                   name="cartonHeight"
-                                   value={productDetails.cartonHeight}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                        <div className="input-wrapper">
-                            <label>Width</label>
-                            <input type="text"
-                                   name="cartonWidth"
-                                   value={productDetails.cartonWidth}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                        <div className="input-wrapper">
-                            <label>Depth</label>
-                            <input type="text"
-                                   name="cartonDepth"
-                                   value={productDetails.cartonDepth}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                        <div className="input-wrapper">
-                            <label>Weight</label>
-                            <input type="text"
-                                   name="cartonWeight"
-                                   value={productDetails.cartonWeight}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                        <div className="input-wrapper">
-                            <label>Carton QTY</label>
-                            <input type="text"
-                                   name="qtyPerCarton"
-                                   value={productDetails.qtyPerCarton}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                        <div className="input-wrapper">
-                            <label>Cubic</label>
-                            <input type="text"
-                                   name="cartonCubic"
-                                   value={productDetails.cartonCubic}
-                                   onChange={(e) => {
-                                       this.getProductDetails(e.target.name, e.target.value)
-                                   }}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="input-wrapper">
-                    <label>Carton Notes</label>
-                    <input type="text"
-                           name="cartonNotes"
-                           value={productDetails.cartonNotes}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 1</label>
-                        <input type="text"
-                               name="qtyBreakPoint1"
-                               value={productDetails.qtyBreakPoint1}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 1 Price</label>
-                        <input type="text"
-                               name="qtyBreakPoint1Price"
-                               value={productDetails.qtyBreakPoint1Price}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 2</label>
-                        <input type="text"
-                               name="qtyBreakPoint2"
-                               value={productDetails.qtyBreakPoint2}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 2 Price</label>
-                        <input type="text"
-                               name="qtyBreakPoint2Price"
-                               value={productDetails.qtyBreakPoint2Price}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 3</label>
-                        <input type="text"
-                               name="qtyBreakPoint3"
-                               value={productDetails.qtyBreakPoint3}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 3 Price</label>
-                        <input type="text"
-                               name="qtyBreakPoint3Price"
-                               value={productDetails.qtyBreakPoint3Price}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper-for-sm">
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 4</label>
-                        <input type="text"
-                               name="qtyBreakPoint4"
-                               value={productDetails.qtyBreakPoint4}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                    <div className="input-wrapper">
-                        <label>QTY Break Point 4 Price</label>
-                        <input type="text"
-                               name="qtyBreakPoint4Price"
-                               value={productDetails.qtyBreakPoint4Price}
-                               onChange={(e) => {
-                                   this.getProductDetails(e.target.name, e.target.value)
-                               }}/>
-                    </div>
-                </div>
-                <div className="input-wrapper">
-                    <label>Parent product code</label>
-                    <input type="text"
-                           name="parentProductCode"
-                           value={productDetails.parentProductCode}
-                           onChange={(e) => {
-                               this.getProductDetails(e.target.name, e.target.value)
-                           }}/>
-                </div>
-            </section>
+    return (
+      <Grid container>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Product name"
+            name="name"
+            value={productDetails.name}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
         </div>
-    }
+        <div className={classes.inputWrapper}>
+          <label>Vendor</label>
+          <Select
+            name="vendor"
+            value={productDetails.vendor}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+          >
+            <MenuItem value="opt1">Option 1</MenuItem>
+            <MenuItem value="opt2">Option 2</MenuItem>
+            <MenuItem value="opt3">Option 3</MenuItem>
+            <MenuItem value="opt4">Option 4</MenuItem>
+          </Select>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Product codee"
+              name="code"
+              value={productDetails.code}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Service name"
+              name="serviceName"
+              value={productDetails.serviceName}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Stock"
+              name="stock"
+              value={productDetails.stock}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Brand"
+              name="brand"
+              value={productDetails.brand}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper tag-adder">
+          <TextField
+            label="Product colours"
+            name="colourInputValue"
+            value={colourInputValue}
+            className={classes.textField}
+            onKeyDown={e => {
+              if (e.keyCode === 13) {
+                this.getInputedTag("colours", e.target.value);
+              }
+            }}
+            onChange={e =>
+              this.setState({
+                colourInputValue: e.target.value
+              })
+            }
+            margin="none"
+          />
+        </div>
+        <div className="tags_button_block">
+          {productDetails.color &&
+            productDetails.colour.map((item, index) => {
+              return (
+                <Chip
+                  key={index}
+                  onDelete={() => this.removeTag("colour", index)}
+                  label={item}
+                />
+              );
+            })}
+        </div>
+        <div className="input-wrapper tag-adder">
+          <TextField
+            label="Size"
+            name="sizeInputValue"
+            value={productDetails.sizeInputValue}
+            className={classes.textField}
+            onKeyDown={e => {
+              if (e.keyCode === 13) {
+                this.getInputedTag("size", e.target.value);
+              }
+            }}
+            onChange={e =>
+              this.setState({
+                sizeInputValue: e.target.value
+              })
+            }
+            margin="none"
+          />
+        </div>
+        <div className="tags_button_block">
+          {productDetails.size &&
+            productDetails.size.map((item, index) => {
+              return (
+                <Chip
+                  key={index}
+                  onDelete={() => this.removeTag("size", index)}
+                  label={item}
+                />
+              );
+            })}
+        </div>
+        <div className="input-wrapper tag-adder">
+          <TextField
+            label="Tags"
+            name="tagInputValue"
+            value={tagInputValue}
+            className={classes.textField}
+            onKeyDown={e => {
+              if (e.keyCode === 13) {
+                this.getInputedTag("size", e.target.value);
+              }
+            }}
+            onChange={e =>
+              this.setState({
+                tagInputValue: e.target.value
+              })
+            }
+            margin="none"
+          />
+        </div>
+        <div className="tags_button_block">
+          {productDetails.tags &&
+            productDetails.tags.map((item, index) => {
+              return (
+                <Chip
+                  key={index}
+                  onDelete={() => this.removeTag("tags", index)}
+                  label={item}
+                />
+              );
+            })}
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Link url"
+              name="linkUrl"
+              value={productDetails.linkUrl}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Print Area"
+              name="printArea"
+              value={productDetails.printArea}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Freight Description"
+            name="freightDescription"
+            value={productDetails.freightDescription}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
+        </div>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Description"
+            name="description"
+            value={productDetails.description}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
+        </div>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Primary Price Description"
+            name="primaryPriceDescription"
+            value={productDetails.primaryPriceDescription}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Individual Product Packaging"
+              name="individualProductPackaging"
+              value={productDetails.individualProductPackaging}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Standard Production Time"
+              name="stdProductionTime"
+              value={productDetails.stdProductionTime}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <label>Category</label>
+
+            <Select
+              name="category"
+              value={productDetails.category}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+            >
+              <MenuItem value="opt1">Option 1</MenuItem>
+              <MenuItem value="opt2">Option 2</MenuItem>
+              <MenuItem value="opt3">Option 3</MenuItem>
+              <MenuItem value="opt4">Option 4</MenuItem>
+            </Select>
+          </div>
+          <div className={classes.inputWrapper}>
+            <label>Subcategory</label>
+
+            <Select
+              name="subCategory"
+              value={productDetails.subCategory}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+            >
+              <MenuItem value="opt1">Option 1</MenuItem>
+              <MenuItem value="opt2">Option 2</MenuItem>
+              <MenuItem value="opt3">Option 3</MenuItem>
+              <MenuItem value="opt4">Option 4</MenuItem>
+            </Select>
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm carton-details">
+          <header>Carton Details</header>
+          <div className="wrapper-row">
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Height"
+                name="cartonHeight"
+                value={productDetails.cartonHeight}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Width"
+                name="cartonWidth"
+                value={productDetails.cartonWidth}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Depth"
+                name="cartonDepth"
+                value={productDetails.cartonDepth}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Carton Weight"
+                name="cartonWeight"
+                value={productDetails.cartonWeight}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Carton QTY"
+                name="qtyPerCarton"
+                value={productDetails.qtyPerCarton}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Cubic"
+                name="cartonCubic"
+                value={productDetails.cartonCubic}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+              />
+            </div>
+          </div>
+        </div>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Carton Notes"
+            name="cartonNotes"
+            value={productDetails.cartonNotes}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 1"
+              name="qtyBreakPoint1"
+              value={productDetails.qtyBreakPoint1}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 1 Price"
+              name="qtyBreakPoint1Price"
+              value={productDetails.qtyBreakPoint1Price}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 2"
+              name="qtyBreakPoint2"
+              value={productDetails.qtyBreakPoint2}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 2 Price"
+              name="qtyBreakPoint2Price"
+              value={productDetails.qtyBreakPoint2Price}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 3"
+              name="qtyBreakPoint3"
+              value={productDetails.qtyBreakPoint3}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 3 Price"
+              name="qtyBreakPoint3Price"
+              value={productDetails.qtyBreakPoint3Price}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className="input-wrapper-for-sm">
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 4"
+              name="qtyBreakPoint4"
+              value={productDetails.qtyBreakPoint4}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="QTY Break Point 4 Price"
+              name="qtyBreakPoint4Price"
+              value={productDetails.qtyBreakPoint4Price}
+              className={classes.textField}
+              onChange={e => {
+                this.getProductDetails(e.target.name, e.target.value);
+              }}
+              margin="none"
+            />
+          </div>
+        </div>
+        <div className={classes.inputWrapper}>
+          <TextField
+            label="Parent product code"
+            name="parentProductCode"
+            value={productDetails.parentProductCode}
+            className={classes.textField}
+            onChange={e => {
+              this.getProductDetails(e.target.name, e.target.value);
+            }}
+            margin="none"
+          />
+        </div>
+        <Button onClick={closeModal} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={this.addthisProduct} color="primary">
+          Add
+        </Button>
+      </Grid>
+    );
+  }
 }
 
-export default AddProduct;
+export default withStyles(styles)(AddProduct);

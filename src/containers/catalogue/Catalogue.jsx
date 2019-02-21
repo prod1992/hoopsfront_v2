@@ -28,6 +28,11 @@ import Book from "@material-ui/icons/Book";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Close from "@material-ui/icons/Close";
 
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
@@ -53,9 +58,20 @@ import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
 import FilterList from "@material-ui/icons/FilterList";
 
-import Modal from "react-modal";
+import Dialog from "@material-ui/core/Dialog";
 
 const styles = theme => ({
+  ModalClass: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    width: theme.spacing.unit * 60,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: "none"
+  },
   catalogueHeader: {
     fontSize: "1.5rem",
     display: "flex",
@@ -568,7 +584,10 @@ class Catalogue extends React.Component {
                       onClickAway={this.handleMoreHorizClickButton}
                     >
                       <MenuList>
-                        <MenuItem className={classes.menuItem}>
+                        <MenuItem
+                          className={classes.menuItem}
+                          onClick={this.openProductAddingModal}
+                        >
                           <ListItemIcon className={classes.icon}>
                             <Add />
                           </ListItemIcon>
@@ -611,14 +630,28 @@ class Catalogue extends React.Component {
           </Grid>
           <FilterBar />
         </Grid>
-        <Modal
-          isOpen={this.state.productAddingModal}
-          onRequestClose={this.closeProductAddingModal}
-          overlayClassName="product-adding-modal-overlay"
-          className="product-adding-modal"
+        <Dialog
+          open={this.state.productAddingModal}
+          onClose={this.closeProductAddingModal}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
         >
-          <AddProduct closeModal={this.closeProductAddingModal} />
-        </Modal>
+          <DialogTitle id="scroll-dialog-title">
+            <div>
+              <header className="popup_header_block">
+                <h3>Add product information</h3>
+                <p>Provide the following information to add a product</p>
+              </header>
+              <Close onClick={this.closeProductAddingModal} />
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <AddProduct closeModal={this.closeProductAddingModal} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions />
+        </Dialog>
 
         <div className="catalogue-body">
           <div className="shared-scroll-view">

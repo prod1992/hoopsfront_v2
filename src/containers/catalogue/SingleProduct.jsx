@@ -85,6 +85,9 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none"
+  },
+  DNone: {
+    display: "none"
   }
 });
 class SingleProduct extends Component {
@@ -93,12 +96,14 @@ class SingleProduct extends Component {
 
     this.state = {
       modalIsOpen: false,
+      ShowUploadImageButton: false,
       product: {}
     };
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-
+    this.showUploadImageButton = this.showUploadImageButton.bind(this);
+    this.hideUploadImageButton = this.hideUploadImageButton.bind(this);
     this.imageSelector = React.createRef();
   }
 
@@ -138,7 +143,12 @@ class SingleProduct extends Component {
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
-
+  showUploadImageButton() {
+    this.setState({ ShowUploadImageButton: true });
+  }
+  hideUploadImageButton() {
+    this.setState({ ShowUploadImageButton: false });
+  }
   handleImageChange(e) {
     e.preventDefault();
 
@@ -180,19 +190,25 @@ class SingleProduct extends Component {
                       className={classes.media}
                       image={product.image_name}
                       title={product.title}
+                      onMouseOver={this.showUploadImageButton}
+                      onMouseLeave={this.hideUploadImageButton}
                     />
                     <Fab
                       onClick={() => this.imageSelector.current.click()}
                       color="secondary"
                       aria-label="Edit"
-                      className={classes.fab}
+                      className={
+                        classes.fab + this.state.ShowUploadImageButton
+                          ? classes.show
+                          : classes.DNone
+                      }
                     >
                       <Edit />
                     </Fab>
                     <input
                       type="file"
                       ref={this.imageSelector}
-                      className="d-none"
+                      className={classes.DNone}
                       onChange={e => this.handleImageChange(e)}
                     />
                   </div>
