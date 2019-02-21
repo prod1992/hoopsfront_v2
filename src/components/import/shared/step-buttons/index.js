@@ -39,10 +39,10 @@ class StepButtons extends Component {
     const { stepState } = this.props.importSteps;
     if (csv === true) {
       if (stepState === 0) {
-        const vendor = this.props.selectVendor.selected;
+        const vendor = this.props.selectVendor.selected.single;
         if (vendor) {
           this.props.formData.delete("vendor");
-          this.props.formData.append("vendor", vendor.id);
+          this.props.formData.append("vendor", vendor.value);
           this.props.onUpload(this.props.formData);
         } else {
           this.notifyOnEmptyFields("Please, select a vendor!");

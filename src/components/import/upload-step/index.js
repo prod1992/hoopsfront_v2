@@ -22,6 +22,8 @@ import { Grid, Paper, Chip } from "@material-ui/core";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Close from "@material-ui/icons/Close";
 
+import IntergrationReactSelect from "../../../components/shared/IntegrationReactSelect";
+
 const styles = theme => ({
   heading: {
     fontWeight: 400,
@@ -260,7 +262,7 @@ class UploadFiles extends React.Component {
                 />
 
                 <div className="custom-field-row">
-                  <SelectDropdown />
+                  <IntergrationReactSelect />
                 </div>
               </div>
             </Grid>

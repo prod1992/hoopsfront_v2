@@ -22,7 +22,6 @@ const styles = theme => ({
     borderRadius: 3,
     boxShadow: "rgba(0, 0, 0, 0) 0px 0px 8px 0px",
     transition: "0.2s ease box-shadow",
-
     "&:hover": {
       boxShadow: "rgba(0, 0, 0, 0.2) 0px 0px 8px 0px"
     }
