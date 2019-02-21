@@ -27,6 +27,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Book from "@material-ui/icons/Book";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
@@ -114,7 +115,8 @@ class Catalogue extends React.Component {
       open: false,
       preventOverflow: "scrollParent",
       DownloadPopper: false,
-      MoreHorizOpen: false
+      MoreHorizOpen: false,
+      DownluadCSVOpen: false
     };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -472,36 +474,28 @@ class Catalogue extends React.Component {
                   }}
                 >
                   <VerticalAlignBottom />
-                  <Popper
-                    open={this.state.DownloadPopper}
-                    anchorEl={this.ExportCSVButton}
-                    transition={true}
-                    placement="bottom-start"
-                    disablePortal={disablePortal}
-                    className={classes.popper}
-                    modifiers={{
-                      flip: {
-                        enabled: flip
-                      },
-                      arrow: {
-                        enabled: arrow,
-                        element: this.ExportCSVButton
-                      },
-                      preventOverflow: {
-                        enabled: preventOverflow !== "disabled",
-                        boundariesElement:
-                          preventOverflow === "disabled"
-                            ? "scrollParent"
-                            : preventOverflow
-                      }
-                    }}
+                </IconButton>
+                <Popper
+                  open={this.state.DownluadCSVOpen}
+                  anchorEl={this.ExportCSVButton}
+                  placement="bottom-start"
+                  disablePortal={disablePortal}
+                  modifiers={{
+                    flip: {
+                      enabled: flip
+                    }
+                    /* arrow: {
+                      enabled: arrow,
+                      element: this.ExportCSVButton
+                    },*/
+                  }}
+                >
+                  {arrow ? (
+                    <span className={classes.arrow} ref={this.handleArrowRef} />
+                  ) : null}
+                  <ClickAwayListener
+                    onClickAway={this.handleDownloadCSVClickButton}
                   >
-                    {arrow ? (
-                      <span
-                        className={classes.arrow}
-                        ref={this.handleArrowRef}
-                      />
-                    ) : null}
                     <Paper className={classes.paper}>
                       <MenuList>
                         <MenuItem
@@ -519,8 +513,8 @@ class Catalogue extends React.Component {
                         </MenuItem>
                       </MenuList>
                     </Paper>
-                  </Popper>
-                </IconButton>
+                  </ClickAwayListener>
+                </Popper>
 
                 <IconButton
                   className={
@@ -570,41 +564,45 @@ class Catalogue extends React.Component {
                     <span className={classes.arrow} ref={this.handleArrowRef} />
                   ) : null}
                   <Paper className={classes.paper}>
-                    <MenuList>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <Add />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="add product"
-                        />
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <Link to="/import" className={classes.importHref}>
+                    <ClickAwayListener
+                      onClickAway={this.handleMoreHorizClickButton}
+                    >
+                      <MenuList>
+                        <MenuItem className={classes.menuItem}>
                           <ListItemIcon className={classes.icon}>
-                            <OpenInBrowser />
+                            <Add />
                           </ListItemIcon>
-
                           <ListItemText
                             classes={{ primary: classes.primary }}
                             inset
-                            primary="import"
+                            primary="add product"
                           />
-                        </Link>
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <Edit />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="bulk edit"
-                        />
-                      </MenuItem>
-                    </MenuList>
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem}>
+                          <Link to="/import" className={classes.importHref}>
+                            <ListItemIcon className={classes.icon}>
+                              <OpenInBrowser />
+                            </ListItemIcon>
+
+                            <ListItemText
+                              classes={{ primary: classes.primary }}
+                              inset
+                              primary="import"
+                            />
+                          </Link>
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem}>
+                          <ListItemIcon className={classes.icon}>
+                            <Edit />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={{ primary: classes.primary }}
+                            inset
+                            primary="bulk edit"
+                          />
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
                   </Paper>
                 </Popper>
               </div>
