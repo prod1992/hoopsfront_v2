@@ -82,9 +82,10 @@ const styles = theme => ({
   },
   automateButton: {
     backgroundColor: "#1DB3E7",
-    marginRight: 6,
     minWidth: "40px",
-    cursor: "pointer"
+    cursor: "pointer",
+    marginLeft: "10px",
+    marginRight: "5px"
   },
   catalogueProcessHref: {
     textDecoration: "none",
@@ -114,6 +115,10 @@ const styles = theme => ({
   importHref: {
     display: "flex",
     textDecoration: "none"
+  },
+  CatalogueBody: {
+    flex: 1,
+    width: "100%"
   }
 });
 class Catalogue extends React.Component {
@@ -506,9 +511,9 @@ class Catalogue extends React.Component {
                       enabled: flip
                     }
                     /* arrow: {
-                      enabled: arrow,
-                      element: this.ExportCSVButton
-                    },*/
+                        enabled: arrow,
+                        element: this.ExportCSVButton
+                      },*/
                   }}
                 >
                   {arrow ? (
@@ -661,7 +666,7 @@ class Catalogue extends React.Component {
           <DialogActions />
         </Dialog>
 
-        <div className="catalogue-body">
+        <div className={classes.CatalogueBody}>
           <div className="shared-scroll-view">
             <div className="catalogue-grid">
               {catalogueStates["bulkEdit"] && <BulkEdit />}
