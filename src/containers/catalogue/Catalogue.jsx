@@ -27,6 +27,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Book from "@material-ui/icons/Book";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Close from "@material-ui/icons/Close";
 
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewList from "@material-ui/icons/ViewList";
@@ -52,9 +58,20 @@ import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
 import FilterList from "@material-ui/icons/FilterList";
 
-import Modal from "react-modal";
+import Dialog from "@material-ui/core/Dialog";
 
 const styles = theme => ({
+  ModalClass: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    width: theme.spacing.unit * 60,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: "none"
+  },
   catalogueHeader: {
     fontSize: "1.5rem",
     display: "flex",
@@ -114,7 +131,8 @@ class Catalogue extends React.Component {
       open: false,
       preventOverflow: "scrollParent",
       DownloadPopper: false,
-      MoreHorizOpen: false
+      MoreHorizOpen: false,
+      DownluadCSVOpen: false
     };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -472,36 +490,28 @@ class Catalogue extends React.Component {
                   }}
                 >
                   <VerticalAlignBottom />
-                  <Popper
-                    open={this.state.DownloadPopper}
-                    anchorEl={this.ExportCSVButton}
-                    transition={true}
-                    placement="bottom-start"
-                    disablePortal={disablePortal}
-                    className={classes.popper}
-                    modifiers={{
-                      flip: {
-                        enabled: flip
-                      },
-                      arrow: {
-                        enabled: arrow,
-                        element: this.ExportCSVButton
-                      },
-                      preventOverflow: {
-                        enabled: preventOverflow !== "disabled",
-                        boundariesElement:
-                          preventOverflow === "disabled"
-                            ? "scrollParent"
-                            : preventOverflow
-                      }
-                    }}
+                </IconButton>
+                <Popper
+                  open={this.state.DownluadCSVOpen}
+                  anchorEl={this.ExportCSVButton}
+                  placement="bottom-start"
+                  disablePortal={disablePortal}
+                  modifiers={{
+                    flip: {
+                      enabled: flip
+                    }
+                    /* arrow: {
+                      enabled: arrow,
+                      element: this.ExportCSVButton
+                    },*/
+                  }}
+                >
+                  {arrow ? (
+                    <span className={classes.arrow} ref={this.handleArrowRef} />
+                  ) : null}
+                  <ClickAwayListener
+                    onClickAway={this.handleDownloadCSVClickButton}
                   >
-                    {arrow ? (
-                      <span
-                        className={classes.arrow}
-                        ref={this.handleArrowRef}
-                      />
-                    ) : null}
                     <Paper className={classes.paper}>
                       <MenuList>
                         <MenuItem
@@ -519,8 +529,8 @@ class Catalogue extends React.Component {
                         </MenuItem>
                       </MenuList>
                     </Paper>
-                  </Popper>
-                </IconButton>
+                  </ClickAwayListener>
+                </Popper>
 
                 <IconButton
                   className={
@@ -570,41 +580,48 @@ class Catalogue extends React.Component {
                     <span className={classes.arrow} ref={this.handleArrowRef} />
                   ) : null}
                   <Paper className={classes.paper}>
-                    <MenuList>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <Add />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="add product"
-                        />
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <Link to="/import" className={classes.importHref}>
+                    <ClickAwayListener
+                      onClickAway={this.handleMoreHorizClickButton}
+                    >
+                      <MenuList>
+                        <MenuItem
+                          className={classes.menuItem}
+                          onClick={this.openProductAddingModal}
+                        >
                           <ListItemIcon className={classes.icon}>
-                            <OpenInBrowser />
+                            <Add />
                           </ListItemIcon>
-
                           <ListItemText
                             classes={{ primary: classes.primary }}
                             inset
-                            primary="import"
+                            primary="add product"
                           />
-                        </Link>
-                      </MenuItem>
-                      <MenuItem className={classes.menuItem}>
-                        <ListItemIcon className={classes.icon}>
-                          <Edit />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={{ primary: classes.primary }}
-                          inset
-                          primary="bulk edit"
-                        />
-                      </MenuItem>
-                    </MenuList>
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem}>
+                          <Link to="/import" className={classes.importHref}>
+                            <ListItemIcon className={classes.icon}>
+                              <OpenInBrowser />
+                            </ListItemIcon>
+
+                            <ListItemText
+                              classes={{ primary: classes.primary }}
+                              inset
+                              primary="import"
+                            />
+                          </Link>
+                        </MenuItem>
+                        <MenuItem className={classes.menuItem}>
+                          <ListItemIcon className={classes.icon}>
+                            <Edit />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={{ primary: classes.primary }}
+                            inset
+                            primary="bulk edit"
+                          />
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
                   </Paper>
                 </Popper>
               </div>
@@ -613,14 +630,28 @@ class Catalogue extends React.Component {
           </Grid>
           <FilterBar />
         </Grid>
-        <Modal
-          isOpen={this.state.productAddingModal}
-          onRequestClose={this.closeProductAddingModal}
-          overlayClassName="product-adding-modal-overlay"
-          className="product-adding-modal"
+        <Dialog
+          open={this.state.productAddingModal}
+          onClose={this.closeProductAddingModal}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
         >
-          <AddProduct closeModal={this.closeProductAddingModal} />
-        </Modal>
+          <DialogTitle id="scroll-dialog-title">
+            <div>
+              <header className="popup_header_block">
+                <h3>Add product information</h3>
+                <p>Provide the following information to add a product</p>
+              </header>
+              <Close onClick={this.closeProductAddingModal} />
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <AddProduct closeModal={this.closeProductAddingModal} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions />
+        </Dialog>
 
         <div className="catalogue-body">
           <div className="shared-scroll-view">
