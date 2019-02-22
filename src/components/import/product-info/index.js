@@ -1,82 +1,124 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
 import TrendingFlat from "@material-ui/icons/TrendingFlat";
-class ProductInfo extends Component {
+
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Table,
+  Paper,
+  Grid
+} from "@material-ui/core";
+
+import RenderLabelGroup from "../../shared/RenderLabelGroup";
+
+const styles = theme => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 700
+  }
+});
+
+class ProductInfo extends React.Component {
   render() {
-    const { importFileData } = this.props;
+    const { classes, importFileData } = this.props;
+    const getPriority = item => {
+      console.log(item);
+      if (item.required) {
+        return "required";
+      }
+      if (item.recomended) {
+        return "recomended";
+      } else {
+        return "";
+      }
+    };
     console.log(importFileData);
     return (
       <div className="product_mapping_block">
-        <div className="product_mapping_block_title">
-          <div className="product_info">
-            <div className="product_info_icon_block">
-              <i className="material-icons white-text product_info_icon_block_icon">
-                beenhere
-              </i>
-            </div>
-            <span className="product_info_icon_block_text">
-              Product info mapping
-            </span>
-          </div>
-          <div className="watch_the_video">
-            <VideoBtn />
-          </div>
-        </div>
-        <div className="hoops_map_table">
-          <table className="hoops_map_table_in_table">
-            <thead>
-              <tr>
-                <td>
-                  <span>Map to fields in Hoops</span>
-                </td>
-                <td />
-                <td>
+        <Paper>
+          <Grid container className="product_mapping_block_title">
+            <Grid item>
+              <div className="product_info_icon_block">
+                <i className="material-icons white-text product_info_icon_block_icon">
+                  beenhere
+                </i>
+              </div>
+              <span className="product_info_icon_block_text">
+                Product info mapping
+              </span>
+            </Grid>
+            <Grid item>
+              <VideoBtn />
+            </Grid>
+          </Grid>
+        </Paper>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <span>Map to fields in </span>
+                </TableCell>
+                <TableCell />
+                <TableCell>
                   <span>Fields in your file</span>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {importFileData &&
                 importFileData.db_fields.map((item, index) => {
                   if (index < 13) {
                     return (
-                      <tr key={index}>
-                        <td>
-                          <span>{item.label}</span>
-                          {item.required && (
-                            <button className="hoops_map_table_required_button">
-                              Required
-                            </button>
-                          )}
-                          {item.recomended && (
-                            <button className="hoops_map_table_recommended_button">
-                              Recommended
-                            </button>
-                          )}
-                          <a href="#" className="what_this_link">
-                            What's This?
-                          </a>
-                        </td>
-                        <td>
+                      <TableRow key={index}>
+                        <TableCell>
+                          <RenderLabelGroup
+                            text={item.label}
+                            url={"#"}
+                            priority={getPriority(item)}
+                            anchorText={"What's this?"}
+                          />
+                        </TableCell>
+                        <TableCell>
                           <TrendingFlat />
-                        </td>
-                        <td>
+                        </TableCell>
+                        <TableCell>
                           <ImportedProperty
                             propertyItem={item}
                             propertyOptions={importFileData.csv_headers}
                           />
-                        </td>
-                      </tr>
+                        </TableCell>
+                      </TableRow>
                     );
                   }
                 })}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </Paper>
       </div>
     );
   }
 }
 
-export default ProductInfo;
+function mapStateToProps(state) {
+  return {
+    // selectVendor: state.selectVendor,
+    // importSteps: state.importStepsReducer,
+    // importFiles: state.importCatalogFiles,
+    // progress: state.importCatalogFiles.progress
+  };
+}
+
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(ProductInfo)
+);

@@ -612,6 +612,9 @@ class Catalogue extends React.Component {
                               <Add />
                             </ListItemIcon>
                             <ListItemText
+                              primaryTypographyProps={{
+                                style: { textTransform: "capitalize" }
+                              }}
                               classes={{ primary: classes.primary }}
                               inset
                               primary="add product"
@@ -624,6 +627,9 @@ class Catalogue extends React.Component {
                               </ListItemIcon>
 
                               <ListItemText
+                                primaryTypographyProps={{
+                                  style: { textTransform: "capitalize" }
+                                }}
                                 classes={{ primary: classes.primary }}
                                 inset
                                 primary="import"
@@ -638,6 +644,9 @@ class Catalogue extends React.Component {
                               <Edit />
                             </ListItemIcon>
                             <ListItemText
+                              primaryTypographyProps={{
+                                style: { textTransform: "capitalize" }
+                              }}
                               classes={{ primary: classes.primary }}
                               inset
                               primary="bulk edit"

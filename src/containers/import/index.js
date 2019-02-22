@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
+import CustomizedStepper from "../../components/import/Stepper";
+
 import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 
@@ -25,7 +27,12 @@ import {
 
 import { Icon } from "@material-ui/core";
 
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {
+  Grid,
+  Paper,
+  BottomNavigation,
+  BottomNavigationAction
+} from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -44,6 +51,9 @@ const styles = theme => ({
   },
   pageWrapper: {
     marginBotttom: 70
+  },
+  resultsPaper: {
+    padding: 16
   }
 });
 
@@ -61,60 +71,53 @@ class ImportPage extends React.Component {
 
     return (
       <div className={classes.pageWrapper}>
+        <CustomizedStepper />
         {importStep.stepState === 0 ? <UploadFiles /> : ""}
         {importStep.stepState !== 0 ? (
           <div className="step-shared-wrapper">
-            <div className="main-header-control-wrapper">
-              <div className="shared-header-control">
-                <StepButtons />
-                <ImportStateChart />
-              </div>
-              <div className="user-status-info">
-                <div className="info-wrapper">
-                  <div className="col-sm-12 col-md-4 info-item">
-                    <div className="text">Vendor</div>
-                    <div className="content">
-                      <Person />
-                      <span>
-                        {selectedVendor && selectedVendor.vendor_name}
+            <Paper className={classes.resultsPaper}>
+              <Grid container>
+                <Grid item sm={4}>
+                  <div className="text">Vendor</div>
+                  <div className="content">
+                    <Person />
+                    <span>{selectedVendor && selectedVendor.vendor_name}</span>
+                  </div>
+                </Grid>
+                <Grid item sm={4}>
+                  <div className="text">Product csv files</div>
+                  {importFileData.csvFile && (
+                    <div className="upload-name">
+                      <span className="badge csv">CSV</span>
+                      <span className="file-name">
+                        {importFileData.csvFile}
                       </span>
                     </div>
-                  </div>
-                  <div className="col-sm-12 col-md-4 info-item">
-                    <div className="text">Product csv files</div>
-                    {importFileData.csvFile && (
-                      <div className="upload-name">
-                        <span className="badge csv">CSV</span>
-                        <span className="file-name">
-                          {importFileData.csvFile}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-sm-12 col-md-3 info-item">
-                    <div className="text">Product zip files</div>
-                    {importFileData.zipFile && (
-                      <div className="upload-name">
-                        <span className="badge zip">ZIP</span>
-                        <span className="file-name">
-                          {importFileData.zipFile}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-sm-12 col-md-1 info-to-import">
-                    <button
-                      className="to-import-btn"
-                      onClick={() => {
-                        this.props.movePrevStep();
-                      }}
-                    >
-                      <Edit />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  )}
+                </Grid>
+                <Grid item sm={3}>
+                  <div className="text">Product zip files</div>
+                  {importFileData.zipFile && (
+                    <div className="upload-name">
+                      <span className="badge zip">ZIP</span>
+                      <span className="file-name">
+                        {importFileData.zipFile}
+                      </span>
+                    </div>
+                  )}
+                </Grid>
+                <Grid item sm={1}>
+                  <button
+                    className="to-import-btn"
+                    onClick={() => {
+                      this.props.movePrevStep();
+                    }}
+                  >
+                    <Edit />
+                  </button>
+                </Grid>
+              </Grid>
+            </Paper>
             {importStep.stepState === 1 ? (
               <ProductInfo
                 importFileData={this.props.importFileData.importData}
@@ -141,7 +144,7 @@ class ImportPage extends React.Component {
             <StepButtons />
           </div>
         ) : null}
-        {/* <GlobalStep /> */}
+
         <BottomNavigation
           showLabels
           value={value}

@@ -39,7 +39,7 @@ const styles = theme => ({
     padding: 24
   },
   dropZone: {
-    minHeight: 220,
+    height: 220,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -180,7 +180,6 @@ class UploadFiles extends React.Component {
               alignItems: "center",
               color: "#1db3e7",
               fontSize: props.fontSize,
-              lineHeight: 1.5,
               textUnderlinePosition: "below",
               WebkitTextUnderlinePosition: "under",
               MsTextUnderlinePosition: "below",
@@ -283,18 +282,21 @@ class UploadFiles extends React.Component {
             </Grid>
             <Grid item style={{ marginLeft: "auto" }}>
               <RenderBlueUrl
+                fontSize={14}
                 to="/"
                 anchorText={"Download the basic template"}
                 text={"Great for simple products like apparel."}
                 icon={<CloudDownload />}
               />
               <RenderBlueUrl
+                fontSize={14}
                 to="/"
                 anchorText={"Download the complete template"}
                 text={"Great for complex products like promotional products."}
                 icon={<CloudDownload />}
               />
               <RenderBlueUrl
+                fontSize={14}
                 to="/"
                 anchorText={"Download the basic template"}
                 icon={<CloudDownload />}
@@ -329,7 +331,8 @@ class UploadFiles extends React.Component {
                           style={{
                             position: "relative",
                             width: "100%",
-                            height: "100%"
+                            height: "100%",
+                            display: "flex"
                           }}
                         >
                           <input {...getInputProps()} />
@@ -391,7 +394,8 @@ class UploadFiles extends React.Component {
                           style={{
                             position: "relative",
                             width: "100%",
-                            height: "100%"
+                            height: "100%",
+                            display: "flex"
                           }}
                         >
                           <input {...getInputProps()} />

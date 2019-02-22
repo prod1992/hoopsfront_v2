@@ -1,14 +1,42 @@
+import React from "react";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import {
   moveNextStep,
   movePrevStep
 } from "../../../../actions/catalogue-actions";
 import { onUpload, onFinish } from "../../../../core/import";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+
 //import { Modal } from "../../../modal/modal";
 import { ToastContainer, toast } from "react-toastify";
-import { KeyboardBackspace } from "@material-ui/icons";
-import { Grid, Button } from "@material-ui/core";
+import { KeyboardBackspace, SkipNext } from "@material-ui/icons";
+import {
+  Grid,
+  Button,
+  Stepper,
+  Step,
+  StepLabel,
+  StepConnector
+} from "@material-ui/core";
+
+const styles = theme => ({
+  uploadControls: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  buttonStyles: {
+    borderRadius: "2px",
+    height: 42,
+    padding: "0 15px",
+    fontSize: ".935rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 100,
+    boxShadow: "none"
+  }
+});
 
 const ArrowLeft = props => {
   return <KeyboardBackspace {...props} />;
@@ -20,7 +48,7 @@ const ArrowRight = props => {
   );
 };
 
-class StepButtons extends Component {
+class StepButtons extends React.Component {
   constructor(props) {
     super(props);
     this.renderSkipButton = this.renderSkipButton.bind(this);
@@ -91,6 +119,7 @@ class StepButtons extends Component {
   }
 
   renderSkipButton(param) {
+    const { classes } = this.props;
     if (param === 0 || param === 5) {
       return (
         <Button
@@ -101,7 +130,7 @@ class StepButtons extends Component {
           disabled
         >
           <span>Skip</span>
-          <i className="material-icons">skip_next</i>
+          <SkipNext />{" "}
         </Button>
       );
     } else {
@@ -109,37 +138,40 @@ class StepButtons extends Component {
         <Button
           variant="contained"
           color="primary"
+          className={classes.buttonStyles}
           onClick={this.changeNextStep}
         >
           <span>Skip</span>
-          <i className="material-icons">skip_next</i>
+          <SkipNext />{" "}
         </Button>
       );
     }
   }
 
   renderNextButton(param) {
+    const { classes } = this.props;
+
     if (param === 5) {
       return (
         <Button
           onClick={this.changeNextStep}
-          className="next disabled"
+          className={classes.buttonStyles}
           disabled
         >
-          <span>Next</span>
+          Next
           <ArrowRight />
         </Button>
       );
     } else {
       return (
         <Button
+          className={classes.buttonStyles}
           variant="contained"
           color="primary"
           onClick={this.changeNextStep}
-          className="next"
           style={{ textTransform: "capitalize" }}
         >
-          <span>Next</span>
+          Next
           <ArrowRight />
         </Button>
       );
@@ -147,33 +179,36 @@ class StepButtons extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const stepData = this.props.importSteps;
     /*if (this.props.importCatalogFiles.error) {
       <Modal>{this.props.importCatalogFiles.error}</Modal>;
     }
     */
     return (
-      <div className="next-prev-control">
+      <div>
         <ToastContainer autoClose={2000} />
-        {!this.props.firstPage && (
-          <div className="left-side">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.changePrevStep}
-              className={stepData["stepState"] === 0 ? "disabled" : ""}
-            >
-              <KeyboardBackspace />
+        <div className={classes.uploadControls}>
+          {!this.props.firstPage && (
+            <div style={{ marginRight: "auto" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.changePrevStep}
+                className={stepData["stepState"] === 0 ? "disabled" : ""}
+              >
+                <ArrowLeft />
 
-              <span>Back</span>
-            </Button>
+                <span>Back</span>
+              </Button>
+            </div>
+          )}
+
+          <div style={{ marginLeft: "auto" }}>
+            {!this.props.firstPage &&
+              this.renderSkipButton(stepData["stepState"])}
+            {this.renderNextButton(stepData["stepState"])}
           </div>
-        )}
-
-        <div className="right-side">
-          {!this.props.firstPage &&
-            this.renderSkipButton(stepData["stepState"])}
-          {this.renderNextButton(stepData["stepState"])}
         </div>
       </div>
     );
@@ -208,4 +243,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(StepButtons);
+)(withStyles(styles)(StepButtons));

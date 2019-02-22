@@ -13,10 +13,16 @@ import {
   Paper,
   Chip,
   MenuItem,
-  OutlinedInput
+  Button,
+  OutlinedInput,
+  Dialog
 } from "@material-ui/core";
 
 import CancelIcon from "@material-ui/icons/Cancel";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+
+import AddIcon from "@material-ui/icons/Add";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 
 import {
@@ -72,6 +78,16 @@ const styles = theme => ({
   },
   divider: {
     height: theme.spacing.unit * 2
+  },
+  addVendorButton: {
+    borderRadius: 0,
+    width: "100%",
+    textTransform: "capitalize",
+    margin: 0,
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
+    textAlign: "left"
   }
 });
 
@@ -115,17 +131,19 @@ function Control(props) {
 
 function Option(props) {
   return (
-    <MenuItem
-      buttonRef={props.innerRef}
-      selected={props.isFocused}
-      component="div"
-      style={{
-        fontWeight: props.isSelected ? 500 : 400
-      }}
-      {...props.innerProps}
-    >
-      {props.children}
-    </MenuItem>
+    <div>
+      <MenuItem
+        buttonRef={props.innerRef}
+        selected={props.isFocused}
+        component="div"
+        style={{
+          fontWeight: props.isSelected ? 500 : 400
+        }}
+        {...props.innerProps}
+      >
+        {props.children}
+      </MenuItem>
+    </div>
   );
 }
 
@@ -181,6 +199,13 @@ function Menu(props) {
       className={props.selectProps.classes.paper}
       {...props.innerProps}
     >
+      <Button
+        className={props.selectProps.classes.addVendorButton}
+        variant="default"
+      >
+        <AddIcon />
+        Add New
+      </Button>
       {props.children}
     </Paper>
   );

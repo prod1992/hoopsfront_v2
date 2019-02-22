@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
 
-class AdditionalCoast extends Component {
+class AdditionalCost extends Component {
   constructor(props) {
     super(props);
     this.toggleAdditionalBlock = this.toggleAdditionalBlock.bind(this);
@@ -251,4 +251,4 @@ class AdditionalCoast extends Component {
   }
 }
 
-export default AdditionalCoast;
+export default AdditionalCost;

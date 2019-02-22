@@ -36,7 +36,8 @@ const styles = theme => ({
   },
   mainWrapper: {
     flexGrow: 1,
-    padding: "90px 30px 0px 30px"
+    padding: "90px 30px 0px 30px",
+    marginBottom: 90
   },
   darkTooltip: {
     backgroundColor: "#222222",
