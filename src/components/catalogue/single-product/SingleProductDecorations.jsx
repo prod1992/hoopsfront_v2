@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -7,7 +8,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
+import Book from "@material-ui/icons/Book";
+import Fab from "@material-ui/core/Fab";
+import Edit from "@material-ui/icons/Edit";
 const styles = theme => ({
   root: {
     width: "100%",
@@ -16,6 +19,34 @@ const styles = theme => ({
   },
   table: {
     minWidth: 700
+  },
+  DecorationHeader: {
+    display: "flex",
+    alignItems: "center"
+  },
+  decoration: {
+    padding: "5px 5px 5px 15px",
+    display: "flex",
+    alignItems: "center"
+  },
+  DecorationHeaderProduct: {
+    fontSize: "1.125rem",
+    fontWeight: 400
+  },
+  catalogueProcessHref: {
+    textDecoration: "none",
+    fontSize: "16px",
+    color: "#1DB3E7",
+    marginLeft: "15px"
+  },
+  automateButton: {
+    backgroundColor: "#1DB3E7",
+    minWidth: "40px",
+    cursor: "pointer",
+    marginRight: "5px"
+  },
+  EditButton: {
+    cursor: "pointer"
   }
 });
 
@@ -33,57 +64,39 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9)
 ];
 
-function SingleProductDescription(props) {
-  const { classes } = props;
-
-  return (
-    <div>
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Primary Price Description</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>Brand</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Vendor</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Category</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Min order Qty</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Print Area</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Stock/Indent</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Standard Production Time</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Decoration Areas</TableCell>
-              <TableCell align="right">N/A</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Paper>
-    </div>
-  );
+class SingleProductDescription extends Component {
+  render() {
+    const { classes, product } = this.props;
+    return (
+      <div>
+        <div className={classes.DecorationHeader}>
+          <h4 className={classes.DecorationHeaderProduct}>
+            Decorations Linked to Product({product.decorations.length})
+          </h4>
+          <a
+            href="http://help.hoopscrm.com/decorations/decoration-linked-to-product---vs-your-decorations"
+            className={classes.catalogueProcessHref}
+          >
+            <Fab
+              size="small"
+              color="primary"
+              className={classes.automateButton}
+            >
+              <Book />
+            </Fab>
+            <span>Automate your processes by adding catalogues</span>
+          </a>
+        </div>
+        {product.decorations &&
+          product.decorations.map((decoration, i) => (
+            <Paper key={decoration.name} className={classes.decoration}>
+              <p>{decoration.name}</p>
+              <Edit className={classes.EditButton} />
+            </Paper>
+          ))}
+      </div>
+    );
+  }
 }
 
 SingleProductDescription.propTypes = {

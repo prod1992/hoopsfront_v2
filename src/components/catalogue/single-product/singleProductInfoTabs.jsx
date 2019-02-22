@@ -86,18 +86,20 @@ class SingleProductInfoTabs extends React.Component {
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="Tab 1"
+            label="Description"
           />
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="Tab 2"
+            label="Decoration options"
           />
+          {/*
           <Tab
             disableRipple
             classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
-            label="Tab 3"
+            label="Prices, sizes & colors"
           />
+          */}
         </Tabs>
         {value === 0 && (
           <TabContainer>
@@ -109,11 +111,11 @@ class SingleProductInfoTabs extends React.Component {
             <SingleProductDecorations product={product} />
           </TabContainer>
         )}
-        {value === 2 && (
+        {/*value === 2 && (
           <TabContainer>
             <SingleProductPrices product={product} />
           </TabContainer>
-        )}
+        )*/}
       </div>
     );
   }

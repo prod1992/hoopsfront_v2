@@ -67,7 +67,7 @@ const styles = theme => ({
     height: 22,
     fontFamily: "inherit",
     "&:not([variant='outlined'])": {
-      backgroundColor: "#e9e9e9"
+      //backgroundColor: "#e9e9e9"
     }
   },
   tagsSection: {
@@ -95,6 +95,9 @@ const styles = theme => ({
   },
   DNone: {
     display: "none"
+  },
+  InfoTabsPaper: {
+    marginTop: "30px"
   }
 });
 class SingleProduct extends React.Component {
@@ -378,13 +381,20 @@ class SingleProduct extends React.Component {
                 <Grid style={{ marginLeft: "auto" }} item sm="auto">
                   <Chip
                     color="primary"
+                    className={classes.tagStyles}
                     variant="outlined"
                     label={"Id: " + product.code}
                   />
                 </Grid>
               </Grid>
-              <SingleProductInfoTabs product={product} />
             </Grid>
+          </Paper>
+
+          <Paper
+            style={{ padding: theme.spacing.unit }}
+            className={classes.InfoTabsPaper}
+          >
+            <SingleProductInfoTabs product={product} />
           </Paper>
         </div>
       )
