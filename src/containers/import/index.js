@@ -41,6 +41,9 @@ const styles = theme => ({
     selected: {
       color: "#FFFFFF"
     }
+  },
+  pageWrapper: {
+    marginBotttom: 70
   }
 });
 
@@ -57,7 +60,7 @@ class ImportPage extends React.Component {
     const { classes, importStep, importFileData, selectedVendor } = this.props;
 
     return (
-      <div className="import-page-wrapper">
+      <div className={classes.pageWrapper}>
         {importStep.stepState === 0 ? <UploadFiles /> : ""}
         {importStep.stepState !== 0 ? (
           <div className="step-shared-wrapper">

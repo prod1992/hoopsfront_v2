@@ -205,7 +205,7 @@ class UploadFiles extends React.Component {
         borderRadius: 2,
         padding: 0,
         height: 20,
-        margin: "0 10px",
+        margin: "0 15px",
         color: "#FFFFFF",
         fontSize: ".8125rem",
         textTransform: "capitalize",
@@ -342,7 +342,7 @@ class UploadFiles extends React.Component {
                                 Drag and drop
                               </h4>
                               <div>
-                                Your file here, or <u>click to locate file</u>
+                                your file here, or <u>click to locate file</u>
                               </div>
                             </div>
                           </div>
@@ -404,7 +404,7 @@ class UploadFiles extends React.Component {
                                 Drag and drop
                               </h4>
                               <div>
-                                Your file here, or <u>click to locate file</u>
+                                your file here, or <u>click to locate file</u>
                               </div>
                             </div>
                           </div>

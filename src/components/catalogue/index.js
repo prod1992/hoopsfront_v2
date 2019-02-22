@@ -52,7 +52,8 @@ const styles = theme => ({
   },
   price: {
     color: "#1db3e7",
-    fontWeight: 600
+    fontWeight: 600,
+    fontSize: 20
   },
   priceLabel: {
     fontSize: "0.7rem",

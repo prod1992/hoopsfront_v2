@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: "100px 3rem 0 3rem"
+    padding: "100px 3rem 0 3rem 120px"
   },
   navLink: {
     textDecoration: "none",
