@@ -44,7 +44,13 @@ const styles = theme => ({
     flexDirection: "row"
   },
   price: {
-    color: "#1db3e7"
+    color: "#1db3e7",
+    fontWeight: 600
+  },
+  priceLabel: {
+    fontSize: "0.7rem",
+    color: "#888",
+    fontWeight: 600
   },
   tagStyles: {
     padding: "0 3px",
@@ -111,7 +117,7 @@ class SimpleProduct extends Component {
               <div className={classes.price}>
                 $<span>{simpleProduct.product_price || "0.00"}</span>
               </div>
-              <div className="price-text">BUY PRICE</div>
+              <div className={classes.priceLabel}>BUY PRICE</div>
             </Grid>
           </Grid>
 

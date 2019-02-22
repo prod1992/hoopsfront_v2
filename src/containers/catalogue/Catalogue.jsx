@@ -84,7 +84,6 @@ const styles = theme => ({
     backgroundColor: "#1DB3E7",
     minWidth: "40px",
     cursor: "pointer",
-    marginLeft: "10px",
     marginRight: "5px"
   },
   catalogueProcessHref: {
@@ -149,7 +148,7 @@ class Catalogue extends React.Component {
     this.openProductAddingModal = this.openProductAddingModal.bind(this);
     this.closeProductAddingModal = this.closeProductAddingModal.bind(this);
     this.downloadCSV = this.downloadCSV.bind(this);
-    this.StartBulkEdit = this.StartBulkEdit.bind(this);
+    this.bulkEditOn = this.bulkEditOn.bind(this);
   }
 
   componentDidMount() {
@@ -175,7 +174,7 @@ class Catalogue extends React.Component {
   setWrapperRef(node) {
     this.wrapperRef = node;
   }
-  StartBulkEdit = () => {
+  bulkEditOn = () => {
     this.handleMoreHorizClickButton();
     this.props.dispatch(BulkEditProduct(true));
   };
@@ -426,7 +425,7 @@ class Catalogue extends React.Component {
 
     const id = open ? "scroll-playground" : null;
     return (
-      <Grid container>
+      <Grid container spacing={24}>
         <Grid item>
           <h2 style={{ margin: 0, fontSize: "1.5rem" }}>Catalogues</h2>
         </Grid>
@@ -442,7 +441,7 @@ class Catalogue extends React.Component {
             >
               <Book />
             </Fab>
-            Automate your processes by adding catalogues
+            <span>Automate your processes by adding catalogues</span>
           </a>
         </Grid>
 
@@ -622,7 +621,7 @@ class Catalogue extends React.Component {
                         </MenuItem>
                         <MenuItem
                           className={classes.menuItem}
-                          onClick={this.StartBulkEdit}
+                          onClick={this.bulkEditOn}
                         >
                           <ListItemIcon className={classes.icon}>
                             <Edit />

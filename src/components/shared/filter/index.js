@@ -42,6 +42,11 @@ const styles = {
     fontSize: 16,
     "& svg": {
       marginRight: 10
+    },
+    "& * ": {
+      fontSize: "inherit",
+      fontWeight: "inherit",
+      fontFamily: "inherit"
     }
   }
 };
@@ -49,17 +54,17 @@ const styles = {
 class Filter extends Component {
   constructor(props) {
     super(props);
-    this.Search = this.Search.bind(this);
+    this.performSearch = this.performSearch.bind(this);
   }
 
   showFilterBar() {
     this.props.dispatch(filterShowHide(true));
   }
-  Search(event) {
-    var SreachQuery = event.target.value;
-    if (SreachQuery != "") {
+  performSearch(event) {
+    var searchQuery = event.target.value;
+    if (searchQuery != "") {
       let token = localStorage["userToken"];
-      let uri = getApiCredentials.host + `/api/products?query=${SreachQuery}`;
+      let uri = getApiCredentials.host + `/api/products?query=${searchQuery}`;
       const requestOptions = {
         method: "GET",
         headers: {
@@ -125,7 +130,7 @@ class Filter extends Component {
           <InputBase
             className={classes.input}
             placeholder="Enter Your search here"
-            onChange={event => this.Search(event)}
+            onChange={event => this.performSearch(event)}
           />
           <IconButton className={classes.iconButton} aria-label="Search">
             <SearchIcon />
