@@ -58,7 +58,6 @@ import Button from "@material-ui/core/Button";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import VerticalAlignBottom from "@material-ui/icons/VerticalAlignBottom";
 import FilterList from "@material-ui/icons/FilterList";
-
 import Dialog from "@material-ui/core/Dialog";
 
 const styles = theme => ({
@@ -118,6 +117,22 @@ const styles = theme => ({
   CatalogueBody: {
     flex: 1,
     width: "100%"
+  },
+  modalTitle: {
+    fontSize: 18,
+    margin: 0
+  },
+  modalDescription: {
+    fontSize: 14,
+    margin: 0
+  },
+  closeButton: {
+    cursor: "pointer"
+  },
+  dialogRoot: {
+    maxWidth: "800px",
+    marginLeft: "auto",
+    marginRight: "auto"
   }
 });
 class Catalogue extends React.Component {
@@ -128,7 +143,7 @@ class Catalogue extends React.Component {
       activeBtn: false,
       bulkEdit: false,
       data: [],
-      productAddingModal: false,
+      productAddingModal: true,
       arrow: true,
       arrowRef: null,
       disablePortal: false,
@@ -663,18 +678,33 @@ class Catalogue extends React.Component {
             <FilterBar />
           </Grid>
           <Dialog
+            fullWidth={true}
+            maxWidth="md"
             open={this.state.productAddingModal}
+            classes={{ root: classes.dialogRoot }}
             onClose={this.closeProductAddingModal}
             scroll="paper"
             aria-labelledby="scroll-dialog-title"
           >
             <DialogTitle id="scroll-dialog-title">
               <div>
-                <header className="popup_header_block">
-                  <h3>Add product information</h3>
-                  <p>Provide the following information to add a product</p>
+                <header className={classes.modalHeader}>
+                  <Grid container justify="space-between" spacing={16}>
+                    <Grid item>
+                      <h3 className={classes.modalTitle}>
+                        Add product information
+                      </h3>
+                      <p className={classes.modalDescription}>
+                        Provide the following information to add a product
+                      </p>
+                    </Grid>
+                    <Grid item>
+                      <IconButton>
+                        <Close onClick={this.closeProductAddingModal} />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
                 </header>
-                <Close onClick={this.closeProductAddingModal} />
               </div>
             </DialogTitle>
             <DialogContent>

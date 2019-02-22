@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import {
+  Grid,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Chip,
+  Button,
+  Select
+} from "@material-ui/core";
+import ChipWithRemove from "./../../shared/ChipWithRemove";
 import getApiCredentials from "./../../../constants/api";
-import Chip from "@material-ui/core/Chip";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 
 const styles = theme => ({
   textField: {
@@ -14,8 +19,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: "100%"
   },
+
   inputWrapper: {
-    width: "100vh"
+    marginTop: "15px"
   }
 });
 class AddProduct extends Component {
@@ -28,7 +34,7 @@ class AddProduct extends Component {
         vendor: "",
         name: "",
         serviceName: "",
-        colour: ["Red", "Green", "Yellow"],
+        colours: ["Red", "Green", "Yellow"],
         tags: ["example", "example", "example"],
         linkUrl: "",
         stock: "",
@@ -72,6 +78,7 @@ class AddProduct extends Component {
       sizeInputValue: ""
     };
     this.addthisProduct = this.addthisProduct.bind(this);
+    this.getInputedTag = this.getInputedTag.bind(this);
   }
   addthisProduct() {
     let token = localStorage["userToken"];
@@ -138,180 +145,257 @@ class AddProduct extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid container>
+      <div>
+        <Grid container>
+          <Grid row={true} container spacing={16}>
+            <Grid item xs={12}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Product name"
+                  name="name"
+                  value={productDetails.name}
+                  className={classes.textField}
+                  onChange={e => {
+                    this.getProductDetails(e.target.name, e.target.value);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="none"
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row={true} container spacing={16}>
+            <Grid item xs={12}>
+              <div className={classes.inputWrapper}>
+                <FormControl className={classes.textField}>
+                  <InputLabel
+                    shrink={true}
+                    htmlFor="demo-controlled-open-select"
+                  >
+                    Vendor
+                  </InputLabel>
+                  <Select
+                    label=""
+                    name="vendor"
+                    value={productDetails.vendor}
+                    onChange={e => {
+                      this.getProductDetails(e.target.name, e.target.value);
+                    }}
+                    inputProps={{
+                      name: "vendor",
+                      id: "demo-controlled-open-select"
+                    }}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    <MenuItem value="opt1">Option 1</MenuItem>
+                    <MenuItem value="opt2">Option 2</MenuItem>
+                    <MenuItem value="opt3">Option 3</MenuItem>
+                    <MenuItem value="opt4">Option 4</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row={true} container spacing={16}>
+            <Grid item xs={6}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Product codee"
+                  name="code"
+                  value={productDetails.code}
+                  className={classes.textField}
+                  onChange={e => {
+                    this.getProductDetails(e.target.name, e.target.value);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="none"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Service name"
+                  name="serviceName"
+                  value={productDetails.serviceName}
+                  className={classes.textField}
+                  onChange={e => {
+                    this.getProductDetails(e.target.name, e.target.value);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="none"
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row container spacing={16}>
+            <Grid item xs={6}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Stock"
+                  name="stock"
+                  value={productDetails.stock}
+                  className={classes.textField}
+                  onChange={e => {
+                    this.getProductDetails(e.target.name, e.target.value);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="none"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Brand"
+                  name="brand"
+                  value={productDetails.brand}
+                  className={classes.textField}
+                  onChange={e => {
+                    this.getProductDetails(e.target.name, e.target.value);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  margin="none"
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row container>
+            <Grid item xs={12}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Product colours"
+                  name="colours"
+                  value={colourInputValue}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                      this.setState({
+                        colourInputValue: ""
+                      });
+                      this.getInputedTag("colours", e.target.value);
+                    }
+                  }}
+                  onChange={e =>
+                    this.setState({
+                      colourInputValue: e.target.value
+                    })
+                  }
+                  margin="none"
+                />
+                {productDetails.colours &&
+                  productDetails.colours.map((item, index) => {
+                    return (
+                      <ChipWithRemove
+                        key={index}
+                        onDelete={() => this.removeTag("colours", index)}
+                        label={item}
+                      />
+                    );
+                  })}
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row container>
+            <Grid item xs={12}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Size"
+                  name="sizeInputValue"
+                  value={productDetails.sizeInputValue}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                      this.setState({
+                        sizeInputValue: ""
+                      });
+                      this.getInputedTag("size", e.target.value);
+                    }
+                  }}
+                  onChange={e =>
+                    this.setState({
+                      sizeInputValue: e.target.value
+                    })
+                  }
+                  margin="none"
+                />
+                {productDetails.size &&
+                  productDetails.size.map((item, index) => {
+                    return (
+                      <ChipWithRemove
+                        key={index}
+                        onDelete={() => this.removeTag("size", index)}
+                        label={item}
+                      />
+                    );
+                  })}
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row container>
+            <Grid item xs={12}>
+              <div className={classes.inputWrapper}>
+                <TextField
+                  label="Tags"
+                  name="tagInputValue"
+                  value={tagInputValue}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                      this.setState({
+                        tagInputValue: ""
+                      });
+                      this.getInputedTag("tags", e.target.value);
+                    }
+                  }}
+                  onChange={e =>
+                    this.setState({
+                      tagInputValue: e.target.value
+                    })
+                  }
+                  margin="none"
+                />
+                {productDetails.tags &&
+                  productDetails.tags.map((item, index) => {
+                    return (
+                      <ChipWithRemove
+                        key={index}
+                        onDelete={() => this.removeTag("tags", index)}
+                        label={item}
+                      />
+                    );
+                  })}
+              </div>
+            </Grid>
+          </Grid>
+          <Grid row container spacing={16}>
+            <Grid item xs={6} />
+            <Grid item xs={6} />
+          </Grid>
+        </Grid>
+
         <div className={classes.inputWrapper}>
-          <TextField
-            label="Product name"
-            name="name"
-            value={productDetails.name}
-            className={classes.textField}
-            onChange={e => {
-              this.getProductDetails(e.target.name, e.target.value);
-            }}
-            margin="none"
-          />
-        </div>
-        <div className={classes.inputWrapper}>
-          <label>Vendor</label>
-          <Select
-            name="vendor"
-            value={productDetails.vendor}
-            onChange={e => {
-              this.getProductDetails(e.target.name, e.target.value);
-            }}
-          >
-            <MenuItem value="opt1">Option 1</MenuItem>
-            <MenuItem value="opt2">Option 2</MenuItem>
-            <MenuItem value="opt3">Option 3</MenuItem>
-            <MenuItem value="opt4">Option 4</MenuItem>
-          </Select>
-        </div>
-        <div className="input-wrapper-for-sm">
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Product codee"
-              name="code"
-              value={productDetails.code}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-            />
-          </div>
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Service name"
-              name="serviceName"
-              value={productDetails.serviceName}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-            />
-          </div>
-        </div>
-        <div className="input-wrapper-for-sm">
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Stock"
-              name="stock"
-              value={productDetails.stock}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-            />
-          </div>
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Brand"
-              name="brand"
-              value={productDetails.brand}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-            />
-          </div>
-        </div>
-        <div className="input-wrapper tag-adder">
-          <TextField
-            label="Product colours"
-            name="colourInputValue"
-            value={colourInputValue}
-            className={classes.textField}
-            onKeyDown={e => {
-              if (e.keyCode === 13) {
-                this.getInputedTag("colours", e.target.value);
-              }
-            }}
-            onChange={e =>
-              this.setState({
-                colourInputValue: e.target.value
-              })
-            }
-            margin="none"
-          />
-        </div>
-        <div className="tags_button_block">
-          {productDetails.color &&
-            productDetails.colour.map((item, index) => {
-              return (
-                <Chip
-                  key={index}
-                  onDelete={() => this.removeTag("colour", index)}
-                  label={item}
-                />
-              );
-            })}
-        </div>
-        <div className="input-wrapper tag-adder">
-          <TextField
-            label="Size"
-            name="sizeInputValue"
-            value={productDetails.sizeInputValue}
-            className={classes.textField}
-            onKeyDown={e => {
-              if (e.keyCode === 13) {
-                this.getInputedTag("size", e.target.value);
-              }
-            }}
-            onChange={e =>
-              this.setState({
-                sizeInputValue: e.target.value
-              })
-            }
-            margin="none"
-          />
-        </div>
-        <div className="tags_button_block">
-          {productDetails.size &&
-            productDetails.size.map((item, index) => {
-              return (
-                <Chip
-                  key={index}
-                  onDelete={() => this.removeTag("size", index)}
-                  label={item}
-                />
-              );
-            })}
-        </div>
-        <div className="input-wrapper tag-adder">
-          <TextField
-            label="Tags"
-            name="tagInputValue"
-            value={tagInputValue}
-            className={classes.textField}
-            onKeyDown={e => {
-              if (e.keyCode === 13) {
-                this.getInputedTag("size", e.target.value);
-              }
-            }}
-            onChange={e =>
-              this.setState({
-                tagInputValue: e.target.value
-              })
-            }
-            margin="none"
-          />
-        </div>
-        <div className="tags_button_block">
-          {productDetails.tags &&
-            productDetails.tags.map((item, index) => {
-              return (
-                <Chip
-                  key={index}
-                  onDelete={() => this.removeTag("tags", index)}
-                  label={item}
-                />
-              );
-            })}
-        </div>
-        <div className="input-wrapper-for-sm">
           <div className={classes.inputWrapper}>
             <TextField
               label="Link url"
@@ -322,6 +406,9 @@ class AddProduct extends Component {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
               margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </div>
           <div className={classes.inputWrapper}>
@@ -334,6 +421,9 @@ class AddProduct extends Component {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
               margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </div>
         </div>
@@ -345,6 +435,9 @@ class AddProduct extends Component {
             className={classes.textField}
             onChange={e => {
               this.getProductDetails(e.target.name, e.target.value);
+            }}
+            InputLabelProps={{
+              shrink: true
             }}
             margin="none"
           />
@@ -358,6 +451,9 @@ class AddProduct extends Component {
             onChange={e => {
               this.getProductDetails(e.target.name, e.target.value);
             }}
+            InputLabelProps={{
+              shrink: true
+            }}
             margin="none"
           />
         </div>
@@ -370,10 +466,13 @@ class AddProduct extends Component {
             onChange={e => {
               this.getProductDetails(e.target.name, e.target.value);
             }}
+            InputLabelProps={{
+              shrink: true
+            }}
             margin="none"
           />
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <TextField
               label="Individual Product Packaging"
@@ -382,6 +481,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -395,11 +497,14 @@ class AddProduct extends Component {
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
+              InputLabelProps={{
+                shrink: true
+              }}
               margin="none"
             />
           </div>
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <label>Category</label>
 
@@ -433,7 +538,7 @@ class AddProduct extends Component {
             </Select>
           </div>
         </div>
-        <div className="input-wrapper-for-sm carton-details">
+        <div className={classes.inputWrapper}>
           <header>Carton Details</header>
           <div className="wrapper-row">
             <div className={classes.inputWrapper}>
@@ -444,6 +549,9 @@ class AddProduct extends Component {
                 className={classes.textField}
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 margin="none"
               />
@@ -457,6 +565,9 @@ class AddProduct extends Component {
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 margin="none"
               />
             </div>
@@ -468,6 +579,9 @@ class AddProduct extends Component {
                 className={classes.textField}
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 margin="none"
               />
@@ -481,6 +595,9 @@ class AddProduct extends Component {
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 margin="none"
               />
             </div>
@@ -493,6 +610,9 @@ class AddProduct extends Component {
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 margin="none"
               />
             </div>
@@ -504,6 +624,9 @@ class AddProduct extends Component {
                 className={classes.textField}
                 onChange={e => {
                   this.getProductDetails(e.target.name, e.target.value);
+                }}
+                InputLabelProps={{
+                  shrink: true
                 }}
                 margin="none"
               />
@@ -519,10 +642,13 @@ class AddProduct extends Component {
             onChange={e => {
               this.getProductDetails(e.target.name, e.target.value);
             }}
+            InputLabelProps={{
+              shrink: true
+            }}
             margin="none"
           />
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <TextField
               label="QTY Break Point 1"
@@ -531,6 +657,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -544,11 +673,14 @@ class AddProduct extends Component {
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
+              InputLabelProps={{
+                shrink: true
+              }}
               margin="none"
             />
           </div>
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <TextField
               label="QTY Break Point 2"
@@ -557,6 +689,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -570,11 +705,14 @@ class AddProduct extends Component {
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
+              InputLabelProps={{
+                shrink: true
+              }}
               margin="none"
             />
           </div>
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <TextField
               label="QTY Break Point 3"
@@ -583,6 +721,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -596,11 +737,14 @@ class AddProduct extends Component {
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
               }}
+              InputLabelProps={{
+                shrink: true
+              }}
               margin="none"
             />
           </div>
         </div>
-        <div className="input-wrapper-for-sm">
+        <div className={classes.inputWrapper}>
           <div className={classes.inputWrapper}>
             <TextField
               label="QTY Break Point 4"
@@ -609,6 +753,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -621,6 +768,9 @@ class AddProduct extends Component {
               className={classes.textField}
               onChange={e => {
                 this.getProductDetails(e.target.name, e.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true
               }}
               margin="none"
             />
@@ -635,6 +785,9 @@ class AddProduct extends Component {
             onChange={e => {
               this.getProductDetails(e.target.name, e.target.value);
             }}
+            InputLabelProps={{
+              shrink: true
+            }}
             margin="none"
           />
         </div>
@@ -644,7 +797,7 @@ class AddProduct extends Component {
         <Button onClick={this.addthisProduct} color="primary">
           Add
         </Button>
-      </Grid>
+      </div>
     );
   }
 }
