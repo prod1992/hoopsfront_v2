@@ -116,7 +116,7 @@ class SimpleProduct extends Component {
           </Grid>
           <Grid
             container
-            row
+            row="true"
             justify="space-between"
             alignItems="center"
             spacing={24}

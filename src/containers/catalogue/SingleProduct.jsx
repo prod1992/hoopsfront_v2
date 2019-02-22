@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import getApiCredentials from "../../constants/api";
 import EditingPopup from "../../components/catalogue/single-product/editingPopup";
@@ -97,16 +97,14 @@ const styles = theme => ({
     display: "none"
   }
 });
-class SingleProduct extends Component {
+class SingleProduct extends React.Component {
   constructor() {
     super();
-
     this.state = {
       modalIsOpen: false,
       ShowUploadImageButton: false,
       product: {}
     };
-
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.showUploadImageButton = this.showUploadImageButton.bind(this);
@@ -150,12 +148,15 @@ class SingleProduct extends Component {
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
+
   showUploadImageButton() {
     this.setState({ ShowUploadImageButton: true });
   }
+
   hideUploadImageButton() {
     this.setState({ ShowUploadImageButton: false });
   }
+
   handleImageChange(e) {
     e.preventDefault();
 
