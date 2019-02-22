@@ -19,7 +19,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Close from "@material-ui/icons/Close";
 import DialogActions from "@material-ui/core/DialogActions";
-
+import SingleProductInfoTabs from "../../components/catalogue/single-product/singleProductInfoTabs";
 const styles = theme => ({
   optionLabel: {
     color: "#555",
@@ -382,6 +382,7 @@ class SingleProduct extends Component {
                   />
                 </Grid>
               </Grid>
+              <SingleProductInfoTabs product={product} />
             </Grid>
           </Paper>
         </div>
