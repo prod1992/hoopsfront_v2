@@ -4,13 +4,18 @@ import getApiCredentials from "../../constants/api";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Select from "react-select";
+
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
+import {
+  Typography,
+  NoSsr,
+  TextField,
+  Paper,
+  Chip,
+  MenuItem,
+  OutlinedInput
+} from "@material-ui/core";
+
 import CancelIcon from "@material-ui/icons/Cancel";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 
@@ -19,46 +24,6 @@ import {
   SetVendorList,
   AddNewVendor
 } from "../../actions/select.vendor";
-
-const suggestions = [
-  { label: "Afghanistan" },
-  { label: "Aland Islands" },
-  { label: "Albania" },
-  { label: "Algeria" },
-  { label: "American Samoa" },
-  { label: "Andorra" },
-  { label: "Angola" },
-  { label: "Anguilla" },
-  { label: "Antarctica" },
-  { label: "Antigua and Barbuda" },
-  { label: "Argentina" },
-  { label: "Armenia" },
-  { label: "Aruba" },
-  { label: "Australia" },
-  { label: "Austria" },
-  { label: "Azerbaijan" },
-  { label: "Bahamas" },
-  { label: "Bahrain" },
-  { label: "Bangladesh" },
-  { label: "Barbados" },
-  { label: "Belarus" },
-  { label: "Belgium" },
-  { label: "Belize" },
-  { label: "Benin" },
-  { label: "Bermuda" },
-  { label: "Bhutan" },
-  { label: "Bolivia, Plurinational State of" },
-  { label: "Bonaire, Sint Eustatius and Saba" },
-  { label: "Bosnia and Herzegovina" },
-  { label: "Botswana" },
-  { label: "Bouvet Island" },
-  { label: "Brazil" },
-  { label: "British Indian Ocean Territory" },
-  { label: "Brunei Darussalam" }
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label
-}));
 
 const styles = theme => ({
   root: {
@@ -74,7 +39,8 @@ const styles = theme => ({
     flexWrap: "wrap",
     flex: 1,
     alignItems: "center",
-    overflow: "hidden"
+    overflow: "hidden",
+    padding: 8
   },
   chip: {
     margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`
@@ -95,7 +61,6 @@ const styles = theme => ({
   },
   placeholder: {
     position: "absolute",
-    left: 2,
     fontSize: 16
   },
   paper: {
@@ -130,6 +95,10 @@ function Control(props) {
   return (
     <TextField
       fullWidth
+      variant="outlined"
+      InputLabelProps={{
+        shrink: true
+      }}
       InputProps={{
         inputComponent,
         inputProps: {
@@ -238,7 +207,7 @@ class IntegrationReactSelect extends React.Component {
     this.getVendorData = this.getVendorData.bind(this);
   }
 
-  getVendorData() {
+  async getVendorData() {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + "/api/vendors";
     const requestOptions = {
@@ -249,18 +218,14 @@ class IntegrationReactSelect extends React.Component {
         Authorization: "Bearer " + token
       }
     };
-    const reqInstance = new Request(uri, requestOptions);
-    fetch(reqInstance)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then(data => {
-        console.log(data);
-        this.props.dispatch(SetVendorList(data));
-      })
-      .catch(err => console.log(err, "error111"));
+    try {
+      const reqInstance = new Request(uri, requestOptions);
+      const response = await fetch(reqInstance);
+      const data = await response.json();
+      this.props.dispatch(SetVendorList(data));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handleChange = name => value => {
@@ -310,8 +275,15 @@ class IntegrationReactSelect extends React.Component {
             components={components}
             value={value}
             onChange={this.handleChange("single")}
-            placeholder="Search a Vendor"
+            placeholder="Select vendor"
             isClearable
+            input={
+              <OutlinedInput
+                name="age"
+                labelWidth={this.state.labelWidth}
+                id="outlined-age-native-simple"
+              />
+            }
           />
         </NoSsr>
       </div>

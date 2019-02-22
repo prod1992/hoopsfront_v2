@@ -17,9 +17,10 @@ import Pricing from "../../components/import/pricing";
 import { moveNextStep, movePrevStep } from "../../actions/catalogue-actions";
 
 import {
-  Restore as RestoreIcon,
+  Backup as BackupIcon,
   Favorite as FavoriteIcon,
-  RemoveRedEye as RemoveRedEyeIcon
+  RemoveRedEye as RemoveRedEyeIcon,
+  OpenInBrowser as ImportIcon
 } from "@material-ui/icons";
 
 import { Icon } from "@material-ui/core";
@@ -57,91 +58,87 @@ class ImportPage extends React.Component {
 
     return (
       <div className="import-page-wrapper">
-        <div className="shared-scroll-view">
-          {importStep.stepState === 0 ? <UploadFiles /> : ""}
-          {importStep.stepState !== 0 ? (
-            <div className="step-shared-wrapper">
-              <div className="main-header-control-wrapper">
-                <div className="shared-header-control">
-                  <StepButtons />
-                  <ImportStateChart />
-                </div>
-                <div className="user-status-info">
-                  <div className="info-wrapper">
-                    <div className="col-sm-12 col-md-4 info-item">
-                      <div className="text">Vendor</div>
-                      <div className="content">
-                        <Person />
-                        <span>
-                          {selectedVendor && selectedVendor.vendor_name}
+        {importStep.stepState === 0 ? <UploadFiles /> : ""}
+        {importStep.stepState !== 0 ? (
+          <div className="step-shared-wrapper">
+            <div className="main-header-control-wrapper">
+              <div className="shared-header-control">
+                <StepButtons />
+                <ImportStateChart />
+              </div>
+              <div className="user-status-info">
+                <div className="info-wrapper">
+                  <div className="col-sm-12 col-md-4 info-item">
+                    <div className="text">Vendor</div>
+                    <div className="content">
+                      <Person />
+                      <span>
+                        {selectedVendor && selectedVendor.vendor_name}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="col-sm-12 col-md-4 info-item">
+                    <div className="text">Product csv files</div>
+                    {importFileData.csvFile && (
+                      <div className="upload-name">
+                        <span className="badge csv">CSV</span>
+                        <span className="file-name">
+                          {importFileData.csvFile}
                         </span>
                       </div>
-                    </div>
-                    <div className="col-sm-12 col-md-4 info-item">
-                      <div className="text">Product csv files</div>
-                      {importFileData.csvFile && (
-                        <div className="upload-name">
-                          <span className="badge csv">CSV</span>
-                          <span className="file-name">
-                            {importFileData.csvFile}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="col-sm-12 col-md-3 info-item">
-                      <div className="text">Product zip files</div>
-                      {importFileData.zipFile && (
-                        <div className="upload-name">
-                          <span className="badge zip">ZIP</span>
-                          <span className="file-name">
-                            {importFileData.zipFile}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="col-sm-12 col-md-1 info-to-import">
-                      <button
-                        className="to-import-btn"
-                        onClick={() => {
-                          this.props.movePrevStep();
-                        }}
-                      >
-                        <Edit />
-                      </button>
-                    </div>
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-3 info-item">
+                    <div className="text">Product zip files</div>
+                    {importFileData.zipFile && (
+                      <div className="upload-name">
+                        <span className="badge zip">ZIP</span>
+                        <span className="file-name">
+                          {importFileData.zipFile}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-1 info-to-import">
+                    <button
+                      className="to-import-btn"
+                      onClick={() => {
+                        this.props.movePrevStep();
+                      }}
+                    >
+                      <Edit />
+                    </button>
                   </div>
                 </div>
               </div>
-              {importStep.stepState === 1 ? (
-                <ProductInfo
-                  importFileData={this.props.importFileData.importData}
-                />
-              ) : null}
-              {importStep.stepState === 2 ? (
-                <ShippingInfo
-                  importFileData={this.props.importFileData.importData}
-                />
-              ) : null}
-              {importStep.stepState === 3 ? (
-                <Pricing
-                  importFileData={this.props.importFileData.importData}
-                />
-              ) : null}
-              {importStep.stepState === 4 ? (
-                <AdditionalCoast
-                  importFileData={this.props.importFileData.importData}
-                />
-              ) : null}
-              {importStep.stepState === 5 ? (
-                <PreviewImport
-                  importFileData={this.props.importFileData.importData}
-                />
-              ) : null}
-              <StepButtons />
             </div>
-          ) : null}
-        </div>
-        <GlobalStep />
+            {importStep.stepState === 1 ? (
+              <ProductInfo
+                importFileData={this.props.importFileData.importData}
+              />
+            ) : null}
+            {importStep.stepState === 2 ? (
+              <ShippingInfo
+                importFileData={this.props.importFileData.importData}
+              />
+            ) : null}
+            {importStep.stepState === 3 ? (
+              <Pricing importFileData={this.props.importFileData.importData} />
+            ) : null}
+            {importStep.stepState === 4 ? (
+              <AdditionalCoast
+                importFileData={this.props.importFileData.importData}
+              />
+            ) : null}
+            {importStep.stepState === 5 ? (
+              <PreviewImport
+                importFileData={this.props.importFileData.importData}
+              />
+            ) : null}
+            <StepButtons />
+          </div>
+        ) : null}
+        {/* <GlobalStep /> */}
         <BottomNavigation
           showLabels
           value={value}
@@ -150,21 +147,21 @@ class ImportPage extends React.Component {
         >
           <BottomNavigationAction
             className={classes.wrapper}
-            label="Recents"
+            label="Upload File"
             value="recents"
-            icon={<RestoreIcon />}
+            icon={<BackupIcon />}
           />
           <BottomNavigationAction
             className={classes.wrapper}
-            label="Favorites"
-            value="favorites"
+            label="Map and preview"
+            value="map_and_preview"
             icon={<RemoveRedEyeIcon />}
           />
           <BottomNavigationAction
             className={classes.wrapper}
-            label="Nearby"
-            value="nearby"
-            icon={<RemoveRedEyeIcon />}
+            label="Import"
+            value="import"
+            icon={<ImportIcon />}
           />
         </BottomNavigation>
       </div>

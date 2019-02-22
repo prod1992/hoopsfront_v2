@@ -18,18 +18,24 @@ import {
 
 import { toast, ToastContainer } from "react-toastify";
 import Dropzone from "react-dropzone";
-import { Grid, Paper, Chip } from "@material-ui/core";
+import { Grid, Paper, Chip, Button } from "@material-ui/core";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Close from "@material-ui/icons/Close";
 
 import IntergrationReactSelect from "../../../components/shared/IntegrationReactSelect";
 
 const styles = theme => ({
+  root: {
+    maxWidth: 1100,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
   heading: {
     fontWeight: 400,
-    fontSize: 16
+    fontSize: 16,
+    margin: ".5rem 0 .4rem 0"
   },
-  uploadFileRoot: {
+  paper: {
     padding: 24
   },
   dropZone: {
@@ -46,7 +52,8 @@ const styles = theme => ({
   dropZoneTitle: {
     fontWeight: 500,
     margin: "6px 0 0",
-    fontSize: "1.125rem"
+    fontSize: "1.125rem",
+    lineHeight: "110%"
   },
   dropZoneInner: {
     maxWidth: 300,
@@ -56,7 +63,7 @@ const styles = theme => ({
     alignItems: "center"
   },
   dropZoneLabel: {
-    marginBottom: 5
+    marginBottom: 15
   },
   dropZoneIcon: {
     marginRight: 10,
@@ -68,6 +75,9 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "center",
     color: "#93a6ab"
+  },
+  chipLabel: {
+    padding: "1px 8px 0"
   }
 });
 
@@ -169,11 +179,11 @@ class UploadFiles extends React.Component {
               display: "flex",
               alignItems: "center",
               color: "#1db3e7",
-              fontSize: 14,
+              fontSize: props.fontSize,
               lineHeight: 1.5,
               textUnderlinePosition: "below",
-              webkitTextUnderlinePosition: "under",
-              msTextUnderlinePosition: "below",
+              WebkitTextUnderlinePosition: "under",
+              MsTextUnderlinePosition: "below",
               textUnderlinePosition: "under"
             }}
           >
@@ -186,6 +196,11 @@ class UploadFiles extends React.Component {
     };
 
     const RenderLabelGroup = props => {
+      const rootStyles = {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 10
+      };
       let chipStyles = {
         borderRadius: 2,
         padding: 0,
@@ -199,30 +214,39 @@ class UploadFiles extends React.Component {
       chipStyles.backgroundColor =
         props.priority === "required" ? "#e3645b" : "#f0ab5d";
       return (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={rootStyles}>
           <span>{props.text}</span>
-          <Chip style={chipStyles} label={props.priority} />
-          <RenderBlueUrl anchorText={"What's this?"} to={props.url} />
+          <Chip
+            classes={{ label: classes.chipLabel }}
+            style={chipStyles}
+            label={props.priority}
+          />
+          <RenderBlueUrl
+            fontSize={12}
+            anchorText={props.anchorText}
+            to={props.url}
+          />
         </div>
       );
     };
 
     return (
-      <div>
+      <div className={classes.root}>
         <Grid
           container
           justify="space-between"
-          alignItems="center"
+          align="center"
           spacing={16}
+          style={{ marginBottom: 30 }}
         >
           <Grid item>
-            <h5 className={classes.heading}>Upload file</h5>
+            <h4 className={classes.heading}>Upload file</h4>
           </Grid>
           <Grid item>
             <VideoBtn />
           </Grid>
         </Grid>
-        <Paper className={classes.uploadFileRoot}>
+        <Paper className={classes.paper}>
           <ToastContainer autoClose={2000} />
           <Grid container>
             <Grid item>
@@ -241,15 +265,6 @@ class UploadFiles extends React.Component {
                       </div>
                     </div>
                   )}
-                  <div className="next-prev-control">
-                    {/*<div className="right-side">*/}
-                    {/*<button className="next">*/}
-                    {/*<span>Next</span>*/}
-                    {/*<i className="material-icons">trending_flat</i>*/}
-                    {/*</button>*/}
-                    {/*</div>*/}
-                  </div>
-                  <StepButtons formData={this.formData} firstPage={true} />
                 </div>
               </div>
               <div className="field-col">
@@ -259,11 +274,10 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/vendor"
                   }
                   priority={"required"}
+                  anchorText={"What's this?"}
                 />
 
-                <div className="custom-field-row">
-                  <IntergrationReactSelect />
-                </div>
+                <IntergrationReactSelect />
               </div>
             </Grid>
             <Grid item style={{ marginLeft: "auto" }}>
@@ -295,6 +309,7 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/what-format-do-csv-files-need-to-be"
                   }
                   priority={"required"}
+                  anchorText={"What's this?"}
                 />
 
                 <div className={classes.dropZone}>
@@ -337,9 +352,12 @@ class UploadFiles extends React.Component {
                   ) : (
                     <div className="selected-file-wrapper">
                       <span>{csvFileName}</span>
-                      <button onClick={() => this.removeFile("csv")}>
+                      <Button
+                        color="red"
+                        onClick={() => this.removeFile("csv")}
+                      >
                         <Close />
-                      </button>
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -353,6 +371,7 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/how-do-i-import-product-images"
                   }
                   priority={"recommended"}
+                  anchorText={"What's this?"}
                 />
 
                 <div className={classes.dropZone}>
@@ -395,13 +414,16 @@ class UploadFiles extends React.Component {
                   ) : (
                     <div className="selected-file-wrapper">
                       <span>{zipFileName}</span>
-                      <button onClick={() => this.removeFile("zip")}>
+                      <Button onClick={() => this.removeFile("zip")}>
                         <Close />
-                      </button>
+                      </Button>
                     </div>
                   )}
                 </div>
               </div>
+            </Grid>
+            <Grid item xs={12}>
+              <StepButtons formData={this.formData} firstPage={true} />
             </Grid>
           </Grid>
           {this.props.selectVendor.addNewVendor && <AddVendor />}

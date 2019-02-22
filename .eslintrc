@@ -1,16 +1,12 @@
 {
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true,
-            "modules": true
-        }
-    },
-    "plugins": [
-        "react-redux"
-    ],
-    "extends": [
-        "plugin:react-redux/recommended"
-    ]
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "plugins": ["eslint-plugin-react-redux"],
+  "extends": ["plugin:react-redux/recommended"]
 }

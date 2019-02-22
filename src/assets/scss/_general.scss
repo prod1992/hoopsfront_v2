@@ -21,3 +21,9 @@ body {
   padding: 0;
   color: rgba(0, 0, 0, 0.87);
 }
+
+a,
+u {
+  text-underline-position: under;
+  -ms-text-underline-position: under;
+}

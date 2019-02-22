@@ -7,7 +7,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 //import { Modal } from "../../../modal/modal";
 import { ToastContainer, toast } from "react-toastify";
-import TrendingFlat from "@material-ui/icons/TrendingFlat";
+import { KeyboardBackspace } from "@material-ui/icons";
+import { Grid, Button } from "@material-ui/core";
+
+const ArrowLeft = props => {
+  return <KeyboardBackspace {...props} />;
+};
+
+const ArrowRight = props => {
+  return (
+    <KeyboardBackspace {...props} style={{ transform: "rotate(180deg)" }} />
+  );
+};
 
 class StepButtons extends Component {
   constructor(props) {
@@ -17,8 +28,6 @@ class StepButtons extends Component {
     this.changeNextStep = this.changeNextStep.bind(this);
     this.changePrevStep = this.changePrevStep.bind(this);
   }
-
-  componentDidMount(prevProps) {}
 
   notifyOnEmptyFields(message) {
     toast.error(message, {
@@ -84,17 +93,27 @@ class StepButtons extends Component {
   renderSkipButton(param) {
     if (param === 0 || param === 5) {
       return (
-        <button className="disabled" onClick={this.changeNextStep} disabled>
+        <Button
+          variant="contained"
+          color="primary"
+          className="disabled"
+          onClick={this.changeNextStep}
+          disabled
+        >
           <span>Skip</span>
           <i className="material-icons">skip_next</i>
-        </button>
+        </Button>
       );
     } else {
       return (
-        <button onClick={this.changeNextStep}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.changeNextStep}
+        >
           <span>Skip</span>
           <i className="material-icons">skip_next</i>
-        </button>
+        </Button>
       );
     }
   }
@@ -102,21 +121,27 @@ class StepButtons extends Component {
   renderNextButton(param) {
     if (param === 5) {
       return (
-        <button
+        <Button
           onClick={this.changeNextStep}
           className="next disabled"
           disabled
         >
           <span>Next</span>
-          <TrendingFlat />
-        </button>
+          <ArrowRight />
+        </Button>
       );
     } else {
       return (
-        <button onClick={this.changeNextStep} className="next">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.changeNextStep}
+          className="next"
+          style={{ textTransform: "capitalize" }}
+        >
           <span>Next</span>
-          <TrendingFlat />
-        </button>
+          <ArrowRight />
+        </Button>
       );
     }
   }
@@ -132,14 +157,16 @@ class StepButtons extends Component {
         <ToastContainer autoClose={2000} />
         {!this.props.firstPage && (
           <div className="left-side">
-            <button
+            <Button
+              variant="contained"
+              color="primary"
               onClick={this.changePrevStep}
               className={stepData["stepState"] === 0 ? "disabled" : ""}
             >
-              <TrendingFlat />
+              <KeyboardBackspace />
 
               <span>Back</span>
-            </button>
+            </Button>
           </div>
         )}
 

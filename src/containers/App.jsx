@@ -46,13 +46,11 @@ class App extends React.Component {
     return (
       !!this.props.appReady && (
         <Router>
-          <div className="app">
-            {!auth.isLoggedIn ? (
-              <AuthRouteWrapper />
-            ) : (
-              <Dashboard theme={theme} />
-            )}
-          </div>
+          {!auth.isLoggedIn ? (
+            <AuthRouteWrapper />
+          ) : (
+            <Dashboard theme={theme} />
+          )}
         </Router>
       )
     );
