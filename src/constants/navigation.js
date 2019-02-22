@@ -24,17 +24,17 @@ export const NAVIGATION_ITEMS = [
   },
   {
     title: "Quotes",
-    href: "catalogue",
+    href: "quotes",
     icon: <BookIcon color={"secondary"} />
   },
   {
     title: "Jobs",
-    href: "catalogue",
+    href: "jobs",
     icon: <AssignmentIcon color={"secondary"} />
   },
   {
     title: "Purchase Orders",
-    href: "catalogue",
+    href: "purchase-orders",
     icon: <DescriptionIcon color={"secondary"} />
   }
 ];

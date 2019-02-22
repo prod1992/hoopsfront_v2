@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-class Dashboard extends React.Component {
+class Quotes extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
         <Grid container spacing={24}>
           <Grid item>
             <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 500 }}>
-              Dashboard
+              Quotes
             </h2>
           </Grid>
         </Grid>
@@ -20,4 +20,4 @@ class Dashboard extends React.Component {
     );
   }
 }
-export default Dashboard;
+export default Quotes;

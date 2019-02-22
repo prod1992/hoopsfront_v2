@@ -197,7 +197,7 @@ const components = {
   ValueContainer
 };
 
-class IntegrationReactSelect extends React.Component {
+class AppSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -291,7 +291,7 @@ class IntegrationReactSelect extends React.Component {
   }
 }
 
-IntegrationReactSelect.propTypes = {
+AppSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -303,5 +303,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(IntegrationReactSelect)
+  withStyles(styles, { withTheme: true })(AppSelect)
 );

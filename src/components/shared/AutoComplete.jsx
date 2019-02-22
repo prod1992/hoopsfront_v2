@@ -182,7 +182,7 @@ const components = {
   ValueContainer
 };
 
-class IntegrationReactSelect extends React.Component {
+class AppAutocomplete extends React.Component {
   state = {
     single: null,
     multi: null
@@ -232,9 +232,9 @@ class IntegrationReactSelect extends React.Component {
   }
 }
 
-IntegrationReactSelect.propTypes = {
+AppAutocomplete.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
+export default withStyles(styles, { withTheme: true })(AppAutocomplete);

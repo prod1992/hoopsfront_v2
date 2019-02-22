@@ -22,7 +22,7 @@ import { Grid, Paper, Chip, Button } from "@material-ui/core";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Close from "@material-ui/icons/Close";
 
-import IntergrationReactSelect from "../../../components/shared/IntegrationReactSelect";
+import AppSelect from "../../shared/AppSelect";
 
 const styles = theme => ({
   root: {
@@ -234,6 +234,7 @@ class UploadFiles extends React.Component {
       <div className={classes.root}>
         <Grid
           container
+          row
           justify="space-between"
           align="center"
           spacing={16}
@@ -277,7 +278,7 @@ class UploadFiles extends React.Component {
                   anchorText={"What's this?"}
                 />
 
-                <IntergrationReactSelect />
+                <AppSelect />
               </div>
             </Grid>
             <Grid item style={{ marginLeft: "auto" }}>

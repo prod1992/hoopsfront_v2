@@ -425,270 +425,284 @@ class Catalogue extends React.Component {
 
     const id = open ? "scroll-playground" : null;
     return (
-      <Grid container spacing={24}>
-        <Grid item>
-          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>Catalogues</h2>
-        </Grid>
-        <Grid item>
-          <a
-            href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
-            className={classes.catalogueProcessHref}
-          >
-            <Fab
-              size="small"
-              color="primary"
-              className={classes.automateButton}
+      <div>
+        <Grid container spacing={24}>
+          <Grid item>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 500 }}>
+              Catalogues
+            </h2>
+          </Grid>
+          <Grid item>
+            <a
+              href="http://help.hoopscrm.com/use-cases/using-your-catalog-to-automate-your-business"
+              className={classes.catalogueProcessHref}
             >
-              <Book />
-            </Fab>
-            <span>Automate your processes by adding catalogues</span>
-          </a>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Grid container justify="space-between">
-            <Grid item>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: 15,
-                  marginBottom: 20
-                }}
-                ref={this.setWrapperRef}
+              <Fab
+                size="small"
+                color="primary"
+                className={classes.automateButton}
               >
-                <IconButton
-                  className={
-                    classes.catalogActionButton +
-                    (this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
-                      ? " active"
-                      : "")
-                  }
-                  onClick={() =>
-                    this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
-                  }
-                  size="small"
-                >
-                  <ViewModule />
-                </IconButton>
-                <IconButton
-                  className={
-                    classes.catalogActionButton +
-                    (this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
-                      ? " active"
-                      : "")
-                  }
-                  onClick={() =>
-                    this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
-                  }
-                  size="small"
-                >
-                  <ViewList />
-                </IconButton>
-                <IconButton
-                  className={
-                    classes.catalogActionButton +
-                    (this.state.activeBtn === CATALOGUE_CONTROL_BTN_TYPES["csv"]
-                      ? " active"
-                      : "")
-                  }
-                  size="small"
-                  onClick={this.handleDownloadCSVClickButton}
-                  buttonRef={node => {
-                    this.ExportCSVButton = node;
+                <Book />
+              </Fab>
+              <span>Automate your processes by adding catalogues</span>
+            </a>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container justify="space-between">
+              <Grid item>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: 15,
+                    marginBottom: 20
                   }}
+                  ref={this.setWrapperRef}
                 >
-                  <VerticalAlignBottom />
-                </IconButton>
-                <Popper
-                  open={this.state.DownluadCSVOpen}
-                  anchorEl={this.ExportCSVButton}
-                  placement="bottom-start"
-                  disablePortal={disablePortal}
-                  modifiers={{
-                    flip: {
-                      enabled: flip
+                  <IconButton
+                    className={
+                      classes.catalogActionButton +
+                      (this.state.viewType === PRODUCT_VIEW_TYPE["col_view"]
+                        ? " active"
+                        : "")
                     }
-                    /* arrow: {
+                    onClick={() =>
+                      this.changeProductView(PRODUCT_VIEW_TYPE["col_view"])
+                    }
+                    size="small"
+                  >
+                    <ViewModule />
+                  </IconButton>
+                  <IconButton
+                    className={
+                      classes.catalogActionButton +
+                      (this.state.viewType === PRODUCT_VIEW_TYPE["grid_view"]
+                        ? " active"
+                        : "")
+                    }
+                    onClick={() =>
+                      this.changeProductView(PRODUCT_VIEW_TYPE["grid_view"])
+                    }
+                    size="small"
+                  >
+                    <ViewList />
+                  </IconButton>
+                  <IconButton
+                    className={
+                      classes.catalogActionButton +
+                      (this.state.activeBtn ===
+                      CATALOGUE_CONTROL_BTN_TYPES["csv"]
+                        ? " active"
+                        : "")
+                    }
+                    size="small"
+                    onClick={this.handleDownloadCSVClickButton}
+                    buttonRef={node => {
+                      this.ExportCSVButton = node;
+                    }}
+                  >
+                    <VerticalAlignBottom />
+                  </IconButton>
+                  <Popper
+                    open={this.state.DownluadCSVOpen}
+                    anchorEl={this.ExportCSVButton}
+                    placement="bottom-start"
+                    disablePortal={disablePortal}
+                    modifiers={{
+                      flip: {
+                        enabled: flip
+                      }
+                      /* arrow: {
                         enabled: arrow,
                         element: this.ExportCSVButton
                       },*/
-                  }}
-                >
-                  {arrow ? (
-                    <span className={classes.arrow} ref={this.handleArrowRef} />
-                  ) : null}
-                  <ClickAwayListener
-                    onClickAway={this.handleDownloadCSVClickButton}
+                    }}
                   >
-                    <Paper className={classes.paper}>
-                      <MenuList>
-                        <MenuItem
-                          className={classes.menuItem}
-                          onClick={this.downloadCSV}
-                        >
-                          <ListItemIcon className={classes.icon}>
-                            <LibraryBooks />
-                          </ListItemIcon>
-                          <ListItemText
-                            classes={{ primary: classes.primary }}
-                            inset
-                            primary="CSV"
-                          />
-                        </MenuItem>
-                      </MenuList>
-                    </Paper>
-                  </ClickAwayListener>
-                </Popper>
-
-                <IconButton
-                  className={
-                    classes.catalogActionButton +
-                    (this.state.activeBtn ===
-                    CATALOGUE_CONTROL_BTN_TYPES["import"]
-                      ? " active"
-                      : "")
-                  }
-                  size="small"
-                  buttonRef={node => {
-                    this.anchorEl = node;
-                  }}
-                  variant="contained"
-                  onClick={this.handleMoreHorizClickButton}
-                  aria-describedby={id}
-                >
-                  <MoreHoriz />
-                  {this.state.activeBtn ===
-                    CATALOGUE_CONTROL_BTN_TYPES["import"]}
-                </IconButton>
-                <Popper
-                  id={id}
-                  open={this.state.MoreHorizOpen}
-                  anchorEl={this.anchorEl}
-                  placement="bottom-start"
-                  disablePortal={disablePortal}
-                  className={classes.popper}
-                  modifiers={{
-                    flip: {
-                      enabled: flip
-                    },
-                    arrow: {
-                      enabled: arrow,
-                      element: arrowRef
-                    },
-                    preventOverflow: {
-                      enabled: preventOverflow !== "disabled",
-                      boundariesElement:
-                        preventOverflow === "disabled"
-                          ? "scrollParent"
-                          : preventOverflow
-                    }
-                  }}
-                >
-                  {arrow ? (
-                    <span className={classes.arrow} ref={this.handleArrowRef} />
-                  ) : null}
-                  <Paper className={classes.paper}>
+                    {arrow ? (
+                      <span
+                        className={classes.arrow}
+                        ref={this.handleArrowRef}
+                      />
+                    ) : null}
                     <ClickAwayListener
-                      onClickAway={this.handleMoreHorizClickButton}
+                      onClickAway={this.handleDownloadCSVClickButton}
                     >
-                      <MenuList>
-                        <MenuItem
-                          className={classes.menuItem}
-                          onClick={this.openProductAddingModal}
-                        >
-                          <ListItemIcon className={classes.icon}>
-                            <Add />
-                          </ListItemIcon>
-                          <ListItemText
-                            classes={{ primary: classes.primary }}
-                            inset
-                            primary="add product"
-                          />
-                        </MenuItem>
-                        <MenuItem className={classes.menuItem}>
-                          <Link to="/import" className={classes.importHref}>
+                      <Paper className={classes.paper}>
+                        <MenuList>
+                          <MenuItem
+                            className={classes.menuItem}
+                            onClick={this.downloadCSV}
+                          >
                             <ListItemIcon className={classes.icon}>
-                              <OpenInBrowser />
+                              <LibraryBooks />
                             </ListItemIcon>
-
                             <ListItemText
                               classes={{ primary: classes.primary }}
                               inset
-                              primary="import"
+                              primary="CSV"
                             />
-                          </Link>
-                        </MenuItem>
-                        <MenuItem
-                          className={classes.menuItem}
-                          onClick={this.bulkEditOn}
-                        >
-                          <ListItemIcon className={classes.icon}>
-                            <Edit />
-                          </ListItemIcon>
-                          <ListItemText
-                            classes={{ primary: classes.primary }}
-                            inset
-                            primary="bulk edit"
-                          />
-                        </MenuItem>
-                      </MenuList>
+                          </MenuItem>
+                        </MenuList>
+                      </Paper>
                     </ClickAwayListener>
-                  </Paper>
-                </Popper>
-              </div>
-            </Grid>
-            <Grid item>{!catalogueStates.bulkEdit ? <Filter /> : null}</Grid>
-          </Grid>
-          <FilterBar />
-        </Grid>
-        <Dialog
-          open={this.state.productAddingModal}
-          onClose={this.closeProductAddingModal}
-          scroll="paper"
-          aria-labelledby="scroll-dialog-title"
-        >
-          <DialogTitle id="scroll-dialog-title">
-            <div>
-              <header className="popup_header_block">
-                <h3>Add product information</h3>
-                <p>Provide the following information to add a product</p>
-              </header>
-              <Close onClick={this.closeProductAddingModal} />
-            </div>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <AddProduct closeModal={this.closeProductAddingModal} />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions />
-        </Dialog>
+                  </Popper>
 
-        <div className={classes.CatalogueBody}>
-          <div className="shared-scroll-view">
-            <div className="catalogue-grid">
-              {catalogueStates["bulkEdit"] && <BulkEdit />}
-              <div className={`catalogue-item-wrapper ${this.state.viewType}`}>
-                <Grid container spacing={16}>
-                  {!products["data"] ? (
-                    <Loader />
-                  ) : (
-                    products["data"].map((item, index) => (
-                      <SimpleProduct
-                        key={index}
-                        simpleProduct={item}
-                        viewType={this.state.viewType}
-                        bulkEdit={catalogueStates["bulkEdit"]}
+                  <IconButton
+                    className={
+                      classes.catalogActionButton +
+                      (this.state.activeBtn ===
+                      CATALOGUE_CONTROL_BTN_TYPES["import"]
+                        ? " active"
+                        : "")
+                    }
+                    size="small"
+                    buttonRef={node => {
+                      this.anchorEl = node;
+                    }}
+                    variant="contained"
+                    onClick={this.handleMoreHorizClickButton}
+                    aria-describedby={id}
+                  >
+                    <MoreHoriz />
+                    {this.state.activeBtn ===
+                      CATALOGUE_CONTROL_BTN_TYPES["import"]}
+                  </IconButton>
+                  <Popper
+                    id={id}
+                    open={this.state.MoreHorizOpen}
+                    anchorEl={this.anchorEl}
+                    placement="bottom-start"
+                    disablePortal={disablePortal}
+                    className={classes.popper}
+                    modifiers={{
+                      flip: {
+                        enabled: flip
+                      },
+                      arrow: {
+                        enabled: arrow,
+                        element: arrowRef
+                      },
+                      preventOverflow: {
+                        enabled: preventOverflow !== "disabled",
+                        boundariesElement:
+                          preventOverflow === "disabled"
+                            ? "scrollParent"
+                            : preventOverflow
+                      }
+                    }}
+                  >
+                    {arrow ? (
+                      <span
+                        className={classes.arrow}
+                        ref={this.handleArrowRef}
                       />
-                    ))
-                  )}
-                </Grid>
+                    ) : null}
+                    <Paper className={classes.paper}>
+                      <ClickAwayListener
+                        onClickAway={this.handleMoreHorizClickButton}
+                      >
+                        <MenuList>
+                          <MenuItem
+                            className={classes.menuItem}
+                            onClick={this.openProductAddingModal}
+                          >
+                            <ListItemIcon className={classes.icon}>
+                              <Add />
+                            </ListItemIcon>
+                            <ListItemText
+                              classes={{ primary: classes.primary }}
+                              inset
+                              primary="add product"
+                            />
+                          </MenuItem>
+                          <MenuItem className={classes.menuItem}>
+                            <Link to="/import" className={classes.importHref}>
+                              <ListItemIcon className={classes.icon}>
+                                <OpenInBrowser />
+                              </ListItemIcon>
+
+                              <ListItemText
+                                classes={{ primary: classes.primary }}
+                                inset
+                                primary="import"
+                              />
+                            </Link>
+                          </MenuItem>
+                          <MenuItem
+                            className={classes.menuItem}
+                            onClick={this.bulkEditOn}
+                          >
+                            <ListItemIcon className={classes.icon}>
+                              <Edit />
+                            </ListItemIcon>
+                            <ListItemText
+                              classes={{ primary: classes.primary }}
+                              inset
+                              primary="bulk edit"
+                            />
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Popper>
+                </div>
+              </Grid>
+              <Grid item>{!catalogueStates.bulkEdit ? <Filter /> : null}</Grid>
+            </Grid>
+            <FilterBar />
+          </Grid>
+          <Dialog
+            open={this.state.productAddingModal}
+            onClose={this.closeProductAddingModal}
+            scroll="paper"
+            aria-labelledby="scroll-dialog-title"
+          >
+            <DialogTitle id="scroll-dialog-title">
+              <div>
+                <header className="popup_header_block">
+                  <h3>Add product information</h3>
+                  <p>Provide the following information to add a product</p>
+                </header>
+                <Close onClick={this.closeProductAddingModal} />
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <AddProduct closeModal={this.closeProductAddingModal} />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions />
+          </Dialog>
+
+          <div className={classes.CatalogueBody}>
+            <div className="shared-scroll-view">
+              <div className="catalogue-grid">
+                {catalogueStates["bulkEdit"] && <BulkEdit />}
+                <div
+                  className={`catalogue-item-wrapper ${this.state.viewType}`}
+                >
+                  <Grid container spacing={16}>
+                    {!products["data"] ? (
+                      <Loader />
+                    ) : (
+                      products["data"].map((item, index) => (
+                        <SimpleProduct
+                          key={index}
+                          simpleProduct={item}
+                          viewType={this.state.viewType}
+                          bulkEdit={catalogueStates["bulkEdit"]}
+                        />
+                      ))
+                    )}
+                  </Grid>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Grid>
+        </Grid>
+      </div>
     );
   }
 }

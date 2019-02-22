@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid } from "@material-ui/core";
 
 class Customers extends React.Component {
   constructor(props) {
@@ -8,10 +9,14 @@ class Customers extends React.Component {
   render() {
     return (
       <div>
-        <div className="section-heading">
-          <h2>Customers</h2>
-        </div>
-        <div className="section-content" />
+        <Grid container spacing={24}>
+          <Grid item>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 500 }}>
+              Customers
+            </h2>
+          </Grid>
+          <Grid item />
+        </Grid>
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 
-import GlobalStep from "../../components/import/shared/import-global-step";
+// import GlobalStep from "../../components/import/shared/import-global-step";
 import ImportStateChart from "../../components/import/shared/state-chart";
 import AdditionalCoast from "../../components/import/additional-cost";
 import StepButtons from "../../components/import/shared/step-buttons";

@@ -2,13 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { HashRouter as Router } from "react-router-dom";
 import AuthRouteWrapper from "./auth-route-wrapper";
-import Dashboard from "./dashboard";
+import Home from "./home";
 import User from "../core/auth";
 import { SetUserData, UserLoggedIn } from "../actions/user";
-
 import { AppReady } from "../actions/app";
-
-import theme from "../ui/theme";
 
 class App extends React.Component {
   constructor(props) {
@@ -45,13 +42,7 @@ class App extends React.Component {
 
     return (
       !!this.props.appReady && (
-        <Router>
-          {!auth.isLoggedIn ? (
-            <AuthRouteWrapper />
-          ) : (
-            <Dashboard theme={theme} />
-          )}
-        </Router>
+        <Router>{!auth.isLoggedIn ? <AuthRouteWrapper /> : <Home />}</Router>
       )
     );
   }
