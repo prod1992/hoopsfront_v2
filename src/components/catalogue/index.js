@@ -33,9 +33,16 @@ const styles = theme => ({
     height: 0,
     paddingTop: "56.25%" // 16:9
   },
-  productHeader: {
-    margin: "10px 0"
+  productTitle: {
+    // margin: "0 0 5px"
   },
+  productBrand: {
+    fontSize: "0.75rem"
+  },
+  productCategories: {
+    fontSize: "0.8rem"
+  },
+
   productInfo: {
     fontSize: "0.9rem"
   },
@@ -103,17 +110,23 @@ class SimpleProduct extends Component {
     const ColumnItemView = props => {
       return (
         <div className="item-info">
-          <Grid container className={classes.productHeader}>
+          <Grid container className={classes.productTitle}>
             <Grid item>{simpleProduct.name}</Grid>
           </Grid>
-          <Grid container justify="space-between">
-            <Grid item>
+          <Grid
+            container
+            row
+            justify="space-between"
+            alignItems="center"
+            spacing={24}
+          >
+            <Grid item xs>
               <Chip label={simpleProduct.id} className={classes.tagStyles} />
-              <div className="brand">
-                <span>Brand</span>:<span>{simpleProduct.brand}</span>
+              <div className={classes.productBrand}>
+                <span>Brand</span>:&nbsp;<span>{simpleProduct.brand}</span>
               </div>
             </Grid>
-            <Grid item style={{ textAlign: "right" }}>
+            <Grid item xs={"auto"} style={{ textAlign: "right" }}>
               <div className={classes.price}>
                 $<span>{simpleProduct.product_price || "0.00"}</span>
               </div>
@@ -121,12 +134,13 @@ class SimpleProduct extends Component {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container className={classes.productCategories}>
             <Grid item>
-              Category: <strong>{simpleProduct.category}</strong>
+              Category:&nbsp;<strong>{simpleProduct.category}</strong>
             </Grid>
-            <span className={classes.endder}>|</span>
-
+            <Grid item style={{ margin: "0 10px" }}>
+              |
+            </Grid>
             <Grid item>
               <span>
                 Vendor: <strong>Example</strong>
