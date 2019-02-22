@@ -27,7 +27,7 @@ import ImportPage from "../import";
 
 import Main from "../main";
 
-const drawerWidth = 240;
+const drawerWidth = 245;
 const styles = theme => ({
   root: {
     display: "flex",
@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: "100px 3rem 0 3rem"
+    padding: "100px 3rem 0 3rem 120px"
   },
   navLink: {
     textDecoration: "none",
@@ -120,7 +120,12 @@ class Dashboard extends Component {
               >
                 <NavLink to={"/" + item.href} className={classes.navLink}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.title} />
+                  <ListItemText
+                    primaryTypographyProps={{
+                      style: { fontFamily: "inherit" }
+                    }}
+                    primary={item.title}
+                  />
                 </NavLink>
               </Tooltip>
             </ListItem>
