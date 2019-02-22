@@ -73,7 +73,7 @@ const styles = theme => ({
     width: "100%",
     padding: 18,
     position: "relative",
-    ":before": {
+    "&:before": {
       content: "",
       position: "absolute",
       height: "100%",
@@ -84,7 +84,7 @@ const styles = theme => ({
       bottom: 0
     },
     "&.active": {
-      backgroundColor: "#f3f3f3",
+      backgroundColor: "#e8e8e8",
       fontWeight: 500
     }
   }
@@ -189,9 +189,7 @@ class Home extends Component {
             <Route path="/quotes" component={Quotes} />
             <Route path="/purchase-orders" component={PurchaseOrders} />
             {/* <Route path="/profile" component={Catalogue} /> */}
-
             <Route path="/import" component={ImportPage} />
-
             <Route exact path="/product/:id" component={SingleProduct} />
             <Route render={() => <Redirect to="/catalogue" />} />
           </Switch>
