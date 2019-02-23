@@ -18,6 +18,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Close from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
 import DialogActions from "@material-ui/core/DialogActions";
 import SingleProductInfoTabs from "../../components/catalogue/single-product/singleProductInfoTabs";
 const styles = theme => ({
@@ -98,6 +99,19 @@ const styles = theme => ({
   },
   InfoTabsPaper: {
     marginTop: "30px"
+  },
+  dialogRoot: {
+    maxWidth: "800px",
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+  modalTitle: {
+    fontSize: 18,
+    margin: 0
+  },
+  modalDescription: {
+    fontSize: 14,
+    margin: 0
   }
 });
 class SingleProduct extends React.Component {
@@ -183,21 +197,30 @@ class SingleProduct extends React.Component {
       product && (
         <div>
           <Dialog
+            fullWidth={true}
+            maxWidth="md"
+            classes={{ root: classes.dialogRoot }}
             open={this.state.modalIsOpen}
             onClose={this.closeModal}
             scroll="paper"
             aria-labelledby="scroll-dialog-title"
           >
             <DialogTitle id="scroll-dialog-title">
-              <div>
-                <header className="popup_header_block">
-                  <h3>Edit product detail</h3>
-                  <p>
-                    Provide the following information to edit product detail
-                  </p>
-                </header>
-                <Close onClick={this.closeModal} />
-              </div>
+              <header className="popup_header_block">
+                <Grid container justify="space-between" spacing={16}>
+                  <Grid item>
+                    <h3 className={classes.modalTitle}>Edit product detail</h3>
+                    <p className={classes.modalDescription}>
+                      Provide the following information to edit product detail
+                    </p>
+                  </Grid>
+                  <Grid item>
+                    <IconButton>
+                      <Close onClick={this.closeModal} />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </header>
             </DialogTitle>
             <DialogContent>
               <DialogContentText>

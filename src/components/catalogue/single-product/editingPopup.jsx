@@ -5,10 +5,16 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 
-import Chip from "@material-ui/core/Chip";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
+import ChipWithRemove from "../../shared/ChipWithRemove";
+import {
+  Select,
+  Grid,
+  MenuItem,
+  Button,
+  FormControl,
+  InputLabel
+} from "@material-ui/core";
+
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -130,171 +136,155 @@ class EditingPopup extends Component {
     const { classes } = this.props;
 
     return (
-      <div className="popup_main_block edit_popup">
-        <div className="popup">
-          <div className="popup_content">
-            <div className="popup_vendor_block">
-              <div className="popup_vendor_block">
-                <div className="popup_vendor_block_title">
-                  <h3>Vendor</h3>
-                </div>
+      <Grid container>
+        <Grid row={true} container spacing={16}>
+          <FormControl className={classes.textField}>
+            <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+              Vendor
+            </InputLabel>
+            <Select
+              className={classes.textField}
+              name="vendor"
+              value={productInfo.vendor_id}
+              onChange={e => {
+                this.getEditedInfo("vendor_id", e.target.value);
+              }}
+            >
+              <MenuItem value="select1">Example Vendor</MenuItem>
+              <MenuItem value="select2">Select2</MenuItem>
+              <MenuItem value="select3">Select3</MenuItem>
+              <MenuItem value="select4">Select4</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid row={true} container spacing={16}>
+          <TextField
+            label="Product name"
+            name="name"
+            value={productInfo.name}
+            className={classes.textField}
+            onChange={e => this.getEditedInfo("name", e.target.value)}
+            margin="none"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+        </Grid>
+        <Grid row={true} container spacing={16}>
+          <Grid item xs={6}>
+            <TextField
+              label="Brand"
+              value={productInfo.brand}
+              className={classes.textField}
+              onChange={e => this.getEditedInfo("brand", e.target.value)}
+              margin="none"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Min order Qty"
+              value={productInfo.minimum_order_quantity}
+              className={classes.textField}
+              onChange={e =>
+                this.getEditedInfo("minimum_order_quantity", e.target.value)
+              }
+              margin="none"
+            />
+          </Grid>
+        </Grid>
 
-                <Select
-                  name="vendor"
-                  value={productInfo.vendor_id}
-                  onChange={e => {
-                    this.getEditedInfo("vendor_id", e.target.value);
-                  }}
-                >
-                  <MenuItem value="select1">Example Vendor</MenuItem>
-                  <MenuItem value="select2">Select2</MenuItem>
-                  <MenuItem value="select3">Select3</MenuItem>
-                  <MenuItem value="select4">Select4</MenuItem>
-                </Select>
-              </div>
+        <Grid row={true} container spacing={16}>
+          <Grid item xs={6}>
+            <FormControl className={classes.textField}>
+              <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+                category
+              </InputLabel>
+              <Select
+                className={classes.textField}
+                value={productInfo.category}
+                onChange={e => {
+                  this.getEditedInfo("category", e.target.value);
+                }}
+              >
+                <MenuItem value="select1">T-Shirts</MenuItem>
+                <MenuItem value="select2">Select2</MenuItem>
+                <MenuItem value="select3">Select3</MenuItem>
+                <MenuItem value="select4">Select4</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl className={classes.textField}>
+              <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+                sub category
+              </InputLabel>
+              <Select
+                className={classes.textField}
+                value={productInfo.sub_category}
+                onChange={e => {
+                  this.getEditedInfo("sub_category", e.target.value);
+                }}
+              >
+                <MenuItem value="select1">Short Sleeve</MenuItem>
+                <MenuItem value="select2">Select2</MenuItem>
+                <MenuItem value="select3">Select3</MenuItem>
+                <MenuItem value="select4">Select4</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid row={true} container spacing={16}>
+          <Grid item xs={6}>
+            <TextField
+              label="Tags"
+              value={tagInputValue}
+              className={classes.textField}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  this.getInsertedTags(e.target.value);
+                }
+              }}
+              onChange={e =>
+                this.setState({
+                  tagInputValue: e.target.value
+                })
+              }
+              margin="none"
+            />
+            <div>
+              {productInfo.tags &&
+                productInfo.tags.map((item, index) => {
+                  return (
+                    <ChipWithRemove
+                      key={index}
+                      onDelete={() => this.removeTag(index)}
+                      label={item}
+                    />
+                  );
+                })}
             </div>
-            <div className="popup_product_name_block">
-              <div className="popup_product_title">
-                <div className="popup_product_select_block">
-                  <TextField
-                    label="Product name"
-                    name="name"
-                    value={productInfo.name}
-                    className={classes.textField}
-                    onChange={e => this.getEditedInfo("name", e.target.value)}
-                    margin="none"
-                  />
-                </div>
-              </div>
-              <div className="brand_block">
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <TextField
-                      label="Brand"
-                      value={productInfo.brand}
-                      className={classes.textField}
-                      onChange={e =>
-                        this.getEditedInfo("brand", e.target.value)
-                      }
-                      margin="none"
-                    />
-                  </div>
-                </div>
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <TextField
-                      label="Min order Qty"
-                      value={productInfo.minimum_order_quantity}
-                      className={classes.textField}
-                      onChange={e =>
-                        this.getEditedInfo(
-                          "minimum_order_quantity",
-                          e.target.value
-                        )
-                      }
-                      margin="none"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="brand_block">
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <div className="popup_vendor_block_title">
-                      <h3>Category</h3>
-                    </div>
-
-                    <Select
-                      value={productInfo.category}
-                      onChange={e => {
-                        this.getEditedInfo("category", e.target.value);
-                      }}
-                    >
-                      <MenuItem value="select1">T-Shirts</MenuItem>
-                      <MenuItem value="select2">Select2</MenuItem>
-                      <MenuItem value="select3">Select3</MenuItem>
-                      <MenuItem value="select4">Select4</MenuItem>
-                    </Select>
-                  </div>
-                </div>
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <div className="popup_vendor_block_title">
-                      <h3>Sub category</h3>
-                    </div>
-
-                    <Select
-                      value={productInfo.sub_category}
-                      onChange={e => {
-                        this.getEditedInfo("sub_category", e.target.value);
-                      }}
-                    >
-                      <MenuItem value="select1">Short Sleeve</MenuItem>
-                      <MenuItem value="select2">Select2</MenuItem>
-                      <MenuItem value="select3">Select3</MenuItem>
-                      <MenuItem value="select4">Select4</MenuItem>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-              <div className="tags_block">
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <TextField
-                      label="Tags"
-                      value={tagInputValue}
-                      className={classes.textField}
-                      onKeyDown={e => {
-                        if (e.keyCode === 13) {
-                          this.getInsertedTags(e.target.value);
-                        }
-                      }}
-                      onChange={e =>
-                        this.setState({
-                          tagInputValue: e.target.value
-                        })
-                      }
-                      margin="none"
-                    />
-                  </div>
-                </div>
-                <div className="brand_block_itemss">
-                  <div className="popup_product_select_block">
-                    <TextField
-                      label="Link Url"
-                      value={productInfo.link_url}
-                      className={classes.textField}
-                      onChange={e =>
-                        this.getEditedInfo("link_url", e.target.value)
-                      }
-                      margin="none"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="tags_button_block">
-                {productInfo.tags &&
-                  productInfo.tags.map((item, index) => {
-                    return (
-                      <Chip
-                        key={index}
-                        onDelete={() => this.removeTag(index)}
-                        label={item}
-                      />
-                    );
-                  })}
-              </div>
-            </div>
-
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Link Url"
+              value={productInfo.link_url}
+              className={classes.textField}
+              onChange={e => this.getEditedInfo("link_url", e.target.value)}
+              margin="none"
+            />
+          </Grid>
+        </Grid>
+        <Grid row={true} container spacing={16}>
+          <Grid item xs={6}>
             <Button onClick={() => this.props.closeModal()} color="primary">
               Cancel
             </Button>
             <Button onClick={this.updateProduct} color="primary">
               Save
             </Button>
-          </div>
-        </div>
-      </div>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
