@@ -129,7 +129,12 @@ class SimpleProduct extends Component {
             </Grid>
             <Grid item xs={"auto"} style={{ textAlign: "right" }}>
               <div className={classes.price}>
-                $<span>{simpleProduct.product_price || "0.00"}</span>
+                $
+                <span>
+                  {simpleProduct.price
+                    ? simpleProduct.price.toFixed(2)
+                    : "" || "0.00"}
+                </span>
               </div>
               <div className={classes.priceLabel}>BUY PRICE</div>
             </Grid>
@@ -185,7 +190,12 @@ class SimpleProduct extends Component {
             <Grid item xs={2}>
               <div>
                 <div className={classes.price}>
-                  $<span>{simpleProduct.product_price || "0.00"}</span>
+                  $
+                  <span>
+                    {simpleProduct.price
+                      ? simpleProduct.price.toFixed(2)
+                      : "" || "0.00"}
+                  </span>
                 </div>
                 <div>
                   <span className="price-text">BUY PRICE</span>
