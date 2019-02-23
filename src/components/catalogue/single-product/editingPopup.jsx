@@ -178,6 +178,9 @@ class EditingPopup extends Component {
               className={classes.textField}
               onChange={e => this.getEditedInfo("brand", e.target.value)}
               margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -189,6 +192,9 @@ class EditingPopup extends Component {
                 this.getEditedInfo("minimum_order_quantity", e.target.value)
               }
               margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </Grid>
         </Grid>
@@ -239,6 +245,9 @@ class EditingPopup extends Component {
               label="Tags"
               value={tagInputValue}
               className={classes.textField}
+              InputLabelProps={{
+                shrink: true
+              }}
               onKeyDown={e => {
                 if (e.keyCode === 13) {
                   this.getInsertedTags(e.target.value);
@@ -271,6 +280,9 @@ class EditingPopup extends Component {
               className={classes.textField}
               onChange={e => this.getEditedInfo("link_url", e.target.value)}
               margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </Grid>
         </Grid>
