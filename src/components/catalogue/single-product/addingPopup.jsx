@@ -34,7 +34,7 @@ class AddProduct extends Component {
         vendor: "",
         name: "",
         serviceName: "",
-        colours: ["Red", "Green", "Yellow"],
+        colour: ["Red", "Green", "Yellow"],
         tags: ["example", "example", "example"],
         linkUrl: "",
         stock: "",
@@ -276,8 +276,8 @@ class AddProduct extends Component {
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <TextField
-                  label="Product colours"
-                  name="colours"
+                  label="Product colour"
+                  name="colour"
                   value={colourInputValue}
                   className={classes.textField}
                   InputLabelProps={{
@@ -288,7 +288,7 @@ class AddProduct extends Component {
                       this.setState({
                         colourInputValue: ""
                       });
-                      this.getInputedTag("colours", e.target.value);
+                      this.getInputedTag("colour", e.target.value);
                     }
                   }}
                   onChange={e =>
@@ -298,12 +298,12 @@ class AddProduct extends Component {
                   }
                   margin="none"
                 />
-                {productDetails.colours &&
-                  productDetails.colours.map((item, index) => {
+                {productDetails.colour &&
+                  productDetails.colour.map((item, index) => {
                     return (
                       <ChipWithRemove
                         key={index}
-                        onDelete={() => this.removeTag("colours", index)}
+                        onDelete={() => this.removeTag("colour", index)}
                         label={item}
                       />
                     );
@@ -390,42 +390,44 @@ class AddProduct extends Component {
             </Grid>
           </Grid>
           <Grid row container spacing={16}>
-            <Grid item xs={6} />
-            <Grid item xs={6} />
+            <Grid item xs={6}>
+              <TextField
+                label="Link url"
+                name="linkUrl"
+                value={productDetails.linkUrl}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Print Area"
+                name="printArea"
+                value={productDetails.printArea}
+                className={classes.textField}
+                onChange={e => {
+                  this.getProductDetails(e.target.name, e.target.value);
+                }}
+                margin="none"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid row container spacing={16}>
+            <Grid item />
           </Grid>
         </Grid>
-
         <div className={classes.inputWrapper}>
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Link url"
-              name="linkUrl"
-              value={productDetails.linkUrl}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </div>
-          <div className={classes.inputWrapper}>
-            <TextField
-              label="Print Area"
-              name="printArea"
-              value={productDetails.printArea}
-              className={classes.textField}
-              onChange={e => {
-                this.getProductDetails(e.target.name, e.target.value);
-              }}
-              margin="none"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </div>
+          <div className={classes.inputWrapper} />
+          <div className={classes.inputWrapper} />
         </div>
         <div className={classes.inputWrapper}>
           <TextField
