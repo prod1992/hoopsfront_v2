@@ -204,7 +204,7 @@ class AddProduct extends Component {
             <Grid item xs={6}>
               <div className={classes.inputWrapper}>
                 <TextField
-                  label="Product codee"
+                  label="Product code"
                   name="code"
                   value={productDetails.code}
                   className={classes.textField}

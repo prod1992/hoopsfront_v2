@@ -143,7 +143,7 @@ class Catalogue extends React.Component {
       activeBtn: false,
       bulkEdit: false,
       data: [],
-      productAddingModal: true,
+      productAddingModal: false,
       arrow: true,
       arrowRef: null,
       disablePortal: false,

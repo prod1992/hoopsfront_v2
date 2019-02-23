@@ -191,6 +191,7 @@ class SingleProduct extends React.Component {
 
     const { classes, theme } = this.props;
     // const price = product && JSON.parse(service[0])["29"];
+
     const price = (Math.random() * 3 + 0.1).toFixed(2);
 
     return (
@@ -245,8 +246,6 @@ class SingleProduct extends React.Component {
                       className={classes.media}
                       image={product.image_name}
                       title={product.title}
-                      onMouseOver={this.showUploadImageButton}
-                      onMouseLeave={this.hideUploadImageButton}
                     />
                     <Fab
                       onClick={() => this.imageSelector.current.click()}
@@ -269,7 +268,7 @@ class SingleProduct extends React.Component {
                   </div>
                 </div>
               </Grid>
-              <Grid item container xs={12} sm={8}>
+              <Grid item xs={12} sm={8}>
                 <Grid item container sm spacing={16}>
                   <Grid item>
                     <div className="product-heading-column">
@@ -304,7 +303,9 @@ class SingleProduct extends React.Component {
                         </li>
                       </ul>
                       <div className="price-options">
-                        <span className={classes.productPrice}>${price}</span>
+                        <span className={classes.productPrice}>
+                          ${product.price ? product.price.toFixed(2) : ""}
+                        </span>
                         <div
                           style={{
                             display: "flex",
@@ -355,7 +356,7 @@ class SingleProduct extends React.Component {
                         <ul className={classes.tagsList}>
                           {product.colour &&
                             product.colour.map((colour, i) => (
-                              <li key={product.id}>
+                              <li key={i + 100}>
                                 <Chip
                                   className={classes.tagStyles}
                                   label={colour}
@@ -372,7 +373,7 @@ class SingleProduct extends React.Component {
                         <ul className={classes.tagsList}>
                           {product.size &&
                             product.size.map((size, i) => (
-                              <li key={product.id}>
+                              <li key={i + 1000}>
                                 <Chip
                                   className={classes.tagStyles}
                                   variant="outlined"
@@ -389,7 +390,7 @@ class SingleProduct extends React.Component {
                         <ul className={classes.tagsList}>
                           {product.tags &&
                             product.tags.map((tag, i) => (
-                              <li key={product.id}>
+                              <li key={i + 200}>
                                 <Chip
                                   className={classes.tagStyles}
                                   label={tag}

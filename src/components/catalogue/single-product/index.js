@@ -71,7 +71,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const { product } = this.state;
-    const price = (Math.random() * 3 + 0.1).toFixed(2);
+    const price = product.price.toFixed(2);
 
     return (
       product && (

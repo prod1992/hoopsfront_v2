@@ -54,7 +54,6 @@ function getStyles(name, that) {
 
 class MultipleSelect extends React.Component {
   constructor(props) {
-    super(props);
     console.log();
     this.state = {
       //name: this.props.values

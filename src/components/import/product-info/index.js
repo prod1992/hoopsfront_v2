@@ -14,7 +14,7 @@ import {
   Paper,
   Grid
 } from "@material-ui/core";
-
+import Beenhere from "@material-ui/icons/Beenhere";
 import RenderLabelGroup from "../../shared/RenderLabelGroup";
 
 const styles = theme => ({
@@ -32,7 +32,6 @@ class ProductInfo extends React.Component {
   render() {
     const { classes, importFileData } = this.props;
     const getPriority = item => {
-      console.log(item);
       if (item.required) {
         return "required";
       }
@@ -42,16 +41,13 @@ class ProductInfo extends React.Component {
         return "";
       }
     };
-    console.log(importFileData);
     return (
       <div className="product_mapping_block">
         <Paper>
           <Grid container className="product_mapping_block_title">
             <Grid item>
               <div className="product_info_icon_block">
-                <i className="material-icons white-text product_info_icon_block_icon">
-                  beenhere
-                </i>
+                <Beenhere />
               </div>
               <span className="product_info_icon_block_text">
                 Product info mapping

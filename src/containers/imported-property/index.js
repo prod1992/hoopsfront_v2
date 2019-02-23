@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setImportedProperty } from "../../actions/import-actions";
-import { PropertyItem } from "../../components/import/imported-property";
+import PropertyItem from "../../components/import/imported-property";
 
 class ImportedProperty extends Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class ImportedProperty extends Component {
     const payload = { name, value };
     console.log(payload);
     this.props.dispatch(setImportedProperty(payload));
+    console.log(this.props.importCatalogFiles.properties);
   }
 
   render() {
@@ -41,9 +42,12 @@ class ImportedProperty extends Component {
       item => Object.values(item)[0] === name
     );
     let value = "";
+
     if (storeData) {
-      value = storeData.value;
+      value = Object.keys(storeData)[0];
     }
+
+    //console.log(this.props.importCatalogFiles.properties);
     return (
       <PropertyItem
         name={name}

@@ -1,7 +1,21 @@
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
+import Beenhere from "@material-ui/icons/Beenhere";
+import AddVendor from "../shared/add-vendor";
+import { withStyles } from "@material-ui/core/styles";
 
+import {
+  FormControlLabel,
+  Radio,
+  Paper,
+  Grid,
+  Fab,
+  Button,
+  RadioGroup
+} from "@material-ui/core";
+import RenderLabelGroup from "../../shared/RenderLabelGroup";
+const styles = theme => ({});
 class AdditionalCost extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +63,7 @@ class AdditionalCost extends Component {
   }
 
   getAdditionalBlock(i) {
-    const { importFileData } = this.props;
+    const { importFileData, classes } = this.props;
 
     console.log("getAdditionalBlock");
     return (
@@ -63,13 +77,14 @@ class AdditionalCost extends Component {
         <div className="step_4_description">
           <div className="description_items">
             <div className="minimum_order_block_title">
-              <h3>Description</h3>
-              <button className="hoops_map_table_required_button">
-                Required
-              </button>
-              <a href="#" className="what_this_link">
-                What's This?
-              </a>
+              <RenderLabelGroup
+                text={"Description"}
+                url={
+                  "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                }
+                priority={"required"}
+                anchorText={"What's This?"}
+              />
             </div>
             <ImportedProperty
               propertyItem={{ name: `description` }}
@@ -78,13 +93,13 @@ class AdditionalCost extends Component {
           </div>
           <div className="description_items">
             <div className="minimum_order_block_title">
-              <h3>Notes</h3>
-              <button className="hoops_map_table_required_button d_none">
-                Required
-              </button>
-              <a href="#" className="what_this_link">
-                What's This?
-              </a>
+              <RenderLabelGroup
+                text={"Notes"}
+                url={
+                  "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                }
+                anchorText={"What's This?"}
+              />
             </div>
             <ImportedProperty
               propertyItem={{ name: `notes` }}
@@ -93,13 +108,13 @@ class AdditionalCost extends Component {
           </div>
           <div className="description_items">
             <div className="minimum_order_block_title">
-              <h3>Setup Cost</h3>
-              <button className="hoops_map_table_required_button d_none">
-                Required
-              </button>
-              <a href="#" className="what_this_link">
-                What's This?
-              </a>
+              <RenderLabelGroup
+                text={"Setup Cost"}
+                url={
+                  "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                }
+                anchorText={"What's This?"}
+              />
             </div>
             <ImportedProperty
               propertyItem={{ name: `setup_cost` }}
@@ -109,9 +124,14 @@ class AdditionalCost extends Component {
         </div>
         {this.getPriceBreakArray(i).map(item => item)}
         <div className="add_more_breaks">
-          <button onClick={() => this.addMorePriceBreaks(i)}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={() => this.addMorePriceBreaks(i)}
+            className={classes.button}
+          >
             Add More Price Breaks
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -127,19 +147,19 @@ class AdditionalCost extends Component {
     return service;
   }
   getPriceBreak(i) {
-    const { importFileData } = this.props;
+    const { importFileData, classes } = this.props;
     return (
-      <div className="quantity_break_block" key={i + 100}>
+      <Paper key={i + 100}>
         <div className="quantity_break_block_content">
           <div className="quantity_break_block_items">
             <div className="minimum_order_block_title">
-              <h3>Quantity break point {i}</h3>
-              <button className="hoops_map_table_required_button">
-                Required
-              </button>
-              <a href="#" className="what_this_link">
-                What's This?
-              </a>
+              <RenderLabelGroup
+                text={"Quantity break point " + i}
+                url={
+                  "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                }
+                anchorText={"What's This?"}
+              />
             </div>
             <ImportedProperty
               propertyItem={{ name: `quantity_break_point_${i}` }}
@@ -148,13 +168,13 @@ class AdditionalCost extends Component {
           </div>
           <div className="quantity_break_block_items">
             <div className="minimum_order_block_title">
-              <h3>Quantity break point {i} price</h3>
-              <button className="hoops_map_table_required_button">
-                Required
-              </button>
-              <a href="#" className="what_this_link">
-                What's This?
-              </a>
+              <RenderLabelGroup
+                text={"Quantity break point " + i + " price"}
+                url={
+                  "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                }
+                anchorText={"What's This?"}
+              />
             </div>
             <ImportedProperty
               propertyItem={{ name: `quantity_break_point_${i}_price` }}
@@ -162,7 +182,7 @@ class AdditionalCost extends Component {
             />
           </div>
         </div>
-      </div>
+      </Paper>
     );
   }
 
@@ -177,78 +197,82 @@ class AdditionalCost extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div className="product_mapping_block">
-        <div className="product_mapping_block_title">
-          <div className="product_info">
-            <div className="product_info_icon_block">
-              <i className="material-icons white-text product_info_icon_block_icon">
-                beenhere
-              </i>
-            </div>
-            <span className="product_info_icon_block_text">
-              Services price mapping
-            </span>
-          </div>
-          <div className="watch_the_video">
-            <VideoBtn />
-          </div>
-        </div>
-        <div className="step_3_catalogue_multiple">
-          <div className="step_3_catalogue_multiple_content">
-            <div className="step_3_catalogue_multiple_items">
-              <div className="step_3_catalogue_title">
-                <h3>Does this catalogue have multiple service options?</h3>
-                <a
-                  href="http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                  className="what_this_link"
-                >
-                  What's This?
-                </a>
+        <Paper>
+          <Grid container className="product_mapping_block_title">
+            <Grid item>
+              <div className="product_info_icon_block">
+                <Beenhere />
               </div>
-              <p className="standard_product_step_3">
-                Eg. Standard Production, Rush Service, Indent etc
-              </p>
+              <span className="product_info_icon_block_text">
+                Product info mapping
+              </span>
+            </Grid>
+            <Grid item>
+              <VideoBtn />
+            </Grid>
+          </Grid>
+          <Paper>
+            <div className="step_3_catalogue_multiple">
+              <div className="step_3_catalogue_multiple_content">
+                <div className="step_3_catalogue_multiple_items">
+                  <div className="step_3_catalogue_title">
+                    <RenderLabelGroup
+                      text={
+                        "Does this catalogue have multiple service options?"
+                      }
+                      url={
+                        "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                      }
+                      anchorText={"What's This?"}
+                    />
+                  </div>
+                  <p className="standard_product_step_3">
+                    Eg. Standard Production, Rush Service, Indent etc
+                  </p>
+                </div>
+                <div className="step_3_catalogue_multiple_items">
+                  <RadioGroup>
+                    <FormControlLabel
+                      value={1}
+                      control={<Radio color="primary" />}
+                      onClick={this.toggleAdditionalBlock}
+                      label="Yes"
+                      labelPlacement="end"
+                    />
+                    <FormControlLabel
+                      value={2}
+                      control={<Radio color="primary" />}
+                      onClick={this.toggleAdditionalBlock}
+                      label="No"
+                      labelPlacement="end"
+                    />
+                  </RadioGroup>
+                </div>
+              </div>
             </div>
-            <div className="step_3_catalogue_multiple_items">
-              <label className="step_3_catalogue_multiple_items_label">
-                <input
-                  type="radio"
-                  name="radio"
-                  value={1}
-                  onChange={this.toggleAdditionalBlock}
-                />
-                <span className="step_3_catalogue_multiple_items_label_checkmark" />
-                Yes
-              </label>
-              <label className="step_3_catalogue_multiple_items_label">
-                <input
-                  type="radio"
-                  name="radio"
-                  value={2}
-                  onChange={this.toggleAdditionalBlock}
-                />
-                <span className="step_3_catalogue_multiple_items_label_checkmark" />
-                No
-              </label>
-            </div>
-          </div>
-        </div>
-        {this.state.showAdditionalBlock && (
-          <div>
-            {this.getAdditionalBlockArray().map(item => item)}
-            <div className="add_more_breaks">
-              <button onClick={this.addMoreAdditionalBlock}>
-                Add More Price Breaks
-              </button>
-            </div>
-          </div>
-        )}
+            {this.state.showAdditionalBlock && (
+              <div>
+                {this.getAdditionalBlockArray().map(item => item)}
+                <div className="add_more_breaks">
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={this.addMoreAdditionalBlock}
+                    className={classes.button}
+                  >
+                    Add More Additional Cost
+                  </Button>
+                </div>
+              </div>
+            )}
+          </Paper>
+        </Paper>
       </div>
     );
   }
 }
 
-export default AdditionalCost;
+export default withStyles(styles, { withTheme: true })(AdditionalCost);

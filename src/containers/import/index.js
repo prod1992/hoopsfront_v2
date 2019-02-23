@@ -71,10 +71,11 @@ class ImportPage extends React.Component {
 
     return (
       <div className={classes.pageWrapper}>
-        <CustomizedStepper />
         {importStep.stepState === 0 ? <UploadFiles /> : ""}
         {importStep.stepState !== 0 ? (
           <div className="step-shared-wrapper">
+            <CustomizedStepper />
+
             <Paper className={classes.resultsPaper}>
               <Grid container>
                 <Grid item sm={4}>
