@@ -20,6 +20,7 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.2)",
     overflow: "hidden",
     borderRadius: 2,
+    lineHeight: 1,
     "& svg": {
       borderRadius: "50%",
       marginRight: 10,

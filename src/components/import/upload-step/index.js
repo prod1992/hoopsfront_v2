@@ -172,8 +172,9 @@ class UploadFiles extends React.Component {
     const RenderBlueUrl = props => {
       return (
         <div>
-          <Link
-            to={props.to}
+          <a
+            {...props}
+            href={props.to}
             style={{
               textDecoration: "underline",
               display: "flex",
@@ -188,7 +189,7 @@ class UploadFiles extends React.Component {
           >
             {props.icon}
             <span style={{ marginLeft: 5 }}>{props.anchorText}</span>
-          </Link>
+          </a>
           {props.text && <p style={{ margin: 0 }}>{props.text}</p>}
         </div>
       );
@@ -282,8 +283,9 @@ class UploadFiles extends React.Component {
             </Grid>
             <Grid item style={{ marginLeft: "auto" }}>
               <RenderBlueUrl
+                download
                 fontSize={14}
-                to="/"
+                to="/../csv/Catalog-Import-Template-Complete.csv"
                 anchorText={"Download the basic template"}
                 text={"Great for simple products like apparel."}
                 icon={<CloudDownload />}

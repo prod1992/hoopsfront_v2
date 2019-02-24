@@ -1,27 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Route, Switch, Redirect, Link, NavLink } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
-import Tooltip from "@material-ui/core/Tooltip";
 import MenuIcon from "@material-ui/icons/Menu";
 // import InboxIcon from "@material-ui/icons/MoveToInbox";
 // import MailIcon from "@material-ui/icons/Mail";
-import { NAVIGATION_ITEMS } from "../../constants/navigation";
-import Logo from "../../components/Logo";
+import AppSidenav from "../../components/AppSidenav";
 import Catalogue from "../catalogue";
 import SingleProduct from "../catalogue/SingleProduct";
 import Customers from "../customers";
 import ImportPage from "../import";
-
 import Quotes from "../quotes";
 import Dashboard from "../dashboard";
 import Jobs from "../jobs";
@@ -39,11 +32,7 @@ const styles = theme => ({
     padding: "90px 30px 0px 30px",
     marginBottom: 90
   },
-  darkTooltip: {
-    backgroundColor: "#222222",
-    fontSize: "1em",
-    padding: "12px"
-  },
+
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
@@ -66,32 +55,10 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth
-  },
-
-  navLink: {
-    textDecoration: "none",
-    display: "flex",
-    width: "100%",
-    padding: 18,
-    position: "relative",
-    "&:before": {
-      content: "",
-      position: "absolute",
-      height: "100%",
-      width: 3,
-      backgroundColor: "#1db3e7",
-      top: 0,
-      left: 0,
-      bottom: 0
-    },
-    "&.active": {
-      backgroundColor: "#e8e8e8",
-      fontWeight: 500
-    }
   }
 });
 
-class Home extends Component {
+class Home extends React.Component {
   state = {
     mobileOpen: false
   };
@@ -102,38 +69,6 @@ class Home extends Component {
 
   render() {
     const { classes, theme } = this.props;
-    const drawer = (
-      <React.Fragment>
-        <a className="hoops-logo">
-          <Logo
-            fill={["#1fb3e6", "#1fb3e6", "#939598", "#939598", "#939598"]}
-          />
-        </a>
-        <List>
-          {NAVIGATION_ITEMS.map((item, index) => (
-            <ListItem button key={index} style={{ padding: 0 }}>
-              <Tooltip
-                title={item.title}
-                placement={"right"}
-                classes={{
-                  tooltip: classes.darkTooltip
-                }}
-              >
-                <NavLink to={"/" + item.href} className={classes.navLink}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText
-                    primaryTypographyProps={{
-                      style: { fontFamily: "inherit" }
-                    }}
-                    primary={item.title}
-                  />
-                </NavLink>
-              </Tooltip>
-            </ListItem>
-          ))}
-        </List>
-      </React.Fragment>
-    );
 
     return (
       <div className={classes.root}>
@@ -162,7 +97,7 @@ class Home extends Component {
                 paper: classes.drawerPaper
               }}
             >
-              {drawer}
+              <AppSidenav />
             </Drawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -173,7 +108,7 @@ class Home extends Component {
               variant="permanent"
               open
             >
-              {drawer}
+              <AppSidenav />
             </Drawer>
           </Hidden>
         </nav>

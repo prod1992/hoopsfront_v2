@@ -17,7 +17,7 @@ import PreviewImport from "../import/preview-import";
 import Paper from "@material-ui/core/Paper";
 const styles = theme => ({
   root: {
-    width: "90%"
+    backgroundColor: "transparent"
   },
   button: {
     marginRight: theme.spacing.unit
@@ -96,21 +96,18 @@ class CustomizedStepper extends React.Component {
     const activeStep = importStep.stepState;
 
     return (
-      <div className={classes.root}>
-        <Paper>
-          <Stepper
-            alternativeLabel
-            activeStep={activeStep}
-            connector={connector}
-          >
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Paper>
-      </div>
+      <Stepper
+        alternativeLabel
+        activeStep={activeStep}
+        connector={connector}
+        className={classes.root}
+      >
+        {steps.map(label => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
     );
   }
 }
