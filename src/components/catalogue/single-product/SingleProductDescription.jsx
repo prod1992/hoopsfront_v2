@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
 const styles = theme => ({
   root: {
     width: "100%",
@@ -16,7 +17,7 @@ const styles = theme => ({
     overflowX: "auto"
   },
   table: {
-    minWidth: 700
+    // minWidth: 700
   },
   tagStyles: {
     padding: "0 3px",
@@ -32,6 +33,9 @@ const styles = theme => ({
   DescriptionTitle: {
     display: "flex",
     alignItems: "center"
+  },
+  blueRow: {
+    backgroundColor: "#EEF3F7"
   }
 });
 
@@ -55,106 +59,127 @@ class SingleProductDescription extends Component {
     const { product } = this.props;
     return (
       <div>
-        <div className={classes.DescriptionTitle}>
-          <h1>Example T-Shirt</h1>
-          <Chip
-            color="primary"
-            className={classes.tagStyles}
-            variant="outlined"
-            label={"Id: " + product.code}
-          />
-        </div>
-        <p>
-          This is the example t-shirt. Delete this product at any time. 200gsm
-          Available in 20 Colours & 5 Sizes. Check out the different prices for
-          each size/colour combination.
-        </p>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableBody>
-              <TableRow>
-                <TableCell>Primary Price Description</TableCell>
-                <TableCell align="right">
-                  {product.primary_price_description}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Brand</TableCell>
-                <TableCell align="right">{product.brand}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Vendor</TableCell>
-                <TableCell align="right">N/A</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Category</TableCell>
-                <TableCell align="right">{product.category}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Min order Qty</TableCell>
-                <TableCell align="right">N/A</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Print Area</TableCell>
-                <TableCell align="right">N/A</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Stock/Indent</TableCell>
-                <TableCell align="right">{product.stock}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Standard Production Time</TableCell>
-                <TableCell align="right">
-                  {product.standard_production_time}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Decoration Areas</TableCell>
-                <TableCell align="right">{product.decoration_areas}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-
-          <Table className={classes.table}>
-            <TableBody>
-              <TableRow>
-                <TableCell>Carton Size</TableCell>
-                <TableCell align="right">
-                  H:{product.carton_height} | W:{product.carton_width} | D:
-                  {product.carton_length}{" "}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Carton Weight</TableCell>
-                <TableCell align="right">{product.carton_weight}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Carton Qty</TableCell>
-                <TableCell align="right">N/A</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Carton Cubic</TableCell>
-                <TableCell align="right">{product.carton_cubic}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Carton Notes</TableCell>
-                <TableCell align="right">{product.carton_notes}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Freight Description</TableCell>
-                <TableCell align="right">
-                  {product.freight_description}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Individual Product Packaging</TableCell>
-                <TableCell align="right">
-                  {product.standard_production_time}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
+        <Grid container>
+          <Grid container spacing={16}>
+            <div className={classes.DescriptionTitle}>
+              <h1>Example T-Shirt</h1>
+              <Chip
+                className={classes.tagStyles}
+                variant="outlined"
+                label={"Id: " + product.code}
+              />
+            </div>
+          </Grid>
+          <Grid container spacing={16}>
+            <p style={{ display: "block" }}>
+              This is the example t-shirt. Delete this product at any time.
+              200gsm Available in 20 Colours & 5 Sizes. Check out the different
+              prices for each size/colour combination.
+            </p>
+          </Grid>
+          <Grid container spacing={16}>
+            <Grid item xs={6}>
+              <Paper>
+                <Table className={classes.table}>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Primary Price Description</TableCell>
+                      <TableCell align="right">
+                        {product.primary_price_description}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Brand</TableCell>
+                      <TableCell align="right">{product.brand}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Vendor</TableCell>
+                      <TableCell align="right">N/A</TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Category</TableCell>
+                      <TableCell align="right">{product.category}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Min order Qty</TableCell>
+                      <TableCell align="right">N/A</TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Print Area</TableCell>
+                      <TableCell align="right">N/A</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Stock/Indent</TableCell>
+                      <TableCell align="right">{product.stock}</TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Standard Production Time</TableCell>
+                      <TableCell align="right">
+                        {product.standard_production_time}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Decoration Areas</TableCell>
+                      <TableCell align="right">
+                        {product.decoration_areas}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper>
+                <Table className={classes.table}>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Carton Size</TableCell>
+                      <TableCell align="right">
+                        H:{product.carton_height} | W:{product.carton_width} |
+                        D:
+                        {product.carton_length}{" "}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Carton Weight</TableCell>
+                      <TableCell align="right">
+                        {product.carton_weight}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Carton Qty</TableCell>
+                      <TableCell align="right">N/A</TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Carton Cubic</TableCell>
+                      <TableCell align="right">
+                        {product.carton_cubic}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Carton Notes</TableCell>
+                      <TableCell align="right">
+                        {product.carton_notes}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={classes.blueRow}>
+                      <TableCell>Freight Description</TableCell>
+                      <TableCell align="right">
+                        {product.freight_description}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Individual Product Packaging</TableCell>
+                      <TableCell align="right">
+                        {product.standard_production_time}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
       </div>
     );
   }

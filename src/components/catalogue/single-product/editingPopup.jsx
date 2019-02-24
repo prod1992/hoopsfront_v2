@@ -19,14 +19,16 @@ const styles = theme => ({
   textField: {
     width: "100%"
   },
-  inputWrapper: {
-    width: "100vh"
-  },
+
   buttonsBlock: {
     justifyContent: "flex-end"
   },
   buttons: {
     marginLeft: "25px"
+  },
+  inputWrapper: {
+    marginTop: "15px",
+    width: "100%"
   }
 });
 
@@ -84,6 +86,9 @@ class EditingPopup extends Component {
     };
 
     this.updateProduct = this.updateProduct.bind(this);
+    this.getVendorsList = this.getVendorsList.bind(this);
+    this.getCategoriesList = this.getCategoriesList.bind(this);
+    this.getSubCategoriesList = this.getSubCategoriesList.bind(this);
   }
 
   componentDidMount() {
@@ -118,6 +123,80 @@ class EditingPopup extends Component {
         minimum_order_quantity: services[0].minimum_order_quantity
       }
     });
+    this.getVendorsList();
+    this.getCategoriesList();
+    this.getSubCategoriesList();
+  }
+
+  getVendorsList() {
+    let token = localStorage["userToken"];
+    let uri = getApiCredentials.host + "/api/vendors";
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      }
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(data => {
+        this.setState({ vendors: data });
+      })
+      .catch(err => console.log(err, "error111"));
+  }
+  getCategoriesList() {
+    let token = localStorage["userToken"];
+    let uri = getApiCredentials.host + "/api/category";
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      }
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(data => {
+        this.setState({ categories: data });
+      })
+      .catch(err => console.log(err, "error111"));
+  }
+
+  getSubCategoriesList() {
+    let token = localStorage["userToken"];
+    let uri = getApiCredentials.host + "/api/subcategory";
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      }
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(data => {
+        this.setState({ subcategories: data });
+      })
+      .catch(err => console.log(err, "error111"));
   }
 
   updateProduct() {
@@ -171,162 +250,195 @@ class EditingPopup extends Component {
   }
 
   render() {
+    console.log(this.state);
     const { tagInputValue, productInfo } = this.state;
     // const { productData } = this.props;
     const { classes } = this.props;
 
     return (
       <Grid container>
-        <Grid row={true} container spacing={16}>
-          <FormControl className={classes.textField}>
-            <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
-              Vendor
-            </InputLabel>
-            <Select
-              input={<BootstrapInput />}
-              className={classes.textField}
-              name="vendor"
-              value={productInfo.vendor_id}
-              onChange={e => {
-                this.getEditedInfo("vendor_id", e.target.value);
-              }}
-            >
-              <MenuItem value="select1">Example Vendor</MenuItem>
-              <MenuItem value="select2">Select2</MenuItem>
-              <MenuItem value="select3">Select3</MenuItem>
-              <MenuItem value="select4">Select4</MenuItem>
-            </Select>
-          </FormControl>
+        <Grid row={true} container>
+          <div className={classes.inputWrapper}>
+            <FormControl className={classes.textField}>
+              <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+                Vendor
+              </InputLabel>
+              <Select
+                input={<BootstrapInput />}
+                className={classes.textField}
+                name="vendor"
+                value={productInfo.vendor_id}
+                onChange={e => {
+                  this.getEditedInfo("vendor_id", e.target.value);
+                }}
+              >
+                {this.state.vendors &&
+                  this.state.vendors.data.map((item, key) => {
+                    return (
+                      <MenuItem key={key} value={item.id}>
+                        {item.vendor_name}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+          </div>
         </Grid>
-        <Grid row={true} container spacing={16}>
-          <TextField
-            label="Product name"
-            name="name"
-            value={productInfo.name}
-            className={classes.textField}
-            onChange={e => this.getEditedInfo("name", e.target.value)}
-            margin="none"
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </Grid>
-        <Grid row={true} container spacing={16}>
-          <Grid item xs={6}>
+        <Grid row={true} container>
+          <div className={classes.inputWrapper}>
             <TextField
-              label="Brand"
-              value={productInfo.brand}
+              label="Product name"
+              name="name"
+              value={productInfo.name}
               className={classes.textField}
-              onChange={e => this.getEditedInfo("brand", e.target.value)}
+              onChange={e => this.getEditedInfo("name", e.target.value)}
               margin="none"
               InputLabelProps={{
                 shrink: true
               }}
             />
+          </div>
+        </Grid>
+        <Grid row={true} container spacing={16}>
+          <Grid item xs={6}>
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Brand"
+                value={productInfo.brand}
+                className={classes.textField}
+                onChange={e => this.getEditedInfo("brand", e.target.value)}
+                margin="none"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Min order Qty"
-              value={productInfo.minimum_order_quantity}
-              className={classes.textField}
-              onChange={e =>
-                this.getEditedInfo("minimum_order_quantity", e.target.value)
-              }
-              margin="none"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Min order Qty"
+                value={productInfo.minimum_order_quantity}
+                className={classes.textField}
+                onChange={e =>
+                  this.getEditedInfo("minimum_order_quantity", e.target.value)
+                }
+                margin="none"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
           </Grid>
         </Grid>
 
         <Grid row={true} container spacing={16}>
           <Grid item xs={6}>
-            <FormControl className={classes.textField}>
-              <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
-                category
-              </InputLabel>
-              <Select
-                input={<BootstrapInput />}
-                className={classes.textField}
-                value={productInfo.category}
-                onChange={e => {
-                  this.getEditedInfo("category", e.target.value);
-                }}
-              >
-                <MenuItem value="select1">T-Shirts</MenuItem>
-                <MenuItem value="select2">Select2</MenuItem>
-                <MenuItem value="select3">Select3</MenuItem>
-                <MenuItem value="select4">Select4</MenuItem>
-              </Select>
-            </FormControl>
+            <div className={classes.inputWrapper}>
+              <FormControl className={classes.textField}>
+                <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+                  category
+                </InputLabel>
+                <Select
+                  input={<BootstrapInput />}
+                  className={classes.textField}
+                  value={productInfo.category}
+                  onChange={e => {
+                    this.getEditedInfo("category", e.target.value);
+                  }}
+                >
+                  {this.state.categories &&
+                    this.state.categories.data.map((item, value) => {
+                      if (item.category) {
+                        return (
+                          <MenuItem value={item.category}>
+                            {item.category}
+                          </MenuItem>
+                        );
+                      }
+                    })}
+                </Select>
+              </FormControl>
+            </div>
           </Grid>
           <Grid item xs={6}>
-            <FormControl className={classes.textField}>
-              <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
-                sub category
-              </InputLabel>
-              <Select
-                input={<BootstrapInput />}
-                className={classes.textField}
-                value={productInfo.sub_category}
-                onChange={e => {
-                  this.getEditedInfo("sub_category", e.target.value);
-                }}
-              >
-                <MenuItem value="select1">Short Sleeve</MenuItem>
-                <MenuItem value="select2">Select2</MenuItem>
-                <MenuItem value="select3">Select3</MenuItem>
-                <MenuItem value="select4">Select4</MenuItem>
-              </Select>
-            </FormControl>
+            <div className={classes.inputWrapper}>
+              <FormControl className={classes.textField}>
+                <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
+                  sub category
+                </InputLabel>
+                <Select
+                  input={<BootstrapInput />}
+                  className={classes.textField}
+                  value={productInfo.sub_category}
+                  onChange={e => {
+                    this.getEditedInfo("sub_category", e.target.value);
+                  }}
+                >
+                  {this.state.subcategories &&
+                    this.state.subcategories.data.map((item, value) => {
+                      if (item.sub_category) {
+                        return (
+                          <MenuItem value={item.sub_category}>
+                            {item.sub_category}
+                          </MenuItem>
+                        );
+                      }
+                    })}
+                </Select>
+              </FormControl>
+            </div>
           </Grid>
         </Grid>
         <Grid row={true} container spacing={16}>
           <Grid item xs={6}>
-            <TextField
-              label="Tags"
-              value={tagInputValue}
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-              onKeyDown={e => {
-                if (e.keyCode === 13) {
-                  this.getInsertedTags(e.target.value);
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Tags"
+                value={tagInputValue}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    this.getInsertedTags(e.target.value);
+                  }
+                }}
+                onChange={e =>
+                  this.setState({
+                    tagInputValue: e.target.value
+                  })
                 }
-              }}
-              onChange={e =>
-                this.setState({
-                  tagInputValue: e.target.value
-                })
-              }
-              margin="none"
-            />
-            <div>
-              {productInfo.tags &&
-                productInfo.tags.map((item, index) => {
-                  return (
-                    <ChipWithRemove
-                      key={index}
-                      onDelete={() => this.removeTag(index)}
-                      label={item}
-                    />
-                  );
-                })}
+                margin="none"
+              />
+              <div>
+                {productInfo.tags &&
+                  productInfo.tags.map((item, index) => {
+                    return (
+                      <ChipWithRemove
+                        key={index}
+                        onDelete={() => this.removeTag(index)}
+                        label={item}
+                      />
+                    );
+                  })}
+              </div>
             </div>
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Link Url"
-              value={productInfo.link_url}
-              className={classes.textField}
-              onChange={e => this.getEditedInfo("link_url", e.target.value)}
-              margin="none"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
+            <div className={classes.inputWrapper}>
+              <TextField
+                label="Link Url"
+                value={productInfo.link_url}
+                className={classes.textField}
+                onChange={e => this.getEditedInfo("link_url", e.target.value)}
+                margin="none"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
           </Grid>
         </Grid>
         <Grid

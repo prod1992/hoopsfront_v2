@@ -9,8 +9,8 @@ import EditingPopup from "./editingPopup";
 Modal.setAppElement("#root");
 
 class SingleProduct extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       modalIsOpen: false,

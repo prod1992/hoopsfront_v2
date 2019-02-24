@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { HashRouter as Router } from "react-router-dom";
-import AuthRouteWrapper from "./auth-route-wrapper";
-import Home from "./home";
 import User from "../core/auth";
 import { SetUserData, UserLoggedIn } from "../actions/user";
 import { AppReady } from "../actions/app";
+
+import AuthRouteWrapper from "./auth-route-wrapper";
+import Home from "./home";
 
 class App extends React.Component {
   constructor(props) {

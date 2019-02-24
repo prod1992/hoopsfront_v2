@@ -7,14 +7,14 @@ import {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import getApiCredentials from "../../../constants/api";
-import Book from "@material-ui/icons/Book";
+// import Book from "@material-ui/icons/Book";
 import Info from "@material-ui/icons/Info";
 import Delete from "@material-ui/icons/Delete";
 import Close from "@material-ui/icons/Close";
-import Fab from "@material-ui/core/Fab";
+// import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
-import { spawn } from "child_process";
+// import { spawn } from "child_process";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 const styles = theme => ({
@@ -103,7 +103,7 @@ class BulkEdit extends Component {
   }
 
   handleDeleteItems() {
-    const { checkedItems, isChecked } = this.state;
+    // const { checkedItems, isChecked } = this.state;
     const { products, selectedIds } = this.props.catalogueReducer;
     let productArray = products["data"];
 
@@ -140,7 +140,7 @@ class BulkEdit extends Component {
 
   render() {
     const { selectedIds, products, selectedAll } = this.props.catalogueReducer;
-    const { checkedItems, isChecked } = this.state;
+    const { isChecked } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.bulkEditWrapper}>

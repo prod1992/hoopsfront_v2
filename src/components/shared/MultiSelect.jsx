@@ -54,10 +54,10 @@ function getStyles(name, that) {
 
 class MultipleSelect extends React.Component {
   constructor(props) {
-    console.log();
+    super(props);
     this.state = {
       //name: this.props.values
-      name: this.props.value
+      name: props.value
     };
   }
 
@@ -70,8 +70,8 @@ class MultipleSelect extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const names = this.props.names;
+    const { classes, names } = this.props;
+
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>

@@ -4,8 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 const styles = theme => ({
   root: {
-    fontSize: 12,
-    height: 24,
     padding: "0 3px",
     fontSize: "0.75rem",
     borderRadius: 15,
