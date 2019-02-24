@@ -258,7 +258,8 @@ class SimpleProduct extends Component {
               flex: "1 0 66px",
               maxWidth:
                 viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 66 : "100%",
-              padding: viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 20 : 0
+              padding: viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 10 : 0,
+              height: "100%"
             }}
             to={`/product/${simpleProduct.id}`}
           >
