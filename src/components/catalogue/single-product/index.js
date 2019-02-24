@@ -188,7 +188,7 @@ class SingleProduct extends React.Component {
               <div className="options-owner">
                 <div className="item">
                   <span>Vendor:</span>
-                  Example
+                  {product.vendor ? product.vendor._id : ""}
                 </div>
                 <span className="line-b" />
                 <div className="item">

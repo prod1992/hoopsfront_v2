@@ -217,6 +217,7 @@ class EditingPopup extends Component {
       .then(res => res.json())
       .then(data => {
         if (data.id) {
+          this.props.setNewProduct(data);
           this.props.closeModal();
         }
       })
@@ -267,7 +268,7 @@ class EditingPopup extends Component {
                 input={<BootstrapInput />}
                 className={classes.textField}
                 name="vendor"
-                value={productInfo.vendor_id}
+                value={productInfo.vendor ? productInfo.vendor._id : ""}
                 onChange={e => {
                   this.getEditedInfo("vendor_id", e.target.value);
                 }}

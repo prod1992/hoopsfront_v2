@@ -22,7 +22,7 @@ import Close from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import DialogActions from "@material-ui/core/DialogActions";
 import Divider from "@material-ui/core/Divider";
-import SingleProductInfoTabs from "../../components/catalogue/single-product/SingleProductInfoTabs";
+import SingleProductInfoTabs from "../../components/catalogue/single-product/singleProductInfoTabs";
 const styles = theme => ({
   optionLabel: {
     color: "#555",
@@ -160,13 +160,22 @@ class SingleProduct extends React.Component {
     this.showUploadImageButton = this.showUploadImageButton.bind(this);
     this.hideUploadImageButton = this.hideUploadImageButton.bind(this);
     this.imageSelector = React.createRef();
+    this.setNewProduct = this.setNewProduct.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.getProduct(id);
   }
+  setNewProduct(data) {
+    if (data.size) data.size = data.size.split(",");
+    if (data.colour) data.colour = data.colour.split(",");
+    if (data.tags) data.tags = data.tags.split(",");
 
+    this.setState({
+      product: data
+    });
+  }
   getProduct(productId) {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + `/api/products/${productId}`;
@@ -208,15 +217,38 @@ class SingleProduct extends React.Component {
   }
 
   handleImageChange(e) {
-    e.preventDefault();
+    //e.preventDefault();
 
     let file = e.target.files[0];
+    let form = new FormData();
 
-    let data = new FormData();
-
-    data.append("file", file, file.name);
-
-    console.log(file, data);
+    form.append("image", file, file.name);
+    console.log(form);
+    /*let token = localStorage["userToken"];
+    let uri =
+      getApiCredentials.host +
+      `/api/products/${this.state.product.id}/upload-image`;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token
+      },
+      data: form,
+      onUploadProgress: p => {
+        console.log(p);
+      }
+    };
+    const reqInstance = new Request(uri, requestOptions);
+    fetch(reqInstance)
+      .then(res => res.json())
+      .then(data => {
+        if (data.id) {
+          this.props.closeModal();
+        }
+      })
+      .catch(err => console.log("error ", err));*/
   }
 
   render() {
@@ -309,7 +341,10 @@ class SingleProduct extends React.Component {
                     <ul className={classes.productOptions}>
                       <li>
                         <span className={classes.optionLabel}>Vendor: </span>
-                        <span className={classes.optionValue}>Example</span>
+
+                        <span className={classes.optionValue}>
+                          {product.vendor ? product.vendor.vendor_name : ""}
+                        </span>
                       </li>
                       <li>
                         <span className={classes.optionLabel}>Category:</span>
@@ -438,6 +473,7 @@ class SingleProduct extends React.Component {
             <DialogContent>
               <DialogContentText>
                 <EditingPopup
+                  setNewProduct={this.setNewProduct}
                   productData={product}
                   closeModal={this.closeModal}
                 />
