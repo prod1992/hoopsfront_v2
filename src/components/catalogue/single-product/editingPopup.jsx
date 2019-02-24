@@ -4,7 +4,7 @@ import getApiCredentials from "./../../../constants/api";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
-
+import InputBase from "@material-ui/core/InputBase";
 import ChipWithRemove from "../../shared/ChipWithRemove";
 import {
   Select,
@@ -14,17 +14,57 @@ import {
   FormControl,
   InputLabel
 } from "@material-ui/core";
-
+import Close from "@material-ui/icons/Close";
 const styles = theme => ({
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
     width: "100%"
   },
   inputWrapper: {
     width: "100vh"
+  },
+  buttonsBlock: {
+    justifyContent: "flex-end"
+  },
+  buttons: {
+    marginLeft: "25px"
   }
 });
+
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    "label + &": {
+      marginTop: theme.spacing.unit * 3
+    }
+  },
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.background.paper,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    width: "auto",
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)"
+    }
+  }
+}))(InputBase);
 class EditingPopup extends Component {
   constructor() {
     super();
@@ -143,6 +183,7 @@ class EditingPopup extends Component {
               Vendor
             </InputLabel>
             <Select
+              input={<BootstrapInput />}
               className={classes.textField}
               name="vendor"
               value={productInfo.vendor_id}
@@ -206,6 +247,7 @@ class EditingPopup extends Component {
                 category
               </InputLabel>
               <Select
+                input={<BootstrapInput />}
                 className={classes.textField}
                 value={productInfo.category}
                 onChange={e => {
@@ -225,6 +267,7 @@ class EditingPopup extends Component {
                 sub category
               </InputLabel>
               <Select
+                input={<BootstrapInput />}
                 className={classes.textField}
                 value={productInfo.sub_category}
                 onChange={e => {
@@ -286,15 +329,26 @@ class EditingPopup extends Component {
             />
           </Grid>
         </Grid>
-        <Grid row={true} container spacing={16}>
-          <Grid item xs={6}>
-            <Button onClick={() => this.props.closeModal()} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.updateProduct} color="primary">
-              Save
-            </Button>
-          </Grid>
+        <Grid
+          row={true}
+          container
+          className={classes.buttonsBlock}
+          spacing={16}
+        >
+          <Button
+            className={classes.buttons}
+            onClick={() => this.props.closeModal()}
+          >
+            <Close /> Cancel
+          </Button>
+          <Button
+            className={classes.buttons}
+            onClick={this.updateProduct}
+            variant="contained"
+            color="primary"
+          >
+            Save
+          </Button>
         </Grid>
       </Grid>
     );

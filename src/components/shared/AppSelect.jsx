@@ -33,8 +33,7 @@ import {
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    height: 250
+    flexGrow: 1
   },
   input: {
     display: "flex",
@@ -192,7 +191,7 @@ function MultiValue(props) {
   );
 }
 
-function Menu(props) {
+function _Menu(props) {
   return (
     <Paper
       square
@@ -210,6 +209,7 @@ function Menu(props) {
     </Paper>
   );
 }
+const Menu = connect(mapStateToProps)(_Menu);
 
 const components = {
   Control,
@@ -282,7 +282,6 @@ class AppSelect extends React.Component {
     if (selectVendor.selected) {
       value = selectVendor.selected.single;
     }
-    console.log(value);
     var vendorList = {};
 
     var vendorList = selectVendor.vendorList.data.map(vendor => ({
@@ -326,7 +325,6 @@ function mapStateToProps(state) {
     selectVendor: state.selectVendor
   };
 }
-
 export default connect(mapStateToProps)(
   withStyles(styles, { withTheme: true })(AppSelect)
 );
