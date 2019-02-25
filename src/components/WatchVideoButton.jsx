@@ -22,7 +22,8 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.2)",
     overflow: "hidden",
     borderRadius: 2,
-    lineHeight: "1",
+    lineHeight: 1,
+    height: 39,
     "& svg": {
       borderRadius: "50%",
       marginRight: 10,
@@ -91,9 +92,9 @@ class WatchVideoButton extends React.Component {
           className={classes.button}
           onClick={this.openModal}
           variant="outlined"
-          color="default"
+          color="primary"
         >
-          <PlayCircleFilled color="primary" />
+          <PlayCircleFilled />
           <span>Watch the video</span>
         </Button>
         <Dialog

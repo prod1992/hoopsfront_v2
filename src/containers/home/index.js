@@ -54,7 +54,8 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    padding: theme.spacing.unit * 2
   }
 });
 
@@ -122,7 +123,6 @@ class Home extends React.Component {
             <Route path="/jobs" component={Jobs} />
             <Route path="/quotes" component={Quotes} />
             <Route path="/purchase-orders" component={PurchaseOrders} />
-            {/* <Route path="/profile" component={Catalogue} /> */}
             <Route path="/import" component={ImportPage} />
             <Route exact path="/product/:id" component={SingleProduct} />
             <Route render={() => <Redirect to="/catalogue" />} />

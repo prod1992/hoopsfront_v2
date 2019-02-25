@@ -22,11 +22,17 @@ const styles = {
   input: {
     marginLeft: 8,
     flex: 1,
-    border: "1px solid #cccccc",
-    padding: ".35rem 1rem"
+    boxShadow: "0 0 0 1px #ccc",
+    padding: ".35rem 1rem",
+    height: 40,
+    minWidth: 260,
+    fontSize: 14
   },
   iconButton: {
-    padding: 10
+    padding: 9,
+    marginLeft: -50,
+    borderRadius: 0,
+    width: 50
   },
   divider: {
     width: 1,
@@ -131,6 +137,7 @@ class Filter extends Component {
             className={classes.input}
             placeholder="Enter Your search here"
             onChange={event => this.performSearch(event)}
+            inputProps={{ style: { lineHeight: 1, padding: 0 } }}
           />
           <IconButton className={classes.iconButton} aria-label="Search">
             <SearchIcon />
