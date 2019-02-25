@@ -2,15 +2,12 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Book from "@material-ui/icons/Book";
 import Fab from "@material-ui/core/Fab";
 import Edit from "@material-ui/icons/Edit";
+import RenderDialog from "../../shared/RenderDialog";
+import EditDecorationModal from "./EditDecorationModal";
 const styles = theme => ({
   root: {
     width: "100%",
@@ -50,25 +47,43 @@ const styles = theme => ({
   }
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
-
 class SingleProductDescription extends Component {
+  constructor(props) {
+    super(props);
+    this.openDecorationEditModal = this.openDecorationEditModal.bind(this);
+    this.closeDecorationEditModal = this.closeDecorationEditModal.bind(this);
+    this.setNewDecoration = this.setNewDecoration.bind(this);
+    this.state = {
+      modalIsOpen: false
+    };
+  }
+  openDecorationEditModal(decoration) {
+    this.setState({ modalIsOpen: true, decoration: decoration });
+  }
+  closeDecorationEditModal() {
+    this.setState({ modalIsOpen: false, decoration: null });
+  }
+  setNewDecoration(data) {
+    this.setState({
+      decoration: data
+    });
+  }
   render() {
     const { classes, product } = this.props;
     return (
       <div>
+        <RenderDialog
+          oppen={this.state.modalIsOpen}
+          closeModal={this.closeModal}
+          ModalTitle={"Edit Decoration"}
+          context={
+            <EditDecorationModal
+              setNewProduct={this.setNewDecoration}
+              closeModal={this.closeDecorationEditModal}
+              decorationData={this.state.decoration}
+            />
+          }
+        />
         <div className={classes.DecorationHeader}>
           <h4 className={classes.DecorationHeaderProduct}>
             Decorations Linked to Product({product.decorations.length})
@@ -91,7 +106,10 @@ class SingleProductDescription extends Component {
           product.decorations.map((decoration, i) => (
             <Paper key={decoration.name} className={classes.decoration}>
               <p>{decoration.name}</p>
-              <Edit className={classes.EditButton} />
+              <Edit
+                onClick={this.openDecorationEditModal(decoration)}
+                className={classes.EditButton}
+              />
             </Paper>
           ))}
       </div>
