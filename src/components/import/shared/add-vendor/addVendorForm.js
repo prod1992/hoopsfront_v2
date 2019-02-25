@@ -3,131 +3,225 @@ import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { AddNewVendor } from "../../../../actions/select.vendor";
 import Clear from "@material-ui/icons/Clear";
+import { Paper, Button, Grid, TextField } from "@material-ui/core";
+
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  fields: {
+    padding: "55px"
+  },
+  fieldsPaper: {
+    padding: "30px"
+  },
+  button: {
+    marginLeft: "15px"
+  },
+  textField: {
+    width: "100%"
+  },
+  addVendorButtonsBlock: {
+    marginTop: "25px",
+    marginBottom: "25px"
+  }
+});
 class AddVendorForm extends Component {
   constructor(props) {
     super(props);
     this.closeAddVendor = this.closeAddVendor.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addVendor = this.addVendor.bind(this);
+    this.state = {
+      vendor_name: ""
+    };
   }
-
+  addVendor() {
+    this.props.addVendorFunction(this.state);
+  }
   closeAddVendor() {
     this.props.dispatch(AddNewVendor(false));
   }
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
   render() {
-    const { handleSubmit } = this.props;
+    const { addVendorFunction, classes } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
-        <div className="fields">
-          <div className="save-new-vendor">
-            <span className="add-v-head">Add vendor</span>
-            <button onClick={this.closeAddVendor}>
+      <form>
+        <div className={classes.fields}>
+          <Grid container className={classes.addVendorButtonsBlock}>
+            <Grid row={true} container xs={6}>
+              <span className="add-v-head">Add vendor</span>
+            </Grid>
+            <Grid
+              row={true}
+              container
+              xs={6}
+              style={{ justifyContent: "flex-end" }}
+            >
+              <Button onClick={this.closeAddVendor} className={classes.button}>
+                <Clear />
+                Cencel
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.addVendor}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Paper className={classes.fieldsPaper}>
+            <Grid container>
+              <Grid container row={true} spacing={16}>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="vendor_name"
+                    name="vendor_name"
+                    label="Vendor name"
+                    required="required"
+                    value={this.state.age}
+                    onChange={this.handleChange("vendor_name")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="contact_address"
+                    name="contact_address"
+                    label="Address"
+                    value={this.state.contact_address}
+                    onChange={this.handleChange("contact_address")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container row={true}>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="contact_name"
+                    name="contact_name"
+                    label="contact name"
+                    value={this.state.contact_name}
+                    onChange={this.handleChange("contact_name")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="city"
+                    name="city"
+                    label="City"
+                    value={this.state.city}
+                    onChange={this.handleChange("city")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container row={true}>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="contact_email"
+                    name="email"
+                    required="required"
+                    label="Contact email"
+                    value={this.state.contact_email}
+                    onChange={this.handleChange("email")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="state"
+                    name="state"
+                    label="State"
+                    value={this.state.state}
+                    onChange={this.handleChange("state")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container row={true}>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="contact_number"
+                    name="contact_number"
+                    label="Contact number"
+                    value={this.state.contact_number}
+                    onChange={this.handleChange("contact_number")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid row xs={6}>
+                  <TextField
+                    className={classes.textField}
+                    id="zip_code"
+                    name="zip_code"
+                    label="Zip code"
+                    value={this.state.zip_code}
+                    onChange={this.handleChange("zip_code")}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Grid
+            container
+            row={true}
+            className={classes.addVendorButtonsBlock}
+            style={{ justifyContent: "flex-end" }}
+          >
+            <Button onClick={this.closeAddVendor} className={classes.button}>
               <Clear />
               Cencel
-            </button>
-            <button type="submit" className="save">
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.addVendor}
+              className={classes.button}
+            >
               Save
-            </button>
-          </div>
-          <div className="fields-wrap">
-            <div className="field-row">
-              <div className="simple-field">
-                <label htmlFor="name">Vendor name</label>
-                <Field
-                  name="vendor_name"
-                  width="100%"
-                  className="vendor-add-field"
-                  id="name"
-                  component="input"
-                  type="text"
-                  required="required"
-                />
-              </div>
-              <div className="simple-field">
-                <label htmlFor="address">Address</label>
-                <Field
-                  type="text"
-                  width="100%"
-                  id="address"
-                  component="input"
-                  className="vendor-add-field"
-                  name="contact_address"
-                />
-              </div>
-            </div>
-            <div className="field-row">
-              <div className="simple-field">
-                <label htmlFor="contact_name">Contact name</label>
-                <Field
-                  type="text"
-                  width="100%"
-                  id="contact_name"
-                  component="input"
-                  className="vendor-add-field"
-                  name="contact_name"
-                />
-              </div>
-              <div className="simple-field">
-                <label htmlFor="city">City</label>
-                <Field
-                  type="text"
-                  width="100%"
-                  id="city"
-                  component="input"
-                  className="vendor-add-field"
-                  name="city"
-                />
-              </div>
-            </div>
-            <div className="field-row">
-              <div className="simple-field">
-                <label htmlFor="contact_email">Contact email</label>
-                <Field
-                  type="email"
-                  width="100%"
-                  id="contact_email"
-                  component="input"
-                  className="vendor-add-field"
-                  name="email"
-                  required="required"
-                />
-              </div>
-              <div className="simple-field">
-                <label htmlFor="text">State</label>
-                <Field
-                  type="text"
-                  width="100%"
-                  id="email"
-                  component="input"
-                  className="vendor-add-field"
-                  name="state"
-                />
-              </div>
-            </div>
-            <div className="field-row">
-              <div className="simple-field">
-                <label htmlFor="contact_number">Contact number</label>
-                <Field
-                  type="number"
-                  width="100%"
-                  id="contact_number"
-                  component="input"
-                  className="vendor-add-field"
-                  name="contact_number"
-                />
-              </div>
-              <div className="simple-field">
-                <label htmlFor="code">Zip code</label>
-                <Field
-                  type="text"
-                  width="100%"
-                  id="code"
-                  component="input"
-                  className="vendor-add-field"
-                  name="code"
-                />
-              </div>
-            </div>
-          </div>
+            </Button>
+          </Grid>
         </div>
       </form>
     );
@@ -139,5 +233,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(
-  reduxForm({ form: "addVendorForm" })(AddVendorForm)
+  withStyles(styles, { withTheme: true })(
+    reduxForm({ form: "addVendorForm" })(AddVendorForm)
+  )
 );

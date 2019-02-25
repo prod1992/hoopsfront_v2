@@ -16,9 +16,18 @@ import {
   Paper,
   Grid,
   Fab,
-  Button
+  Button,
+  Chip
 } from "@material-ui/core";
-const styles = theme => ({});
+const styles = theme => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto",
+    padding: 16,
+    fontSize: 14
+  }
+});
 
 class Pricing extends Component {
   constructor(props) {
@@ -191,121 +200,131 @@ class Pricing extends Component {
 
     return (
       <div className="product_mapping_block">
-        <Paper>
-          <Grid container className="product_mapping_block_title">
+        <Paper className={classes.root}>
+          <Grid
+            container
+            spacing={16}
+            justify="space-between"
+            alignItems="center"
+          >
             <Grid item>
-              <div className="product_info_icon_block">
-                <Beenhere />
-              </div>
-              <span className="product_info_icon_block_text">
-                Product info mapping
-              </span>
+              <h4 style={{ fontSize: "1.125rem", fontWeight: 400, margin: 0 }}>
+                <Chip
+                  style={{
+                    width: 28,
+                    height: 28,
+                    backgroundColor: "#f0ab5d",
+                    color: "#FFFFFF",
+                    marginRight: 10
+                  }}
+                  label={<Beenhere style={{ fontSize: "1.25rem" }} />}
+                />
+                <span>Product info mapping</span>
+              </h4>
             </Grid>
             <Grid item>
               <WatchVideoButton />
             </Grid>
           </Grid>
-          <Paper>
-            {additionalField !== 2 && (
-              <div className="step_3_catalogue_multiple">
-                <div className="step_3_catalogue_multiple_content">
-                  <div className="step_3_catalogue_multiple_items">
-                    <div className="step_3_catalogue_title">
-                      <RenderLabelGroup
-                        text={
-                          "Does this catalogue have multiple service options?"
-                        }
-                        url={
-                          "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
-                        }
-                        anchorText={"What's This?"}
-                      />
-                    </div>
-                    <p className="standard_product_step_3">
-                      Eg. Standard Production, Rush Service, Indent etc
-                    </p>
-                  </div>
-                  <div className="step_3_catalogue_multiple_items">
-                    <FormControlLabel
-                      value={1}
-                      control={<Radio color="primary" />}
-                      onClick={this.setAdditionalFields}
-                      label="Yes"
-                      labelPlacement="end"
-                    />
-                    <FormControlLabel
-                      value={2}
-                      control={<Radio color="primary" />}
-                      onClick={this.setAdditionalFields}
-                      label="No"
-                      labelPlacement="end"
+          {additionalField !== 2 && (
+            <div className="step_3_catalogue_multiple">
+              <div className="step_3_catalogue_multiple_content">
+                <div className="step_3_catalogue_multiple_items">
+                  <div className="step_3_catalogue_title">
+                    <RenderLabelGroup
+                      text={
+                        "Does this catalogue have multiple service options?"
+                      }
+                      url={
+                        "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                      }
+                      anchorText={"What's This?"}
                     />
                   </div>
+                  <p className="standard_product_step_3">
+                    Eg. Standard Production, Rush Service, Indent etc
+                  </p>
+                </div>
+                <div className="step_3_catalogue_multiple_items">
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio color="primary" />}
+                    onClick={this.setAdditionalFields}
+                    label="Yes"
+                    labelPlacement="end"
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio color="primary" />}
+                    onClick={this.setAdditionalFields}
+                    label="No"
+                    labelPlacement="end"
+                  />
                 </div>
               </div>
-            )}
-            {showAdditionalFields && additionalField === 1 && (
-              <div className="hoops_map_table step_3">
-                <table className="hoops_map_table_in_table">
-                  <thead>
-                    <tr>
-                      <td>
-                        <span>Map to fields in Hoops</span>
-                      </td>
-                      <td />
-                      <td>
-                        <span>Fields in your file</span>
-                      </td>
-                      <td />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.getServiceArray().map(service => service)}
-                    <tr>
-                      <td />
-                      <td />
-                      <td />
-                      <td>
-                        <button onClick={this.addMoreService}>Add More</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {showAdditionalFields && additionalField === 2 && (
-              <div className="hoops_map_table step_3">
-                <div className="minimum_order_block">
-                  <div className="minimum_order_block_content">
-                    <div className="minimum_order_block_title">
-                      <RenderLabelGroup
-                        text={"Minimum Order Quantity"}
-                        url={
-                          "http://help.hoopscrm.com/catalog/import-field-explanations/moq-price-breaks"
-                        }
-                        anchorText={"What's This?"}
-                      />
-                    </div>
-                    <ImportedProperty
-                      propertyItem={{ name: "min_order_quantity" }}
-                      propertyOptions={importFileData.csv_headers}
+            </div>
+          )}
+          {showAdditionalFields && additionalField === 1 && (
+            <div className="hoops_map_table step_3">
+              <table className="hoops_map_table_in_table">
+                <thead>
+                  <tr>
+                    <td>
+                      <span>Map to fields in Hoops</span>
+                    </td>
+                    <td />
+                    <td>
+                      <span>Fields in your file</span>
+                    </td>
+                    <td />
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.getServiceArray().map(service => service)}
+                  <tr>
+                    <td />
+                    <td />
+                    <td />
+                    <td>
+                      <button onClick={this.addMoreService}>Add More</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+          {showAdditionalFields && additionalField === 2 && (
+            <div className="hoops_map_table step_3">
+              <div className="minimum_order_block">
+                <div className="minimum_order_block_content">
+                  <div className="minimum_order_block_title">
+                    <RenderLabelGroup
+                      text={"Minimum Order Quantity"}
+                      url={
+                        "http://help.hoopscrm.com/catalog/import-field-explanations/moq-price-breaks"
+                      }
+                      anchorText={"What's This?"}
                     />
                   </div>
-                </div>
-                {this.getPriceBreakArray().map(item => item)}
-                <div className="add_more_breaks">
-                  <Button
-                    variant="outlined"
-                    color="inherit"
-                    className={classes.button}
-                    onClick={this.addMorePriceBreaks}
-                  >
-                    Add More Price Breaks
-                  </Button>
+                  <ImportedProperty
+                    propertyItem={{ name: "min_order_quantity" }}
+                    propertyOptions={importFileData.csv_headers}
+                  />
                 </div>
               </div>
-            )}
-          </Paper>
+              {this.getPriceBreakArray().map(item => item)}
+              <div className="add_more_breaks">
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  className={classes.button}
+                  onClick={this.addMorePriceBreaks}
+                >
+                  Add More Price Breaks
+                </Button>
+              </div>
+            </div>
+          )}
         </Paper>
       </div>
     );

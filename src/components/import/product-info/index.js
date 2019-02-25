@@ -135,3 +135,4 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(
   withStyles(styles, { withTheme: true })(ProductInfo)
 );
+//asd

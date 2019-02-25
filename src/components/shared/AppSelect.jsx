@@ -201,7 +201,7 @@ function _Menu(props) {
     >
       <Button
         className={props.selectProps.classes.addVendorButton}
-        onClick={() => console.log("test")}
+        onClick={() => props.dispatch(AddNewVendor(true))}
       >
         <AddIcon />
         Add New

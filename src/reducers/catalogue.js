@@ -9,7 +9,8 @@ import {
   SET_SUB_CATEGORY_LIST,
   SET_CATEGORY_LIST,
   SET_BRAND_LIST,
-  SET_VENDOR_LIST
+  SET_VENDOR_LIST,
+  ADD_NEW_CREATED_VENDOR
 } from "../actions/action-types";
 
 const initialState = {
@@ -68,11 +69,20 @@ const catalogueReducer = (state = initialState, action) => {
         ...state,
         vendors: action.payload
       };
+    case ADD_NEW_CREATED_VENDOR:
+      return {
+        ...state,
+        vendors: state.vendors.data
+          ? state.vendors.data.push(action.payload)
+          : action.payload.data
+      };
+
     case SET_BRAND_LIST:
       return {
         ...state,
         brands: action.payload
       };
+
     case SET_CATEGORY_LIST:
       return {
         ...state,

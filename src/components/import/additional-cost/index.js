@@ -11,10 +11,19 @@ import {
   Paper,
   Grid,
   Button,
-  RadioGroup
+  RadioGroup,
+  Chip
 } from "@material-ui/core";
 import RenderLabelGroup from "../../shared/RenderLabelGroup";
-const styles = theme => ({});
+const styles = theme => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto",
+    padding: 16,
+    fontSize: 14
+  }
+});
 class AdditionalCost extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +73,6 @@ class AdditionalCost extends Component {
   getAdditionalBlock(i) {
     const { importFileData, classes } = this.props;
 
-    console.log("getAdditionalBlock");
     return (
       <div className="additional_cost_block" key={i + 1000}>
         <div className="additional_cost_title_block">
@@ -199,18 +207,32 @@ class AdditionalCost extends Component {
     const { classes } = this.props;
     return (
       <div className="product_mapping_block">
-        <Paper>
-          <Grid container className="product_mapping_block_title">
+        <Paper className={classes.root}>
+          <Grid
+            container
+            spacing={16}
+            justify="space-between"
+            alignItems="center"
+          >
             <Grid item>
-              <div className="product_info_icon_block">
-                <Beenhere />
-              </div>
-              <span className="product_info_icon_block_text">
-                Product info mapping
-              </span>
+              <h4 style={{ fontSize: "1.125rem", fontWeight: 400, margin: 0 }}>
+                <Chip
+                  style={{
+                    width: 28,
+                    height: 28,
+                    backgroundColor: "#f0ab5d",
+                    color: "#FFFFFF",
+                    marginRight: 10
+                  }}
+                  label={<Beenhere style={{ fontSize: "1.25rem" }} />}
+                />
+                <span>Product info mapping</span>
+              </h4>
             </Grid>
             <Grid item>
-              <WatchVideoButton />
+              <div>
+                <WatchVideoButton />
+              </div>
             </Grid>
           </Grid>
           <Paper>

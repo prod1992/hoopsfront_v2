@@ -4,16 +4,28 @@ import {
 } from "../../../../actions/select.vendor";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Modal from "@material-ui/core/Modal";
 import AddVendorForm from "./addVendorForm";
 import getApiCredentials from "../../../../constants/api";
+
+function getModalStyle() {
+  return {
+    top: `0`,
+    left: `0`,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#F5F5F5"
+    //transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 class AddVendor extends Component {
   constructor(props) {
     super(props);
-    this.submit = this.submit.bind(this);
+    this.AddVendor = this.AddVendor.bind(this);
   }
 
-  submit(values) {
+  AddVendor(values) {
     let token = localStorage["userToken"];
     let uri = getApiCredentials.host + "/api/vendors";
     const requestOptions = {
@@ -45,9 +57,11 @@ class AddVendor extends Component {
 
   render() {
     return (
-      <div className="add-vendor-fields">
-        <AddVendorForm onSubmit={this.submit} />
-      </div>
+      <Modal open={true}>
+        <div style={getModalStyle()}>
+          <AddVendorForm addVendorFunction={this.AddVendor} />
+        </div>
+      </Modal>
     );
   }
 }

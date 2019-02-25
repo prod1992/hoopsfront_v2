@@ -18,7 +18,7 @@ class SelectDropdown extends Component {
     this.getVendorData = this.getVendorData.bind(this);
   }
   addNewVendor() {
-    this.props.dispatch(AddNewVendor(true));
+    // this.props.dispatch(AddNewVendor(true));
   }
   hendleOptionValue(item) {
     this.props.dispatch(SetSelectedVendor(item));
