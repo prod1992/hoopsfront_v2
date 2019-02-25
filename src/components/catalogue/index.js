@@ -27,11 +27,14 @@ const styles = theme => ({
     }
   },
   cardContent: {
-    flex: 1
+    flex: 1,
+    "&:last-child": {
+      paddingBottom: 16
+    }
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "100%"
   },
   productTitle: {
     // margin: "0 0 5px"
@@ -64,6 +67,7 @@ const styles = theme => ({
     padding: "0 3px",
     fontSize: "0.75rem",
     borderRadius: 100,
+    marginLeft: 10,
     height: 22,
     fontFamily: "inherit",
     "&:not([variant='outlined'])": {
@@ -187,18 +191,18 @@ class SimpleProduct extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={"auto"}>
               <div>
                 <div className={classes.price}>
-                  $
                   <span>
+                    $
                     {simpleProduct.price
                       ? simpleProduct.price.toFixed(2)
                       : "" || "0.00"}
                   </span>
                 </div>
                 <div>
-                  <span className="price-text">BUY PRICE</span>
+                  <span className={classes.priceLabel}>BUY PRICE</span>
                 </div>
               </div>
             </Grid>
@@ -255,9 +259,7 @@ class SimpleProduct extends Component {
           <Link
             style={{
               display: "block",
-              flex: "1 0 66px",
-              maxWidth:
-                viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 66 : "100%",
+              width: viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 66 : "100%",
               padding: viewType !== PRODUCT_VIEW_TYPE["col_view"] ? 10 : 0,
               height: "100%"
             }}

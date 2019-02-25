@@ -25,9 +25,10 @@ import {
   OpenInBrowser as ImportIcon
 } from "@material-ui/icons";
 
-import { Icon } from "@material-ui/core";
-
 import {
+  Icon,
+  Chip,
+  IconButton,
   Grid,
   Paper,
   BottomNavigation,
@@ -54,6 +55,16 @@ const styles = theme => ({
   },
   resultsPaper: {
     padding: 16
+  },
+  successChip: {
+    backgroundColor: "#52ba57",
+    color: "#FFFFFF",
+    borderRadius: 0,
+    fontSize: 12,
+    fontWeight: 600,
+    padding: "1px 4px",
+    marginRight: 6,
+    height: "auto"
   }
 });
 
@@ -78,25 +89,30 @@ class ImportPage extends React.Component {
 
             <Paper className={classes.resultsPaper}>
               <Grid container>
-                <Grid item sm={4}>
-                  <div className="text">Vendor</div>
-                  <div className="content">
-                    <Person />
-                    <span>{selectedVendor && selectedVendor.vendor_name}</span>
+                <Grid item md={3}>
+                  <div>
+                    <strong>Vendor</strong>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Person color="primary" />
+                    <span>{selectedVendor.single.label}</span>
                   </div>
                 </Grid>
-                <Grid item sm={4}>
-                  <div className="text">Product csv files</div>
+                <Grid item md={3}>
+                  <div>
+                    <strong>Product csv files</strong>
+                  </div>
                   {importFileData.csvFile && (
-                    <div className="upload-name">
-                      <span className="badge csv">CSV</span>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <Chip label={"CSV"} className={classes.successChip} />
+
                       <span className="file-name">
                         {importFileData.csvFile}
                       </span>
                     </div>
                   )}
                 </Grid>
-                <Grid item sm={3}>
+                <Grid item md={3}>
                   <div className="text">Product zip files</div>
                   {importFileData.zipFile && (
                     <div className="upload-name">
@@ -107,15 +123,15 @@ class ImportPage extends React.Component {
                     </div>
                   )}
                 </Grid>
-                <Grid item sm={1}>
-                  <button
+                <Grid item md={"auto"}>
+                  <IconButton
                     className="to-import-btn"
                     onClick={() => {
                       this.props.movePrevStep();
                     }}
                   >
                     <Edit />
-                  </button>
+                  </IconButton>
                 </Grid>
               </Grid>
             </Paper>

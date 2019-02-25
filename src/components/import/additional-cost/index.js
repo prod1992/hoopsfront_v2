@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import VideoBtn from "../../shared/WatchVideoButton";
 import Beenhere from "@material-ui/icons/Beenhere";
-import AddVendor from "../shared/add-vendor";
+// import AddVendor from "../shared/add-vendor";
 import { withStyles } from "@material-ui/core/styles";
 
 import {
@@ -10,7 +10,6 @@ import {
   Radio,
   Paper,
   Grid,
-  Fab,
   Button,
   RadioGroup
 } from "@material-ui/core";
