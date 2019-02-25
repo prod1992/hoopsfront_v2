@@ -646,10 +646,10 @@ class AddProduct extends Component {
                 }}
               >
                 {this.state.subcategories &&
-                  this.state.subcategories.data.map((item, value) => {
+                  this.state.subcategories.data.map((item, key) => {
                     if (item.sub_category) {
                       return (
-                        <MenuItem value={item.sub_category}>
+                        <MenuItem key={key} value={item.sub_category}>
                           {item.sub_category}
                         </MenuItem>
                       );
