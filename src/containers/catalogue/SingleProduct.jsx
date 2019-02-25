@@ -221,34 +221,32 @@ class SingleProduct extends React.Component {
 
     let file = e.target.files[0];
     let form = new FormData();
-
-    form.append("image", file, file.name);
-    console.log(form);
-    /*let token = localStorage["userToken"];
+    let token = localStorage["userToken"];
     let uri =
       getApiCredentials.host +
       `/api/products/${this.state.product.id}/upload-image`;
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token
-      },
-      data: form,
-      onUploadProgress: p => {
-        console.log(p);
-      }
-    };
-    const reqInstance = new Request(uri, requestOptions);
-    fetch(reqInstance)
-      .then(res => res.json())
-      .then(data => {
-        if (data.id) {
-          this.props.closeModal();
+    form.append("image", file, file.name);
+    axios
+      .request({
+        url: uri,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + token
+        },
+        data: form,
+        onUploadProgress: p => {
+          console.log(p);
         }
       })
-      .catch(err => console.log("error ", err));*/
+      .then(res => {
+        if (res.status == 200) this.setNewProduct(res.data);
+
+        console.log(res);
+      })
+      .catch(err => {
+        console.error("error", err);
+      });
   }
 
   render() {
@@ -269,7 +267,9 @@ class SingleProduct extends React.Component {
                 >
                   <CardMedia
                     className={classes.media}
-                    image={product.image_name}
+                    image={`http://18.185.19.120/api/products/image/${
+                      product.image_name
+                    }`}
                     title={product.title}
                   />
                   <Fab

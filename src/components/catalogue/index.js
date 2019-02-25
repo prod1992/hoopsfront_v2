@@ -267,7 +267,9 @@ class SimpleProduct extends Component {
           >
             <CardMedia
               className={classes.media}
-              image={simpleProduct.image_name}
+              image={`http://18.185.19.120/api/products/image/${
+                simpleProduct.image_name
+              }`}
               title={simpleProduct.title}
             />
           </Link>
