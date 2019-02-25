@@ -35,6 +35,9 @@ const styles = theme => ({
     justifyContent: "space-between",
     width: 100,
     boxShadow: "none"
+  },
+  stebButtons: {
+    marginTop: "15px"
   }
 });
 
@@ -120,7 +123,7 @@ class StepButtons extends React.Component {
 
   renderSkipButton(param) {
     const { classes } = this.props;
-    if (param === 0 || param === 5) {
+    if (param === 0 || param === 5 || param === 1) {
       return (
         <Button
           variant="contained"
@@ -186,9 +189,17 @@ class StepButtons extends React.Component {
     }
     */
     return (
-      <div>
-        <ToastContainer autoClose={2000} />
-        <div className={classes.uploadControls}>
+      <Grid container className={classes.stebButtons}>
+        <ToastContainer
+          position="top-right"
+          autoClose={false}
+          newestOnTop
+          closeOnClick
+          rtl
+          pauseOnVisibilityChange
+          draggable
+        />
+        <Grid row={true} container className={classes.uploadControls}>
           {!this.props.firstPage && (
             <div style={{ marginRight: "auto" }}>
               <Button
@@ -203,14 +214,13 @@ class StepButtons extends React.Component {
               </Button>
             </div>
           )}
-
-          <div style={{ marginLeft: "auto" }}>
+          <Grid style={{ marginLeft: "auto", display: "flex" }} spacing={16}>
             {!this.props.firstPage &&
               this.renderSkipButton(stepData["stepState"])}
             {this.renderNextButton(stepData["stepState"])}
-          </div>
-        </div>
-      </div>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
