@@ -1,14 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import { PlayCircleFilled, Close } from "@material-ui/icons";
+import {
+  Dialog,
+  Button,
+  DialogTitle,
+  DialogContent,
+  IconButton
+} from "@material-ui/core";
 
 import { toggleVideoModal } from "../actions/catalogue-actions";
-import playVideo from "../reducers/video.play";
-
-import Modal from "@material-ui/core/Modal";
-import PlayCircleFilled from "@material-ui/icons/PlayCircleFilled";
-
-import { Button } from "@material-ui/core";
 
 const styles = theme => ({
   button: {
@@ -31,20 +33,52 @@ const styles = theme => ({
   }
 });
 
+const CustomDialogTitle = withStyles(theme => ({
+  paper: {
+    borderRadius: "2px"
+  },
+  root: {
+    margin: 0,
+    padding: theme.spacing.unit,
+    textAlign: "right"
+  },
+  closeButton: {
+    marginLeft: "auto",
+    color: theme.palette.grey[500]
+  }
+}))(props => {
+  const { children, classes, onClose } = props;
+  return (
+    <DialogTitle disableTypography className={classes.root}>
+      {onClose ? (
+        <IconButton
+          aria-label="Close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <Close />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+});
+
 class VideoBtn extends React.Component {
-  state = {
-    open: false
-  };
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  openCloseVideoPopUp() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullWidth: true,
+      maxWidth: "sm"
+    };
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+  openModal() {
     this.props.dispatch(toggleVideoModal(true));
+  }
+
+  closeModal() {
+    this.props.dispatch(toggleVideoModal(false));
   }
 
   render() {
@@ -53,34 +87,62 @@ class VideoBtn extends React.Component {
       <div>
         <Button
           className={classes.button}
-          onClick={() => this.openCloseVideoPopUp()}
+          onClick={this.openModal}
           variant="outlined"
           color="primary"
         >
           <PlayCircleFilled />
           <span>Watch the video</span>
         </Button>
-        <Modal open={this.state.open}>
-          <div>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/cWGE9Gi0bB0?controls=0"
-              frameborder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            />
-          </div>
-        </Modal>
+        <Dialog
+          classes={{ root: classes.paper }}
+          fullWidth={this.state.fullWidth}
+          maxWidth={this.state.maxWidth}
+          open={this.props.videoModalOpen}
+          onClose={this.closeModal}
+        >
+          <CustomDialogTitle onClose={this.closeModal} />
+          <DialogContent>
+            <div
+              style={{
+                paddingBottom: "56.25%",
+                height: 0,
+                position: "relative"
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  bottom: 0,
+                  height: "100%",
+                  width: "100%"
+                }}
+              />
+
+              <iframe
+                style={{ position: "absolute", left: 0, top: 0 }}
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/cWGE9Gi0bB0?controls=0"
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, p) => {
+  console.log(state);
   return {
-    videoData: state.playVideo,
-    open: state.open
+    videoModalOpen: state.playVideo.openVideoOpened
   };
 };
 

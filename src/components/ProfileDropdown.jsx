@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
+  Hidden,
   Grid,
   Avatar,
   ButtonBase,
@@ -70,12 +71,16 @@ class ProfileDropdown extends Component {
             <Grid item xs="auto">
               <Avatar className={classes.greenAvatar}>LG</Avatar>
             </Grid>
-            <Grid item xs>
-              Levon Grigoryan
-            </Grid>
-            <Grid item xs="auto">
-              <ArrowDownIcon />
-            </Grid>
+            <Hidden mdDown>
+              <Grid item xs>
+                Levon Grigoryan
+              </Grid>
+            </Hidden>
+            <Hidden mdDown>
+              <Grid item xs="auto">
+                <ArrowDownIcon />
+              </Grid>
+            </Hidden>
           </Grid>
         </ButtonBase>
         <Menu

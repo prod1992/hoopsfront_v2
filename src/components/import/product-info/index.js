@@ -12,7 +12,8 @@ import {
   TableRow,
   Table,
   Paper,
-  Grid
+  Grid,
+  Chip
 } from "@material-ui/core";
 import Beenhere from "@material-ui/icons/Beenhere";
 import RenderLabelGroup from "../../shared/RenderLabelGroup";
@@ -21,7 +22,9 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: "auto",
+    padding: 16,
+    fontSize: 14
   },
   head: {
     backgroundColor: theme.palette.common.black,
@@ -47,12 +50,26 @@ class ProductInfo extends React.Component {
     };
     return (
       <Paper className={classes.root}>
-        <Grid container spacing={16} justify="space-between">
+        <Grid
+          container
+          spacing={16}
+          justify="space-between"
+          alignItems="center"
+        >
           <Grid item>
-            <div>
-              <Beenhere />
+            <h4 style={{ fontSize: "1.125rem", fontWeight: 400, margin: 0 }}>
+              <Chip
+                style={{
+                  width: 28,
+                  height: 28,
+                  backgroundColor: "#f0ab5d",
+                  color: "#FFFFFF",
+                  marginRight: 10
+                }}
+                label={<Beenhere style={{ fontSize: "1.25rem" }} />}
+              />
               <span>Product info mapping</span>
-            </div>
+            </h4>
           </Grid>
           <Grid item>
             <div>

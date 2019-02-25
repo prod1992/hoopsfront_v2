@@ -25,7 +25,7 @@ const styles = theme => ({
   },
   automateButton: {
     backgroundColor: "#1DB3E7",
-    marginRight: 6,
+    marginRight: 15,
     minWidth: "40px",
     cursor: "pointer"
   },

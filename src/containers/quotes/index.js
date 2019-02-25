@@ -11,7 +11,7 @@ class Quotes extends React.Component {
       <div>
         <Grid container spacing={24}>
           <Grid item>
-            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 500 }}>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 400 }}>
               Quotes
             </h2>
           </Grid>

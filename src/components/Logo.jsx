@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-class Logo extends Component {
+class Logo extends React.PureComponent {
   constructor(props) {
     super(props);
   }

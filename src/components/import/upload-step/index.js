@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import SelectDropdown from "../../../components/shared/select-dropdown";
 import StepButtons from "../shared/step-buttons";
 import { withStyles } from "@material-ui/core/styles";
 import VideoBtn from "../../WatchVideoButton";
@@ -234,7 +232,6 @@ class UploadFiles extends React.Component {
       <div className={classes.root}>
         <Grid
           container
-          row
           justify="space-between"
           align="center"
           spacing={16}

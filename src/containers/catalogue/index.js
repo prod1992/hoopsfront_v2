@@ -83,7 +83,7 @@ const styles = theme => ({
     backgroundColor: "#1DB3E7",
     minWidth: "40px",
     cursor: "pointer",
-    marginRight: "5px"
+    marginRight: 15
   },
   catalogueProcessHref: {
     textDecoration: "none",
@@ -443,7 +443,7 @@ class Catalogue extends React.Component {
       <div>
         <Grid container spacing={24}>
           <Grid item>
-            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 500 }}>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 400 }}>
               Catalogues
             </h2>
           </Grid>
@@ -465,7 +465,7 @@ class Catalogue extends React.Component {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" alignItems="center">
               <Grid item>
                 <div
                   style={{

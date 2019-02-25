@@ -27,13 +27,7 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 /*Filter open close*/
 
 export const FILTER_SHOW = "FILTER_SHOW";
-
-/*Video play states*/
-
-export const VIDEO_MODAL_STATE = "VIDEO_MODAL_STATE";
-
 export const SET_FILTERED_ARRAY = "SET_FILTERED_ARRAY";
-
 export const RESET_SELECTED_IDS = "RESET_SELECTED_IDS";
 
 /*Edit product*/

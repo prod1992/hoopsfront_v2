@@ -38,6 +38,9 @@ const styles = () => ({
       backgroundColor: "#e8e8e8",
       fontWeight: 500
     }
+  },
+  listItemIcon: {
+    marginRight: 6
   }
 });
 
@@ -63,7 +66,9 @@ class AppSidenav extends React.Component {
                 }}
               >
                 <NavLink to={"/" + item.href} className={classes.navLink}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon className={classes.listItemIcon}>
+                    {item.icon}
+                  </ListItemIcon>
                   <ListItemText
                     primaryTypographyProps={{
                       style: { fontFamily: "inherit" }

@@ -43,7 +43,7 @@ const styles = theme => ({
     backgroundColor: "#1DB3E7",
     minWidth: "40px",
     cursor: "pointer",
-    marginRight: "5px"
+    marginRight: 15
   },
   EditButton: {
     cursor: "pointer"

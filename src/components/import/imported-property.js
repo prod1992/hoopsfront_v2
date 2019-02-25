@@ -60,13 +60,15 @@ class PropertyItem extends React.Component {
 
     return (
       <Select
-        className="hoops_map_select"
         name={name}
         required={required}
         value={value}
         onChange={onChange}
         input={<BootstrapInput />}
       >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
         {Object.keys(options).map((option, i) => {
           return (
             <MenuItem key={i} value={option}>

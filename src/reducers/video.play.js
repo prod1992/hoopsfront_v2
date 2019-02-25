@@ -4,7 +4,7 @@ import {
   VIDEO_MODAL_STATE
 } from "../actions/action-types";
 const initialState = {
-  videoModalOpen: false
+  openVideoOpened: false
 };
 
 const playVideo = (state = { ...initialState }, action) => {
@@ -12,7 +12,7 @@ const playVideo = (state = { ...initialState }, action) => {
     case VIDEO_MODAL_STATE:
       return {
         ...state,
-        videoModalOpen: action.payload
+        openVideoOpened: action.payload
       };
     default:
       return state;
