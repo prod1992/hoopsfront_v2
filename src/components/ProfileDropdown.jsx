@@ -8,7 +8,7 @@ import {
   Avatar,
   ButtonBase,
   Menu,
-  MenuList,
+  // MenuList,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -136,7 +136,7 @@ ProfileDropdown.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
+  // console.log(state);
   return {
     first_name: state.authReducer.userData.first_name,
     last_name: state.authReducer.userData.last_name

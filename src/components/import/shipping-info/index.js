@@ -1,5 +1,5 @@
-import ImportStateChart from "../../../components/import/shared/state-chart";
-import StepButtons from "../shared/step-buttons";
+// import ImportStateChart from "../../../components/import/shared/state-chart";
+// import StepButtons from "../shared/step-buttons";
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import WatchVideoButton from "../../WatchVideoButton";

@@ -153,7 +153,10 @@ class SimpleProduct extends Component {
             </Grid>
             <Grid item>
               <span>
-                Vendor: <strong>{simpleProduct.vendor.vendor_name}</strong>
+                Vendor:{" "}
+                {simpleProduct.vendor && (
+                  <strong>{simpleProduct.vendor.vendor_name}</strong>
+                )}
               </span>
             </Grid>
           </Grid>
@@ -186,7 +189,10 @@ class SimpleProduct extends Component {
                   <span className={classes.endder}>|</span>
 
                   <span>
-                    Vendor: <span>{simpleProduct.vendor.vendor_name}</span>
+                    Vendor:{" "}
+                    {simpleProduct.vendor && (
+                      <span>{simpleProduct.vendor.vendor_name}</span>
+                    )}
                   </span>
                 </Grid>
               </Grid>

@@ -8,7 +8,7 @@ import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 
 // import GlobalStep from "../../components/import/shared/import-global-step";
-import ImportStateChart from "../../components/import/shared/state-chart";
+// import ImportStateChart from "../../components/import/shared/state-chart";s
 import AdditionalCoast from "../../components/import/additional-cost";
 import StepButtons from "../../components/import/shared/step-buttons";
 import PreviewImport from "../../components/import/preview-import";
@@ -16,7 +16,7 @@ import ShippingInfo from "../../components/import/shipping-info";
 import UploadFiles from "../../components/import/upload-step";
 import ProductInfo from "../../components/import/product-info";
 import Pricing from "../../components/import/pricing";
-import { moveNextStep, movePrevStep } from "../../actions/catalogue-actions";
+import { movePrevStep } from "../../actions/catalogue-actions";
 
 import {
   Backup as BackupIcon,
