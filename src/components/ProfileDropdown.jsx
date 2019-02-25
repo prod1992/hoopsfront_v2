@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -30,7 +31,7 @@ const styles = theme => ({
   },
   button: {
     textTransform: "none",
-    padding: 8,
+    padding: 0,
     fontSize: 16,
     width: "100%"
   },
@@ -39,11 +40,12 @@ const styles = theme => ({
     height: 52,
     backgroundColor: "#52ba57",
     boxShadow: "0 0 0 4px #eaeaea",
-    fontWeight: 600
+    fontWeight: 600,
+    marginRight: 15
   }
 });
 
-class ProfileDropdown extends Component {
+class ProfileDropdown extends React.Component {
   state = {
     anchorEl: null
   };
@@ -66,19 +68,20 @@ class ProfileDropdown extends Component {
           aria-haspopup="true"
           onClick={this.handleClick}
           className={classes.button}
+          disableRipple
         >
-          <Grid container spacing={16} alignItems="center">
+          <Grid container alignItems="center">
             <Grid item xs="auto">
               <Avatar className={classes.greenAvatar}>LG</Avatar>
             </Grid>
             <Hidden mdDown>
               <Grid item xs>
-                Levon Grigoryan
+                {this.props.first_name}&nbsp;{this.props.last_name}
               </Grid>
             </Hidden>
             <Hidden mdDown>
               <Grid item xs="auto">
-                <ArrowDownIcon />
+                <ArrowDownIcon style={{ lineHeight: 1 }} />
               </Grid>
             </Hidden>
           </Grid>
@@ -132,4 +135,14 @@ ProfileDropdown.propTypes = {
   fill: PropTypes.array
 };
 
-export default withStyles(styles)(ProfileDropdown);
+const mapStateToProps = (state, ownProps) => {
+  console.log(state);
+  return {
+    first_name: state.authReducer.userData.first_name,
+    last_name: state.authReducer.userData.last_name
+  };
+};
+
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(ProfileDropdown)
+);

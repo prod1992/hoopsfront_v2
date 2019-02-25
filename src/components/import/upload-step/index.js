@@ -246,8 +246,8 @@ class UploadFiles extends React.Component {
         </Grid>
         <Paper className={classes.paper}>
           <ToastContainer autoClose={2000} />
-          <Grid container>
-            <Grid item>
+          <Grid container spacing={32}>
+            <Grid item md={7}>
               <div className="custom-container">
                 <div className="upload-body">
                   {progress !== 0 && (
@@ -278,7 +278,7 @@ class UploadFiles extends React.Component {
                 <AppSelect />
               </div>
             </Grid>
-            <Grid item style={{ marginLeft: "auto" }}>
+            <Grid item md={5} style={{ marginLeft: "auto" }}>
               <RenderBlueUrl
                 download
                 fontSize={14}

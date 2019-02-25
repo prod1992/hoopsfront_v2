@@ -16,7 +16,6 @@ const styles = theme => ({
   button: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
     textTransform: "capitalize",
     backgroundColor: "#fff",
     border: "1px solid rgba(0,0,0,.2)",
@@ -24,10 +23,15 @@ const styles = theme => ({
     borderRadius: 2,
     lineHeight: 1,
     height: 39,
+    width: 180,
     "& svg": {
       borderRadius: "50%",
       marginRight: 10,
-      animation: "shadow-pulse 2s infinite"
+      animation: "shadow-pulse 2s infinite",
+      fill: "#1db3e7"
+    },
+    "& span": {
+      color: "#1db3e7"
     },
     "&:hover": {
       backgroundColor: "#FFFFFF",
@@ -92,7 +96,6 @@ class WatchVideoButton extends React.Component {
           className={classes.button}
           onClick={this.openModal}
           variant="outlined"
-          color="primary"
         >
           <PlayCircleFilled />
           <span>Watch the video</span>
@@ -143,7 +146,6 @@ class WatchVideoButton extends React.Component {
 }
 
 const mapStateToProps = (state, p) => {
-  console.log(state);
   return {
     videoModalOpen: state.playVideo.openVideoOpened
   };

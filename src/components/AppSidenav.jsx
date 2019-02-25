@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import ProfileDropdown from "./ProfileDropdown";
 import {
+  Grid,
   List,
   Tooltip,
   ListItem,
@@ -12,7 +13,7 @@ import {
   ListItemIcon
 } from "@material-ui/core";
 
-const styles = () => ({
+const styles = theme => ({
   darkTooltip: {
     backgroundColor: "#222222",
     fontSize: "1em",
@@ -41,6 +42,11 @@ const styles = () => ({
   },
   listItemIcon: {
     marginRight: 6
+  },
+  hoopsLogo: {
+    display: "block",
+    width: "100%",
+    padding: "16px 20px 10px 26px"
   }
 });
 
@@ -49,37 +55,52 @@ class AppSidenav extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <a className="hoops-logo">
-          <Logo
-            fill={["#1fb3e6", "#1fb3e6", "#939598", "#939598", "#939598"]}
-          />
-        </a>
-        <ProfileDropdown />
-        <List>
-          {NAVIGATION_ITEMS.map((item, index) => (
-            <ListItem button key={index} style={{ padding: 0 }}>
-              <Tooltip
-                title={item.title}
-                placement={"right"}
-                classes={{
-                  tooltip: classes.darkTooltip
-                }}
-              >
-                <NavLink to={"/" + item.href} className={classes.navLink}>
-                  <ListItemIcon className={classes.listItemIcon}>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primaryTypographyProps={{
-                      style: { fontFamily: "inherit" }
+        <Grid container>
+          <Grid item xs={12}>
+            <a className={classes.hoopsLogo}>
+              <Logo
+                fill={["#1fb3e6", "#1fb3e6", "#939598", "#939598", "#939598"]}
+              />
+            </a>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <div style={{ padding: "0 1rem" }}>
+              <ProfileDropdown />
+            </div>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={12}>
+            <List className={classes.navList}>
+              {NAVIGATION_ITEMS.map((item, index) => (
+                <ListItem button key={index} style={{ padding: 0 }}>
+                  <Tooltip
+                    title={item.title}
+                    placement={"right"}
+                    classes={{
+                      tooltip: classes.darkTooltip
                     }}
-                    primary={item.title}
-                  />
-                </NavLink>
-              </Tooltip>
-            </ListItem>
-          ))}
-        </List>
+                  >
+                    <NavLink to={"/" + item.href} className={classes.navLink}>
+                      <ListItemIcon className={classes.listItemIcon}>
+                        {item.icon}
+                      </ListItemIcon>
+                      <ListItemText
+                        primaryTypographyProps={{
+                          style: { fontFamily: "inherit" }
+                        }}
+                        primary={item.title}
+                      />
+                    </NavLink>
+                  </Tooltip>
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
+        </Grid>
       </React.Fragment>
     );
   }

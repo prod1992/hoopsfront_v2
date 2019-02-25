@@ -33,7 +33,8 @@ import {
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    maxWidth: 400
   },
   input: {
     display: "flex",
@@ -200,11 +201,12 @@ function _Menu(props) {
     >
       <Button
         className={props.selectProps.classes.addVendorButton}
-        variant="default"
+        onClick={() => console.log("test")}
       >
         <AddIcon />
         Add New
       </Button>
+
       {props.children}
     </Paper>
   );
@@ -303,9 +305,9 @@ class AppSelect extends React.Component {
             isClearable
             input={
               <OutlinedInput
-                name="age"
+                name="vendor"
                 labelWidth={this.state.labelWidth}
-                id="outlined-age-native-simple"
+                id="outlined-vendor-native-simple"
               />
             }
           />
