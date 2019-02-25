@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../WatchVideoButton";
+import WatchVideoButton from "../../WatchVideoButton";
 import TrendingFlat from "@material-ui/icons/TrendingFlat";
 
 import {
@@ -73,7 +73,7 @@ class ProductInfo extends React.Component {
           </Grid>
           <Grid item>
             <div>
-              <VideoBtn />
+              <WatchVideoButton />
             </div>
           </Grid>
         </Grid>

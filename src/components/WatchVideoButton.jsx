@@ -22,13 +22,15 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.2)",
     overflow: "hidden",
     borderRadius: 2,
-    "& span": {
-      lineHeight: 1
-    },
+    lineHeight: "1",
     "& svg": {
       borderRadius: "50%",
       marginRight: 10,
       animation: "shadow-pulse 2s infinite"
+    },
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+      borderColor: "rgba(0,0,0,.2)"
     }
   }
 });
@@ -63,7 +65,7 @@ const CustomDialogTitle = withStyles(theme => ({
   );
 });
 
-class VideoBtn extends React.Component {
+class WatchVideoButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,9 +91,9 @@ class VideoBtn extends React.Component {
           className={classes.button}
           onClick={this.openModal}
           variant="outlined"
-          color="primary"
+          color="default"
         >
-          <PlayCircleFilled />
+          <PlayCircleFilled color="primary" />
           <span>Watch the video</span>
         </Button>
         <Dialog
@@ -146,4 +148,4 @@ const mapStateToProps = (state, p) => {
   };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(VideoBtn));
+export default connect(mapStateToProps)(withStyles(styles)(WatchVideoButton));

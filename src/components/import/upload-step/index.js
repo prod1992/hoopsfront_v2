@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import StepButtons from "../shared/step-buttons";
 import { withStyles } from "@material-ui/core/styles";
-import VideoBtn from "../../WatchVideoButton";
+import WatchVideoButton from "../../WatchVideoButton";
 import AddVendor from "../shared/add-vendor";
 import {
   setCsv,
@@ -233,7 +233,7 @@ class UploadFiles extends React.Component {
         <Grid
           container
           justify="space-between"
-          align="center"
+          alignItems="center"
           spacing={16}
           style={{ marginBottom: 30 }}
         >
@@ -241,7 +241,7 @@ class UploadFiles extends React.Component {
             <h4 className={classes.heading}>Upload file</h4>
           </Grid>
           <Grid item>
-            <VideoBtn />
+            <WatchVideoButton />
           </Grid>
         </Grid>
         <Paper className={classes.paper}>

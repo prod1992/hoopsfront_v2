@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../WatchVideoButton";
+import WatchVideoButton from "../../WatchVideoButton";
 import Beenhere from "@material-ui/icons/Beenhere";
 // import AddVendor from "../shared/add-vendor";
 import { withStyles } from "@material-ui/core/styles";
@@ -210,7 +210,7 @@ class AdditionalCost extends Component {
               </span>
             </Grid>
             <Grid item>
-              <VideoBtn />
+              <WatchVideoButton />
             </Grid>
           </Grid>
           <Paper>
