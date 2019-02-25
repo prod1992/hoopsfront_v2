@@ -54,7 +54,8 @@ const styles = theme => ({
     marginBotttom: 70
   },
   resultsPaper: {
-    padding: 16
+    padding: 16,
+    fontSize: 14
   },
   successChip: {
     backgroundColor: "#52ba57",
@@ -89,7 +90,7 @@ class ImportPage extends React.Component {
 
             <Paper className={classes.resultsPaper}>
               <Grid container>
-                <Grid item md={3}>
+                <Grid item xs>
                   <div>
                     <strong>Vendor</strong>
                   </div>
@@ -98,7 +99,7 @@ class ImportPage extends React.Component {
                     <span>{selectedVendor.single.label}</span>
                   </div>
                 </Grid>
-                <Grid item md={3}>
+                <Grid item xs>
                   <div>
                     <strong>Product csv files</strong>
                   </div>
@@ -112,7 +113,7 @@ class ImportPage extends React.Component {
                     </div>
                   )}
                 </Grid>
-                <Grid item md={3}>
+                <Grid item xs>
                   <div className="text">Product zip files</div>
                   {importFileData.zipFile && (
                     <div className="upload-name">
@@ -123,14 +124,14 @@ class ImportPage extends React.Component {
                     </div>
                   )}
                 </Grid>
-                <Grid item md={"auto"}>
+                <Grid item xs={"auto"}>
                   <IconButton
                     className="to-import-btn"
                     onClick={() => {
                       this.props.movePrevStep();
                     }}
                   >
-                    <Edit />
+                    <Edit fontSize="small" />
                   </IconButton>
                 </Grid>
               </Grid>

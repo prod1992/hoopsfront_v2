@@ -12,8 +12,7 @@ const styles = theme => ({
 const RenderLabelGroup = props => {
   const rootStyles = {
     display: "flex",
-    alignItems: "center",
-    marginBottom: 10
+    alignItems: "center"
   };
   let chipStyles = {
     borderRadius: 2,

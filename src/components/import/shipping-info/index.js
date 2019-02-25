@@ -2,7 +2,7 @@ import ImportStateChart from "../../../components/import/shared/state-chart";
 import StepButtons from "../shared/step-buttons";
 import React, { Component } from "react";
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../shared/WatchVideoButton";
+import VideoBtn from "../../WatchVideoButton";
 import { withStyles } from "@material-ui/core/styles";
 
 import {
@@ -46,7 +46,7 @@ class ShippingInfo extends Component {
     return (
       <div className="product_mapping_block">
         <Paper>
-          <Grid container className="product_mapping_block_title">
+          <Grid container>
             <Grid item>
               <div className="product_info_icon_block">
                 <Beenhere />

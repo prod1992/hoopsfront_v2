@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../shared/WatchVideoButton";
+import VideoBtn from "../../WatchVideoButton";
 import TrendingFlat from "@material-ui/icons/TrendingFlat";
 
 import {
@@ -23,8 +23,12 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   },
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
   table: {
-    minWidth: 700
+    tableLayout: "fixed"
   }
 });
 
@@ -42,66 +46,62 @@ class ProductInfo extends React.Component {
       }
     };
     return (
-      <div className="product_mapping_block">
-        <Paper>
-          <Grid container className="product_mapping_block_title">
-            <Grid item>
-              <div className="product_info_icon_block">
-                <Beenhere />
-              </div>
-              <span className="product_info_icon_block_text">
-                Product info mapping
-              </span>
-            </Grid>
-            <Grid item>
-              <VideoBtn />
-            </Grid>
+      <Paper className={classes.root}>
+        <Grid container spacing={16} justify="space-between">
+          <Grid item>
+            <div>
+              <Beenhere />
+              <span>Product info mapping</span>
+            </div>
           </Grid>
-        </Paper>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <span>Map to fields in </span>
-                </TableCell>
-                <TableCell />
-                <TableCell>
-                  <span>Fields in your file</span>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {importFileData &&
-                importFileData.db_fields.map((item, index) => {
-                  if (index < 13) {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <RenderLabelGroup
-                            text={item.label}
-                            url={"#"}
-                            priority={getPriority(item)}
-                            anchorText={"What's this?"}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TrendingFlat />
-                        </TableCell>
-                        <TableCell>
-                          <ImportedProperty
-                            propertyItem={item}
-                            propertyOptions={importFileData.csv_headers}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
+          <Grid item>
+            <div>
+              <VideoBtn />
+            </div>
+          </Grid>
+        </Grid>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell alignCenter style={{ color: "inherit" }}>
+                <b>Map to fields in </b>
+              </TableCell>
+              <TableCell />
+              <TableCell alignCenter style={{ color: "inherit" }}>
+                <b>Fields in your file</b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {importFileData &&
+              importFileData.db_fields.map((item, index) => {
+                if (index < 13) {
+                  return (
+                    <TableRow key={index}>
+                      <TableCell alignCenter>
+                        <RenderLabelGroup
+                          text={item.label}
+                          url={"#"}
+                          priority={getPriority(item)}
+                          anchorText={"What's this?"}
+                        />
+                      </TableCell>
+                      <TableCell alignCenter>
+                        <TrendingFlat />
+                      </TableCell>
+                      <TableCell alignCenter>
+                        <ImportedProperty
+                          propertyItem={item}
+                          propertyOptions={importFileData.csv_headers}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
+              })}
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
 }

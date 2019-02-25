@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import RenderLabelGroup from "../../shared/RenderLabelGroup";
 
 import ImportedProperty from "../../../containers/imported-property";
-import VideoBtn from "../../shared/WatchVideoButton";
+import VideoBtn from "../../WatchVideoButton";
 import TrendingFlat from "@material-ui/icons/TrendingFlat";
 import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import Beenhere from "@material-ui/icons/Beenhere";

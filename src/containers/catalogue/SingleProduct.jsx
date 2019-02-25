@@ -22,7 +22,7 @@ import Close from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import DialogActions from "@material-ui/core/DialogActions";
 import Divider from "@material-ui/core/Divider";
-import SingleProductInfoTabs from "../../components/catalogue/single-product/singleProductInfoTabs";
+import SingleProductInfoTabs from "../../components/catalogue/single-product/SingleProductInfoTabs";
 const styles = theme => ({
   optionLabel: {
     color: "#555",

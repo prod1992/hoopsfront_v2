@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SelectDropdown from "../../../components/shared/select-dropdown";
 import StepButtons from "../shared/step-buttons";
 import { withStyles } from "@material-ui/core/styles";
-import VideoBtn from "../../shared/WatchVideoButton";
+import VideoBtn from "../../WatchVideoButton";
 import AddVendor from "../shared/add-vendor";
 import {
   setCsv,

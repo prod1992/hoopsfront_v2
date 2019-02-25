@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
-import { toggleVideoModal } from "../../actions/catalogue-actions";
-import playVideo from "../../reducers/video.play";
+import { toggleVideoModal } from "../actions/catalogue-actions";
+import playVideo from "../reducers/video.play";
 
 import Modal from "@material-ui/core/Modal";
 import PlayCircleFilled from "@material-ui/icons/PlayCircleFilled";
@@ -16,11 +16,13 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "space-between",
     textTransform: "capitalize",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     border: "1px solid rgba(0,0,0,.2)",
     overflow: "hidden",
     borderRadius: 2,
-    lineHeight: 1,
+    "& span": {
+      lineHeight: 1
+    },
     "& svg": {
       borderRadius: "50%",
       marginRight: 10,
@@ -77,7 +79,8 @@ class VideoBtn extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    videoData: state.playVideo
+    videoData: state.playVideo,
+    open: state.open
   };
 };
 

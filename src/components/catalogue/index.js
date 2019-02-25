@@ -153,7 +153,7 @@ class SimpleProduct extends Component {
             </Grid>
             <Grid item>
               <span>
-                Vendor: <strong>Example</strong>
+                Vendor: <strong>{simpleProduct.vendor.vendor_name}</strong>
               </span>
             </Grid>
           </Grid>
@@ -186,7 +186,7 @@ class SimpleProduct extends Component {
                   <span className={classes.endder}>|</span>
 
                   <span>
-                    Vendor: <span>Example</span>
+                    Vendor: <span>{simpleProduct.vendor.vendor_name}</span>
                   </span>
                 </Grid>
               </Grid>

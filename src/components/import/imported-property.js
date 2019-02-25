@@ -6,6 +6,7 @@ import InputBase from "@material-ui/core/InputBase";
 
 const BootstrapInput = withStyles(theme => ({
   root: {
+    width: "100%",
     "label + &": {
       marginTop: theme.spacing.unit * 3
     }
@@ -46,7 +47,8 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 120,
+    width: "100%"
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
@@ -65,12 +67,9 @@ class PropertyItem extends React.Component {
         onChange={onChange}
         input={<BootstrapInput />}
       >
-        <MenuItem>Select</MenuItem>
-
         {Object.keys(options).map((option, i) => {
           return (
             <MenuItem key={i} value={option}>
-              {" "}
               {options[option]}
             </MenuItem>
           );
