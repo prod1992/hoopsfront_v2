@@ -226,7 +226,7 @@ class AdditionalCost extends Component {
                   }}
                   label={<Beenhere style={{ fontSize: "1.25rem" }} />}
                 />
-                <span>Product info mapping</span>
+                <span>Services price mapping</span>
               </h4>
             </Grid>
             <Grid item>
@@ -236,25 +236,19 @@ class AdditionalCost extends Component {
             </Grid>
           </Grid>
           <Paper>
-            <div className="step_3_catalogue_multiple">
-              <div className="step_3_catalogue_multiple_content">
-                <div className="step_3_catalogue_multiple_items">
-                  <div className="step_3_catalogue_title">
-                    <RenderLabelGroup
-                      text={
-                        "Does this catalogue have multiple service options?"
-                      }
-                      url={
-                        "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
-                      }
-                      anchorText={"What's This?"}
-                    />
-                  </div>
-                  <p className="standard_product_step_3">
-                    Eg. Standard Production, Rush Service, Indent etc
-                  </p>
-                </div>
-                <div className="step_3_catalogue_multiple_items">
+            <Paper>
+              <Grid container>
+                <Grid item>
+                  <RenderLabelGroup
+                    text={"Does this catalogue have multiple service options?"}
+                    url={
+                      "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                    }
+                    anchorText={"What's This?"}
+                  />
+                  <p>Eg. Standard Production, Rush Service, Indent etc</p>
+                </Grid>
+                <Grid item>
                   <RadioGroup>
                     <FormControlLabel
                       value={1}
@@ -271,9 +265,10 @@ class AdditionalCost extends Component {
                       labelPlacement="end"
                     />
                   </RadioGroup>
-                </div>
-              </div>
-            </div>
+                </Grid>
+              </Grid>
+            </Paper>
+
             {this.state.showAdditionalBlock && (
               <div>
                 {this.getAdditionalBlockArray().map(item => item)}

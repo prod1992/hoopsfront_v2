@@ -80,11 +80,11 @@ class ProductInfo extends React.Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell alignCenter style={{ color: "inherit" }}>
+              <TableCell style={{ color: "inherit" }}>
                 <b>Map to fields in </b>
               </TableCell>
               <TableCell />
-              <TableCell alignCenter style={{ color: "inherit" }}>
+              <TableCell style={{ color: "inherit" }}>
                 <b>Fields in your file</b>
               </TableCell>
             </TableRow>
@@ -95,7 +95,7 @@ class ProductInfo extends React.Component {
                 if (index < 13) {
                   return (
                     <TableRow key={index}>
-                      <TableCell alignCenter>
+                      <TableCell>
                         <RenderLabelGroup
                           text={item.label}
                           url={"#"}
@@ -103,10 +103,10 @@ class ProductInfo extends React.Component {
                           anchorText={"What's this?"}
                         />
                       </TableCell>
-                      <TableCell alignCenter>
+                      <TableCell>
                         <TrendingFlat />
                       </TableCell>
-                      <TableCell alignCenter>
+                      <TableCell>
                         <ImportedProperty
                           propertyItem={item}
                           propertyOptions={importFileData.csv_headers}
