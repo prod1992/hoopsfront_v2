@@ -58,10 +58,18 @@ class SingleProductDescription extends Component {
     };
   }
   openDecorationEditModal(decoration) {
-    this.setState({ modalIsOpen: true, decoration: decoration });
+    this.setState({
+      modalIsOpen: true,
+      decoration: decoration,
+      showPrices: true,
+      editPricesMode: false
+    });
   }
   closeDecorationEditModal() {
-    this.setState({ modalIsOpen: false, decoration: null });
+    this.setState({
+      modalIsOpen: false,
+      decoration: null
+    });
   }
   setNewDecoration(data) {
     this.setState({
@@ -70,6 +78,7 @@ class SingleProductDescription extends Component {
   }
   render() {
     const { classes, product } = this.props;
+
     return (
       <div>
         <RenderDialog
@@ -110,14 +119,16 @@ class SingleProductDescription extends Component {
                 onClick={() => this.openDecorationEditModal(decoration)}
                 className={classes.EditButton}
               />
-              <div>
-                <p>
-                  Note:<span>{decoration.notes}</span>
-                </p>
-                <p>
-                  Setup cost:<span>{decoration.setup_cost}</span>
-                </p>
-              </div>
+              {this.state.showPrices && (
+                <div>
+                  <p>
+                    Note:<span>{decoration.notes}</span>
+                  </p>
+                  <p>
+                    Setup cost:<span>{decoration.setup_cost}</span>
+                  </p>
+                </div>
+              )}
             </Paper>
           ))}
       </div>
