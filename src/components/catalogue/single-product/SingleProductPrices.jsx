@@ -23,25 +23,20 @@ const styles = theme => ({
 class SingleProductPrices extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
   componentDidMount() {
-    console.log(this.props);
     var services = this.props.product.services;
-    console.log(services);
-    services.map((val, key) => {
-      //services[key].break_points = JSON.parse(services[key].break_points);
-      console.log(services[key].break_points);
+    this.setState({
+      services: services
     });
-    console.log(services);
   }
   render() {
     const { classes, product } = this.props;
-    if (!product.services) return <div />;
 
-    product.services.break_points = product.services.break_points
-      ? JSON.parse(product.services.break_points)
-      : null;
-    console.log(product.services.break_points);
+    if (!this.state.services) return <div />;
+    var services = this.state.services;
+    console.log(services);
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -49,17 +44,23 @@ class SingleProductPrices extends Component {
             <TableRow>
               <TableCell>Quantity Brackets</TableCell>
 
-              {product.services &&
-                product.services.map((val, key) => (
+              {services &&
+                services.map((val, key) => (
                   <TableCell key={key}>{val.minimum_order_quantity}</TableCell>
                 ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {product.services &&
-              product.services.map((val, key) => (
-                <TableCell key={key}>{val.minimum_order_quantity}</TableCell>
-              ))}
+            {services &&
+              services.map((val, key) => {
+                val &&
+                  val.break_points.map((bp, bpk) => (
+                    <TableRow key={bpk + 1000}>
+                      <TableCell>{bp.color}</TableCell>
+                      <TableCell>{bp.price}</TableCell>
+                    </TableRow>
+                  ));
+              })}
           </TableBody>
         </Table>
       </Paper>
