@@ -67,7 +67,7 @@ class ShippingInfo extends Component {
                   }}
                   label={<Beenhere style={{ fontSize: "1.25rem" }} />}
                 />
-                <span>Product info mapping</span>
+                <span>Shipping info mapping</span>
               </h4>
             </Grid>
             <Grid item>

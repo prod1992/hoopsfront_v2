@@ -221,7 +221,7 @@ class UploadFiles extends React.Component {
           />
           <RenderBlueUrl
             fontSize={12}
-            anchorText={props.anchorText}
+            anchortext={props.anchorText}
             to={props.url}
           />
         </div>
@@ -272,7 +272,7 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/vendor"
                   }
                   priority={"required"}
-                  anchorText={"What's this?"}
+                  anchortext={"What's this?"}
                 />
 
                 <AppSelect />
@@ -283,21 +283,21 @@ class UploadFiles extends React.Component {
                 download
                 fontSize={14}
                 to="/../csv/Catalog-Import-Template-Complete.csv"
-                anchorText={"Download the basic template"}
+                anchortext={"Download the basic template"}
                 text={"Great for simple products like apparel."}
                 icon={<CloudDownload />}
               />
               <RenderBlueUrl
                 fontSize={14}
                 to="/"
-                anchorText={"Download the complete template"}
+                anchortext={"Download the complete template"}
                 text={"Great for complex products like promotional products."}
                 icon={<CloudDownload />}
               />
               <RenderBlueUrl
                 fontSize={14}
                 to="/"
-                anchorText={"Download the basic template"}
+                anchortext={"Download the basic template"}
                 icon={<CloudDownload />}
               />
             </Grid>
@@ -311,7 +311,7 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/what-format-do-csv-files-need-to-be"
                   }
                   priority={"required"}
-                  anchorText={"What's this?"}
+                  anchortext={"What's this?"}
                 />
 
                 <div className={classes.dropZone}>
@@ -356,7 +356,7 @@ class UploadFiles extends React.Component {
                     <div className="selected-file-wrapper">
                       <span>{csvFileName}</span>
                       <Button
-                        color="red"
+                        style={{ color: "red" }}
                         onClick={() => this.removeFile("csv")}
                       >
                         <Close />
@@ -374,7 +374,7 @@ class UploadFiles extends React.Component {
                     "http://help.hoopscrm.com/catalog/import-field-explanations/how-do-i-import-product-images"
                   }
                   priority={"recommended"}
-                  anchorText={"What's this?"}
+                  anchortext={"What's this?"}
                 />
 
                 <div className={classes.dropZone}>

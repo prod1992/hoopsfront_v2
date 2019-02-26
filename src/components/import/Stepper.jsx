@@ -92,13 +92,12 @@ class CustomizedStepper extends React.Component {
         }}
       />
     );
-    const { importStep } = this.props;
-    const activeStep = importStep.stepState;
+    const { currentStep } = this.props;
 
     return (
       <Stepper
         alternativeLabel
-        activeStep={activeStep}
+        activeStep={currentStep - 1}
         connector={connector}
         className={classes.root}
       >
@@ -112,8 +111,9 @@ class CustomizedStepper extends React.Component {
   }
 }
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    importStep: state.importStepsReducer,
+    currentStep: state.importStepsReducer.stepState,
     importFileData: state.importCatalogFiles,
     selectedVendor: state.selectVendor.selected
   };

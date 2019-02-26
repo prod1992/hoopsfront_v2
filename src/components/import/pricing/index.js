@@ -1,7 +1,9 @@
 // import ImportStateChart from "../../../components/import/shared/state-chart";
 // import StepButtons from "../shared/step-buttons";
-import React, { Component } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { RadioGroup } from "@material-ui/core";
+
 import RenderLabelGroup from "../../shared/RenderLabelGroup";
 
 import ImportedProperty from "../../../containers/imported-property";
@@ -26,10 +28,17 @@ const styles = theme => ({
     overflowX: "auto",
     padding: 16,
     fontSize: 14
+  },
+  radioGroup: {
+    flexDirection: "row"
+  },
+  innerPaper: {
+    padding: 26,
+    margin: "20px 0 15px"
   }
 });
 
-class Pricing extends Component {
+class Pricing extends React.Component {
   constructor(props) {
     super(props);
     this.setAdditionalFields = this.setAdditionalFields.bind(this);
@@ -37,6 +46,7 @@ class Pricing extends Component {
     this.addMorePriceBreaks = this.addMorePriceBreaks.bind(this);
     this.state = {
       showAdditionalFields: false,
+      has_multiple_options: false,
       serviceCount: 1,
       priceBreaksCount: 1,
       additionalField: 0
@@ -219,33 +229,50 @@ class Pricing extends Component {
                   }}
                   label={<Beenhere style={{ fontSize: "1.25rem" }} />}
                 />
-                <span>Product info mapping</span>
+                <span>Services price mapping</span>
               </h4>
             </Grid>
             <Grid item>
               <WatchVideoButton />
             </Grid>
           </Grid>
-          {additionalField !== 2 && (
-            <div className="step_3_catalogue_multiple">
-              <div className="step_3_catalogue_multiple_content">
-                <div className="step_3_catalogue_multiple_items">
-                  <div className="step_3_catalogue_title">
-                    <RenderLabelGroup
-                      text={
-                        "Does this catalogue have multiple service options?"
-                      }
-                      url={
-                        "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
-                      }
-                      anchorText={"What's This?"}
-                    />
-                  </div>
-                  <p className="standard_product_step_3">
-                    Eg. Standard Production, Rush Service, Indent etc
-                  </p>
-                </div>
-                <div className="step_3_catalogue_multiple_items">
+          <Paper className={classes.innerPaper}>
+            <Grid
+              container
+              spacing={24}
+              alignItems="center"
+              justify="space-between"
+            >
+              <Grid item>
+                <RenderLabelGroup
+                  text={
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontSize: "1.25rem",
+                        fontWeight: 400
+                      }}
+                    >
+                      Does this catalogue have multiple service options?
+                    </h3>
+                  }
+                  url={
+                    "http://help.hoopscrm.com/catalog/import-field-explanations/service-options"
+                  }
+                  anchorText={"What's This?"}
+                />
+                <p style={{ margin: 0 }}>
+                  {" "}
+                  Eg. Standard Production, Rush Service, Indent etc
+                </p>
+              </Grid>
+              <Grid item xs="auto">
+                <RadioGroup
+                  className={classes.radioGroup}
+                  aria-label="has_multiple_options"
+                  name="has_multiple_options"
+                  onChange={this.handleChange}
+                >
                   <FormControlLabel
                     value={1}
                     control={<Radio color="primary" />}
@@ -260,7 +287,18 @@ class Pricing extends Component {
                     label="No"
                     labelPlacement="end"
                   />
+                </RadioGroup>
+              </Grid>
+            </Grid>
+          </Paper>
+          {additionalField !== 2 && (
+            <div className="step_3_catalogue_multiple">
+              <div className="step_3_catalogue_multiple_content">
+                <div className="step_3_catalogue_multiple_items">
+                  <div className="step_3_catalogue_title" />
+                  <p className="standard_product_step_3" />
                 </div>
+                <div className="step_3_catalogue_multiple_items" />
               </div>
             </div>
           )}
