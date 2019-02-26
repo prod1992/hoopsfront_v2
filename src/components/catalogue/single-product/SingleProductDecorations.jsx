@@ -74,7 +74,7 @@ class SingleProductDescription extends Component {
       <div>
         <RenderDialog
           oppen={this.state.modalIsOpen}
-          closeModal={this.closeModal}
+          closeModal={this.closeDecorationEditModal}
           ModalTitle={"Edit Decoration"}
           context={
             <EditDecorationModal
@@ -107,9 +107,17 @@ class SingleProductDescription extends Component {
             <Paper key={decoration.name} className={classes.decoration}>
               <p>{decoration.name}</p>
               <Edit
-                onClick={this.openDecorationEditModal(decoration)}
+                onClick={() => this.openDecorationEditModal(decoration)}
                 className={classes.EditButton}
               />
+              <div>
+                <p>
+                  Note:<span>{decoration.notes}</span>
+                </p>
+                <p>
+                  Setup cost:<span>{decoration.setup_cost}</span>
+                </p>
+              </div>
             </Paper>
           ))}
       </div>

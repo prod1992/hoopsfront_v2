@@ -105,7 +105,7 @@ class SingleProductDescription extends Component {
   render() {
     const { classes } = this.props;
     const { product } = this.props;
-
+    console.log(product);
     return (
       <div>
         <RenderDialog

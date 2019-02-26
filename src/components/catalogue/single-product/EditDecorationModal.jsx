@@ -38,17 +38,30 @@ class EditDecorationModal extends Component {
 
     this.state = {};
 
-    this.updateProduct = this.updateProduct.bind(this);
+    this.updateDecoration = this.updateDecoration.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.decorationData);
+    const { id, name, notes, setup_cost, ...other } = this.props.decorationData;
+
+    this.setState({
+      decorationData: {
+        ...other,
+        id,
+        name,
+        notes,
+        setup_cost
+      }
+    });
+    console.log(this.state);
   }
 
-  updateDecoratoin() {
+  updateDecoration() {
+    console.log(this.state.decorationData);
     let token = localStorage["userToken"];
     let uri =
-      getApiCredentials.host + `/api/products/${this.state.productInfo.id}`;
+      getApiCredentials.host +
+      `/api/decorations/${this.state.decorationData.id}`;
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -56,7 +69,7 @@ class EditDecorationModal extends Component {
         Accept: "application/json",
         Authorization: "Bearer " + token
       },
-      body: JSON.stringify(this.state.productInfo)
+      body: JSON.stringify(this.state.decorationData)
     };
     const reqInstance = new Request(uri, requestOptions);
     fetch(reqInstance)
@@ -72,27 +85,92 @@ class EditDecorationModal extends Component {
 
   getEditedInfo(name, value) {
     this.setState({
-      productInfo: {
-        ...this.state.productInfo,
+      decorationData: {
+        ...this.state.decorationData,
         [name]: value
       }
     });
+    console.log(this.state);
   }
 
   render() {
-    const { tagInputValue, productInfo } = this.state;
+    const { tagInputValue, decorationData } = this.state;
+    if (typeof decorationData == "undefined") return <div />;
     // const { productData } = this.props;
+    console.log(decorationData);
     const { classes } = this.props;
-    return <div />;
+    return (
+      <Grid container>
+        <Grid row={true} container>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Decoration Name"
+              name="name"
+              value={decorationData.name}
+              className={classes.textField}
+              onChange={e => this.getEditedInfo("name", e.target.value)}
+              margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </div>
+        </Grid>
+        <Grid row={true} container>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Decoration Name"
+              name="notes"
+              value={decorationData.notes}
+              className={classes.textField}
+              onChange={e => this.getEditedInfo("notes", e.target.value)}
+              margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </div>
+        </Grid>
+        <Grid row={true} container>
+          <div className={classes.inputWrapper}>
+            <TextField
+              label="Setup Cost"
+              name="setup_cost"
+              value={decorationData.setup_cost}
+              className={classes.textField}
+              onChange={e => this.getEditedInfo("setup_cost", e.target.value)}
+              margin="none"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </div>
+        </Grid>
+
+        <Grid
+          row={true}
+          container
+          className={classes.buttonsBlock}
+          spacing={16}
+        >
+          <Button
+            className={classes.buttons}
+            onClick={() => this.props.closeModal()}
+          >
+            <Close /> Cancel
+          </Button>
+          <Button
+            className={classes.buttons}
+            onClick={this.updateDecoration}
+            variant="contained"
+            color="primary"
+          >
+            Save
+          </Button>
+        </Grid>
+      </Grid>
+    );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    editingProductData: state.editingProductData
-  };
-}
-
-export default connect(mapStateToProps)(
-  withStyles(styles)(EditDecorationModal)
-);
+export default withStyles(styles)(EditDecorationModal);
