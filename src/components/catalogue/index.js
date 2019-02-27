@@ -120,7 +120,7 @@ class SimpleProduct extends Component {
           </Grid>
           <Grid
             container
-            row="true"
+            row
             justify="space-between"
             alignItems="center"
             spacing={24}

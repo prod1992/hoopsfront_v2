@@ -62,7 +62,7 @@ class AddVendorForm extends Component {
             >
               <Button onClick={this.closeAddVendor} className={classes.button}>
                 <Clear />
-                Cencel
+                Cancel
               </Button>
 
               <Button
@@ -210,7 +210,7 @@ class AddVendorForm extends Component {
           >
             <Button onClick={this.closeAddVendor} className={classes.button}>
               <Clear />
-              Cencel
+              Cancel
             </Button>
 
             <Button

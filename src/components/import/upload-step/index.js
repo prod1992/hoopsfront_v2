@@ -380,6 +380,7 @@ class UploadFiles extends React.Component {
                 <div className={classes.dropZone}>
                   {zipFileName === "" ? (
                     <Dropzone
+                      onClick={evt => evt.preventDefault()}
                       onDrop={acceptedFile =>
                         this.onFileUpdate(acceptedFile[0], "zip")
                       }
