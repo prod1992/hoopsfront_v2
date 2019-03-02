@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setImportedProperty } from "../../actions/import-actions";
 import PropertyItem from "../../components/import/imported-property";
 
-class ImportedProperty extends Component {
+class ImportedProperty extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);

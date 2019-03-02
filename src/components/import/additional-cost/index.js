@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import WatchVideoButton from "../../WatchVideoButton";
 import Beenhere from "@material-ui/icons/Beenhere";
@@ -24,7 +24,7 @@ const styles = theme => ({
     fontSize: 14
   }
 });
-class AdditionalCost extends Component {
+class AdditionalCost extends React.Component {
   constructor(props) {
     super(props);
     this.toggleAdditionalBlock = this.toggleAdditionalBlock.bind(this);

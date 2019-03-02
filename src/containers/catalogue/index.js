@@ -635,21 +635,27 @@ class Catalogue extends React.Component {
                               primary="add product"
                             />
                           </MenuItem>
-                          <MenuItem className={classes.menuItem}>
-                            <Link to="/import" className={classes.importHref}>
-                              <ListItemIcon className={classes.icon}>
-                                <OpenInBrowser />
-                              </ListItemIcon>
-
-                              <ListItemText
-                                primaryTypographyProps={{
-                                  style: { textTransform: "capitalize" }
-                                }}
-                                classes={{ primary: classes.primary }}
-                                inset
-                                primary="import"
+                          <MenuItem
+                            className={classes.menuItem}
+                            containerElement={
+                              <Link
+                                to="/import"
+                                className={classes.importHref}
                               />
-                            </Link>
+                            }
+                          >
+                            <ListItemIcon className={classes.icon}>
+                              <OpenInBrowser />
+                            </ListItemIcon>
+
+                            <ListItemText
+                              primaryTypographyProps={{
+                                style: { textTransform: "capitalize" }
+                              }}
+                              classes={{ primary: classes.primary }}
+                              inset
+                              primary="import"
+                            />
                           </MenuItem>
                           <MenuItem
                             className={classes.menuItem}

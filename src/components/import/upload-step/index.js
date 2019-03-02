@@ -356,7 +356,7 @@ class UploadFiles extends React.Component {
                     <div className="selected-file-wrapper">
                       <span>{csvFileName}</span>
                       <Button
-                        style={{ color: "red" }}
+                        style={{ color: "red", backgroundColor: "transparent", border: "none" }}
                         onClick={() => this.removeFile("csv")}
                       >
                         <Close />

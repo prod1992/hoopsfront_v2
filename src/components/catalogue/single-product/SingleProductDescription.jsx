@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
@@ -76,7 +76,7 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9)
 ];
 
-class SingleProductDescription extends Component {
+class SingleProductDescription extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { reduxForm, Field } from "redux-form";
 import { connect } from "react-redux";
 import { AddNewVendor } from "../../../../actions/select.vendor";
@@ -25,7 +25,7 @@ const styles = theme => ({
     marginBottom: "25px"
   }
 });
-class AddVendorForm extends Component {
+class AddVendorForm extends React.Component {
   constructor(props) {
     super(props);
     this.closeAddVendor = this.closeAddVendor.bind(this);
@@ -51,15 +51,10 @@ class AddVendorForm extends Component {
       <form>
         <div className={classes.fields}>
           <Grid container className={classes.addVendorButtonsBlock}>
-            <Grid row={true} container xs={6}>
+            <Grid container row xs={6}>
               <span className="add-v-head">Add vendor</span>
             </Grid>
-            <Grid
-              row={true}
-              container
-              xs={6}
-              style={{ justifyContent: "flex-end" }}
-            >
+            <Grid container row xs={6} style={{ justifyContent: "flex-end" }}>
               <Button onClick={this.closeAddVendor} className={classes.button}>
                 <Clear />
                 Cancel
@@ -78,7 +73,7 @@ class AddVendorForm extends Component {
 
           <Paper className={classes.fieldsPaper}>
             <Grid container>
-              <Grid container row={true} spacing={16}>
+              <Grid container row spacing={16}>
                 <Grid row xs={6}>
                   <TextField
                     className={classes.textField}
@@ -109,7 +104,7 @@ class AddVendorForm extends Component {
                   />
                 </Grid>
               </Grid>
-              <Grid container row={true}>
+              <Grid container row>
                 <Grid row xs={6}>
                   <TextField
                     className={classes.textField}
@@ -139,7 +134,7 @@ class AddVendorForm extends Component {
                   />
                 </Grid>
               </Grid>
-              <Grid container row={true}>
+              <Grid container row>
                 <Grid row xs={6}>
                   <TextField
                     className={classes.textField}
@@ -170,7 +165,7 @@ class AddVendorForm extends Component {
                   />
                 </Grid>
               </Grid>
-              <Grid container row={true}>
+              <Grid container row>
                 <Grid row xs={6}>
                   <TextField
                     className={classes.textField}
@@ -204,7 +199,7 @@ class AddVendorForm extends Component {
           </Paper>
           <Grid
             container
-            row={true}
+            row
             className={classes.addVendorButtonsBlock}
             style={{ justifyContent: "flex-end" }}
           >

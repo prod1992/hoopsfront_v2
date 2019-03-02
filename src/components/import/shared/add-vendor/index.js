@@ -2,7 +2,7 @@ import {
   AddNewCreatedVendor,
   AddNewVendor
 } from "../../../../actions/select.vendor";
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import AddVendorForm from "./addVendorForm";
@@ -19,7 +19,7 @@ function getModalStyle() {
   };
 }
 
-class AddVendor extends Component {
+class AddVendor extends React.Component {
   constructor(props) {
     super(props);
     this.AddVendor = this.AddVendor.bind(this);

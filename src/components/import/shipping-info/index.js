@@ -1,6 +1,6 @@
 // import ImportStateChart from "../../../components/import/shared/state-chart";
 // import StepButtons from "../shared/step-buttons";
-import React, { Component } from "react";
+import React from "react";
 import ImportedProperty from "../../../containers/imported-property";
 import WatchVideoButton from "../../WatchVideoButton";
 import { withStyles } from "@material-ui/core/styles";
@@ -32,7 +32,7 @@ const styles = theme => ({
   }
 });
 
-class ShippingInfo extends Component {
+class ShippingInfo extends React.Component {
   render() {
     const { classes, importFileData } = this.props;
 

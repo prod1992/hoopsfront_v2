@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import CloudUpload from "@material-ui/icons/CloudUpload";
 import RemoveRedEye from "@material-ui/icons/RemoveRedEye";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
-class GlobalStep extends Component {
+class GlobalStep extends React.Component {
   constructor(props) {
     super(props);
     this.renderCommonBtn = this.renderCommonBtn.bind(this);

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -34,7 +34,7 @@ const styles = theme => ({
     marginBottom: 20
   }
 });
-class AddProduct extends Component {
+class AddProduct extends React.Component {
   constructor(props) {
     super(props);
 
@@ -236,7 +236,7 @@ class AddProduct extends Component {
     return (
       <div>
         <Grid container>
-          <Grid row={true} container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -255,7 +255,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row={true} container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <FormControl className={classes.textField}>
@@ -293,7 +293,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row={true} container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={6}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -329,7 +329,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={6}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -365,7 +365,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row container>
+          <Grid container row>
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -404,7 +404,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row container>
+          <Grid container row>
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -443,7 +443,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row container>
+          <Grid container row>
             <Grid item xs={12}>
               <div className={classes.inputWrapper}>
                 <TextField
@@ -482,7 +482,7 @@ class AddProduct extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid row container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={6}>
               <TextField
                 label="Link url"
@@ -514,7 +514,7 @@ class AddProduct extends Component {
               />
             </Grid>
           </Grid>
-          <Grid row container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={6}>
               <TextField
                 label="Freight Description"
@@ -547,7 +547,7 @@ class AddProduct extends Component {
             </Grid>
           </Grid>
 
-          <Grid row container spacing={16}>
+          <Grid container row spacing={16}>
             <Grid item xs={6}>
               <TextField
                 label="Primary Price Description"
@@ -581,7 +581,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={12}>
             <TextField
               label="Standard Production Time"
@@ -598,7 +598,7 @@ class AddProduct extends Component {
             />
           </Grid>
         </Grid>
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={12}>
             <FormControl className={classes.textField}>
               <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
@@ -629,7 +629,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={12}>
             <FormControl className={classes.textField}>
               <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
@@ -660,11 +660,11 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16} className={classes.cartonDetails}>
+        <Grid container row spacing={16} className={classes.cartonDetails}>
           <header>Carton Details</header>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="Height"
@@ -697,7 +697,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="Depth"
@@ -730,7 +730,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="Carton QTY"
@@ -763,7 +763,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={12}>
             <TextField
               label="Carton Notes"
@@ -780,7 +780,7 @@ class AddProduct extends Component {
             />
           </Grid>
         </Grid>
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="QTY Break Point 1"
@@ -813,7 +813,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="QTY Break Point 2"
@@ -846,7 +846,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="QTY Break Point 3 Price"
@@ -879,7 +879,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <TextField
               label="QTY Break Point 4"
@@ -912,7 +912,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={12}>
             <TextField
               label="Parent product code"
@@ -930,12 +930,7 @@ class AddProduct extends Component {
           </Grid>
         </Grid>
 
-        <Grid
-          row={true}
-          container
-          className={classes.buttonsBlock}
-          spacing={16}
-        >
+        <Grid container row className={classes.buttonsBlock} spacing={16}>
           <Button className={classes.buttons} onClick={closeModal}>
             <Close /> Cancel
           </Button>

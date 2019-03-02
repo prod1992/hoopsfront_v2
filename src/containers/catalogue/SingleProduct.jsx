@@ -88,15 +88,18 @@ const styles = theme => ({
     borderRadius: 100,
     height: 22,
     fontFamily: "inherit",
-    "&:not([variant='outlined'])": {
-      //backgroundColor: "#e9e9e9"
+    backgroundColor: "#e9e9e9",
+    "&$outlined": {
+      backgroundColor: "#FFFFFF"
     }
   },
+
   tagsSection: {
-    marginTop: 50
+    padding: 0
   },
   tagsSectionHeading: {
-    fontWeight: 400
+    fontWeight: 400,
+    margin: 0
   },
   tagsList: {
     listStyle: "none",
@@ -104,8 +107,9 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap",
     lineHeight: 0,
-    "& li + li": {
-      marginLeft: 3
+    "& li": {
+      marginBottom: 5,
+      marginRight: 5
     }
   },
   ModalClass: {
@@ -126,13 +130,14 @@ const styles = theme => ({
     marginTop: "30px"
   },
   dialogRoot: {
-    maxWidth: "800px",
+    maxWidth: theme.breakpoints.values.md,
     marginLeft: "auto",
     marginRight: "auto"
   },
   modalTitle: {
-    fontSize: 18,
-    margin: 0
+    fontSize: "1.25rem",
+    margin: ".625rem 0 .5rem 0",
+    fontWeight: 400
   },
   modalDescription: {
     fontSize: 14,
@@ -331,13 +336,16 @@ class SingleProduct extends React.Component {
                 <Grid item xs={12} md={"auto"}>
                   <Chip
                     color="primary"
-                    className={classes.tagStyles}
+                    className={{
+                      root: classes.tagStyles,
+                      outlined: classes.tagStyles.outlined
+                    }}
                     variant="outlined"
                     label={"Id: " + product.code}
                   />
                 </Grid>
 
-                <Grid item container spacing={theme.spacing.unit * 2} xs={12}>
+                <Grid item container spacing={theme.spacing.unit * 3} xs={12}>
                   <Grid item xs={12}>
                     <ul className={classes.productOptions}>
                       <li>
@@ -387,6 +395,9 @@ class SingleProduct extends React.Component {
                       </div>
                     </div>
                   </Grid>
+                  <Grid item xs="12">
+                    <Divider />
+                  </Grid>
                   <Grid item xs={12} md={6}>
                     <div className={classes.tagsSection}>
                       <h4 className={classes.tagsSectionHeading}>Colors:</h4>
@@ -403,7 +414,6 @@ class SingleProduct extends React.Component {
                       </ul>
                     </div>
                   </Grid>
-
                   <Grid item xs={12} md={6}>
                     <div className={classes.tagsSection}>
                       <h4 className={classes.tagsSectionHeading}>Sizes:</h4>
@@ -421,7 +431,9 @@ class SingleProduct extends React.Component {
                       </ul>
                     </div>
                   </Grid>
-
+                  <Grid item xs="12">
+                    <Divider />
+                  </Grid>
                   <Grid item xs={12} md={6}>
                     <div className={classes.tagsSection}>
                       <h4 className={classes.tagsSectionHeading}>Tags:</h4>
@@ -455,21 +467,19 @@ class SingleProduct extends React.Component {
             aria-labelledby="scroll-dialog-title"
           >
             <DialogTitle id="scroll-dialog-title">
-              <header className="popup_header_block">
-                <Grid container justify="space-between" spacing={16}>
-                  <Grid item>
-                    <h3 className={classes.modalTitle}>Edit product detail</h3>
-                    <p className={classes.modalDescription}>
-                      Provide the following information to edit product detail
-                    </p>
-                  </Grid>
-                  <Grid item>
-                    <IconButton>
-                      <Close onClick={this.closeModal} />
-                    </IconButton>
-                  </Grid>
+              <Grid container justify="space-between" spacing={16}>
+                <Grid item>
+                  <h3 className={classes.modalTitle}>Edit product detail</h3>
+                  <p className={classes.modalDescription}>
+                    Provide the following information to edit product detail
+                  </p>
                 </Grid>
-              </header>
+                <Grid item>
+                  <IconButton>
+                    <Close onClick={this.closeModal} />
+                  </IconButton>
+                </Grid>
+              </Grid>
             </DialogTitle>
             <DialogContent>
               <DialogContentText>

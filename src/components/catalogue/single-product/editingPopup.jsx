@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import getApiCredentials from "./../../../constants/api";
 import { connect } from "react-redux";
@@ -67,7 +67,7 @@ const BootstrapInput = withStyles(theme => ({
     }
   }
 }))(InputBase);
-class EditingPopup extends Component {
+class EditingPopup extends React.Component {
   constructor() {
     super();
 
@@ -258,7 +258,7 @@ class EditingPopup extends Component {
 
     return (
       <Grid container>
-        <Grid row container>
+        <Grid container row>
           <div className={classes.inputWrapper}>
             <FormControl className={classes.textField}>
               <InputLabel shrink={true} htmlFor="demo-controlled-open-select">
@@ -285,7 +285,7 @@ class EditingPopup extends Component {
             </FormControl>
           </div>
         </Grid>
-        <Grid row container>
+        <Grid container row>
           <div className={classes.inputWrapper}>
             <TextField
               label="Product name"
@@ -300,7 +300,7 @@ class EditingPopup extends Component {
             />
           </div>
         </Grid>
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <div className={classes.inputWrapper}>
               <TextField
@@ -333,7 +333,7 @@ class EditingPopup extends Component {
           </Grid>
         </Grid>
 
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <div className={classes.inputWrapper}>
               <FormControl className={classes.textField}>
@@ -391,7 +391,7 @@ class EditingPopup extends Component {
             </div>
           </Grid>
         </Grid>
-        <Grid row container spacing={16}>
+        <Grid container row spacing={16}>
           <Grid item xs={6}>
             <div className={classes.inputWrapper}>
               <TextField
@@ -442,7 +442,7 @@ class EditingPopup extends Component {
             </div>
           </Grid>
         </Grid>
-        <Grid row container className={classes.buttonsBlock} spacing={16}>
+        <Grid container row className={classes.buttonsBlock} spacing={16}>
           <Button
             className={classes.buttons}
             onClick={() => this.props.closeModal()}

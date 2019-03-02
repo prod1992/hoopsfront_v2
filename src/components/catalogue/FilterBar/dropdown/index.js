@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Checkbox, CheckboxGroup } from "react-checkbox-group";
 
-class FilterDropdown extends Component {
+class FilterDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

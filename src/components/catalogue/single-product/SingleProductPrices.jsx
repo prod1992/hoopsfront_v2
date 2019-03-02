@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -20,7 +20,7 @@ const styles = theme => ({
   }
 });
 
-class SingleProductPrices extends Component {
+class SingleProductPrices extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

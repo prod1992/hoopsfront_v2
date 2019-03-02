@@ -4,12 +4,12 @@ import {
   AddNewVendor
 } from "../../../actions/select.vendor";
 
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import getApiCredentials from "../../../constants/api";
 // import { setProducts } from "../../../actions/catalogue-actions";
 
-class SelectDropdown extends Component {
+class SelectDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

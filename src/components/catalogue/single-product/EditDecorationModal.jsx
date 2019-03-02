@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import getApiCredentials from "./../../../constants/api";
 import { connect } from "react-redux";
@@ -32,7 +32,7 @@ const styles = theme => ({
   }
 });
 
-class EditDecorationModal extends Component {
+class EditDecorationModal extends React.Component {
   constructor() {
     super();
 
@@ -101,7 +101,7 @@ class EditDecorationModal extends Component {
     const { classes } = this.props;
     return (
       <Grid container>
-        <Grid row={true} container>
+        <Grid container row>
           <div className={classes.inputWrapper}>
             <TextField
               label="Decoration Name"
@@ -116,7 +116,7 @@ class EditDecorationModal extends Component {
             />
           </div>
         </Grid>
-        <Grid row={true} container>
+        <Grid container row>
           <div className={classes.inputWrapper}>
             <TextField
               label="Decoration Name"
@@ -131,7 +131,7 @@ class EditDecorationModal extends Component {
             />
           </div>
         </Grid>
-        <Grid row={true} container>
+        <Grid container row>
           <div className={classes.inputWrapper}>
             <TextField
               label="Setup Cost"
@@ -147,12 +147,7 @@ class EditDecorationModal extends Component {
           </div>
         </Grid>
 
-        <Grid
-          row={true}
-          container
-          className={classes.buttonsBlock}
-          spacing={16}
-        >
+        <Grid container row className={classes.buttonsBlock} spacing={16}>
           <Button
             className={classes.buttons}
             onClick={() => this.props.closeModal()}

@@ -17,7 +17,7 @@ import UploadFiles from "../../components/import/upload-step";
 import ProductInfo from "../../components/import/product-info";
 import Pricing from "../../components/import/pricing";
 import { movePrevStep } from "../../actions/catalogue-actions";
-
+import { KeyboardArrowRight } from "@material-ui/icons";
 import {
   Backup as BackupIcon,
   Favorite as FavoriteIcon,
@@ -36,18 +36,36 @@ import {
 } from "@material-ui/core";
 
 const styles = theme => ({
-  root: {
+  bottomNavigationRoot: {
     position: "fixed",
     bottom: 0,
     left: 240,
     right: 0,
-    backgroundColor: "#172027"
+    color: "#94aec7",
+    backgroundColor: "#172027",
+    display: "flex",
+    alignItems: "center"
   },
-  wrapper: {
+  bottomNavigationItem: {
+    maxWidth: "none"
+  },
+  bottomNavigationItemWrapper: {
+    display: "flex",
     color: "#94aec7",
     flexDirection: "row",
-    selected: {
-      color: "#FFFFFF"
+
+    "& svg": { marginRight: 10 }
+  },
+  bottomNavigationItemLabel: {
+    fontSize: "1rem"
+  },
+  bottomNavigationItemSelected: {
+    color: "#FFFFFF",
+    "& $bottomNavigationItemLabel": {
+      fontSize: "1rem"
+    },
+    "& svg": {
+      fill: "#FFFFFF"
     }
   },
   pageWrapper: {
@@ -167,22 +185,39 @@ class ImportPage extends React.Component {
           showLabels
           value={value}
           onChange={this.handleChange}
-          className={classes.root}
+          classes={{ root: classes.bottomNavigationRoot }}
         >
           <BottomNavigationAction
-            className={classes.wrapper}
+            classes={{
+              root: classes.bottomNavigationItem,
+              wrapper: classes.bottomNavigationItemWrapper,
+              selected: classes.bottomNavigationItemSelected,
+              label: classes.bottomNavigationItemLabel
+            }}
             label="Upload File"
             value="recents"
             icon={<BackupIcon />}
           />
+          <KeyboardArrowRight />
           <BottomNavigationAction
-            className={classes.wrapper}
+            classes={{
+              root: classes.bottomNavigationItem,
+              wrapper: classes.bottomNavigationItemWrapper,
+              selected: classes.bottomNavigationItemSelected,
+              label: classes.bottomNavigationItemLabel
+            }}
             label="Map and preview"
             value="map_and_preview"
             icon={<RemoveRedEyeIcon />}
           />
+          <KeyboardArrowRight />
           <BottomNavigationAction
-            className={classes.wrapper}
+            classes={{
+              root: classes.bottomNavigationItem,
+              wrapper: classes.bottomNavigationItemWrapper,
+              selected: classes.bottomNavigationItemSelected,
+              label: classes.bottomNavigationItemLabel
+            }}
             label="Import"
             value="import"
             icon={<ImportIcon />}

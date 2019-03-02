@@ -26,18 +26,22 @@ const styles = theme => ({
     padding: "18px 26px",
     position: "relative",
     "&:before": {
-      content: "",
+      content: "''",
       position: "absolute",
       height: "100%",
-      width: 3,
+      width: 0,
       backgroundColor: "#1db3e7",
       top: 0,
       left: 0,
-      bottom: 0
+      bottom: 0,
+      transition: "0.2s width ease"
     },
     "&.active": {
       backgroundColor: "#e8e8e8",
-      fontWeight: 500
+      fontWeight: 500,
+      "&:before": {
+        width: 3
+      }
     }
   },
   listItemIcon: {

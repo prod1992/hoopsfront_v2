@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 // import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { reduxForm } from "redux-form";
@@ -67,7 +67,7 @@ const renderTextField = ({
   );
 };
 
-class ContactForm extends Component {
+class ContactForm extends React.Component {
   render() {
     const { handleSubmit, formGroup, classes } = this.props;
     return (

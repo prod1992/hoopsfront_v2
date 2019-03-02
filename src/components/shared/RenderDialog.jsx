@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import Close from "@material-ui/icons/Close";
@@ -29,7 +29,7 @@ const styles = theme => ({
   }
 });
 
-class RenderDialog extends Component {
+class RenderDialog extends React.Component {
   render() {
     const { classes } = this.props;
     return (

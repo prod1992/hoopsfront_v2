@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Loader extends Component {
+class Loader extends React.Component {
   render() {
     return (
       <div className="loader-spinner positioning">

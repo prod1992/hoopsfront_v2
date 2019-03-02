@@ -5,11 +5,11 @@ import { REGISTER_FIELD_GROUP } from "../../constants";
 // import ContactPage from '../contact-form/index';
 import User from "../../core/auth";
 //import LoginRegisterLogo from "../logo/index";
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { UserLoggedIn, SetUserData } from "../../actions/user";
 
-class Register extends Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);

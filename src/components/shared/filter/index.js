@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { filterShowHide } from "../../../actions/catalogue-actions";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -57,7 +57,7 @@ const styles = {
   }
 };
 
-class Filter extends Component {
+class Filter extends React.Component {
   constructor(props) {
     super(props);
     this.performSearch = this.performSearch.bind(this);

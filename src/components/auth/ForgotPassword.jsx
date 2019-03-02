@@ -2,9 +2,9 @@ import ContactForm from "./ContactForm";
 import { FORGET_PASSWORD_GROUP } from "../../constants/index";
 // import ContactPage from "../contact-form/index";
 //import LoginRegisterLogo from "../logo/index";
-import React, { Component } from "react";
+import React from "react";
 
-class ForgetPassword extends Component {
+class ForgetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);

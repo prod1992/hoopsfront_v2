@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -37,7 +37,7 @@ const styles = theme => ({
     paddingTop: "100%"
   },
   productTitle: {
-    // margin: "0 0 5px"
+    wordBreak: "break-all"
   },
   productBrand: {
     fontSize: "0.75rem"
@@ -86,7 +86,7 @@ const styles = theme => ({
   }
 });
 
-class SimpleProduct extends Component {
+class SimpleProduct extends React.Component {
   constructor(props) {
     super(props);
   }

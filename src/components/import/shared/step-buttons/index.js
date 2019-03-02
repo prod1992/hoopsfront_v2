@@ -36,7 +36,7 @@ const styles = theme => ({
     width: 100,
     boxShadow: "none"
   },
-  stebButtons: {
+  stepButtons: {
     marginTop: "15px"
   }
 });
@@ -189,7 +189,7 @@ class StepButtons extends React.Component {
     }
     */
     return (
-      <Grid container className={classes.stebButtons}>
+      <Grid container className={classes.stepButtons}>
         <ToastContainer
           position="top-right"
           autoClose={false}
@@ -199,7 +199,7 @@ class StepButtons extends React.Component {
           pauseOnVisibilityChange
           draggable
         />
-        <Grid row={true} container className={classes.uploadControls}>
+        <Grid container className={classes.uploadControls}>
           {!this.props.firstPage && (
             <div style={{ marginRight: "auto" }}>
               <Button
@@ -214,7 +214,7 @@ class StepButtons extends React.Component {
               </Button>
             </div>
           )}
-          <Grid style={{ marginLeft: "auto", display: "flex" }} spacing={16}>
+          <Grid container spacing={16}>
             {!this.props.firstPage &&
               this.renderSkipButton(stepData["stepState"])}
             {this.renderNextButton(stepData["stepState"])}

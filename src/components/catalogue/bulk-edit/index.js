@@ -4,7 +4,7 @@ import {
   setFilteredProductData,
   resetSelectedIds
 } from "../../../actions/catalogue-actions";
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import getApiCredentials from "../../../constants/api";
 // import Book from "@material-ui/icons/Book";
@@ -12,10 +12,10 @@ import Info from "@material-ui/icons/Info";
 import Delete from "@material-ui/icons/Delete";
 import Close from "@material-ui/icons/Close";
 // import Fab from "@material-ui/core/Fab";
-import IconButton from "@material-ui/core/IconButton";
+import { Grid, IconButton, Checkbox } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 // import { spawn } from "child_process";
-import Checkbox from "@material-ui/core/Checkbox";
+
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 const styles = theme => ({
   catalogueProcessHref: {
@@ -62,7 +62,7 @@ const styles = theme => ({
     marginLeft: "10px"
   }
 });
-class BulkEdit extends Component {
+class BulkEdit extends React.Component {
   constructor(props) {
     super(props);
 
@@ -144,8 +144,8 @@ class BulkEdit extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.bulkEditWrapper}>
-        <div className={classes.BulkFunctionRow}>
-          <div className="select-all-option">
+        <Grid container alignItems="center" className={classes.BulkFunctionRow}>
+          <Grid item>
             <div className={classes.checkSection}>
               <FormControlLabel
                 control={
@@ -164,8 +164,8 @@ class BulkEdit extends Component {
               Number of records <span>{selectedIds.length}</span> selected
               records <span>{products["data"] && products["data"].length}</span>
             </span>
-          </div>
-          <div className={classes.deleteVendorRow}>
+          </Grid>
+          <Grid item className={classes.deleteVendorRow}>
             <Info className={classes.getInfo} />
             <strong className={classes.deleteVendorRowLink}>
               Tip Deleting a{" "}
@@ -174,8 +174,8 @@ class BulkEdit extends Component {
               </a>{" "}
               will delete all associated products
             </strong>
-          </div>
-          <div className="bulk-row-btns">
+          </Grid>
+          <Grid item className="bulk-row-btns">
             <IconButton
               size="small"
               className={classes.catalogActionButton}
@@ -190,8 +190,8 @@ class BulkEdit extends Component {
             >
               <Close />
             </IconButton>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </div>
     );
   }

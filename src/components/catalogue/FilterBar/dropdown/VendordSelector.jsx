@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import MultipleSelect from "../../../shared/MultiSelect";
-class VendordSelector extends Component {
+class VendordSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
